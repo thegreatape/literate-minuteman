@@ -1,30 +1,37 @@
 require 'rubygems'
 require 'goodreads'
 require 'open-uri'
+require 'net/http'
+require 'uri'
 require 'hpricot'
 require 'cgi'
 require 'haml'
 require 'pp'
 
 def find(title, author) 
-  open(search_url(title, author)) { |body|
+  open(search_url(title, author)) do |body|
     (Hpricot(body)/'table.browseResult').map do |row|
       title = (row/'.dpBibTitle').inner_html
 
-      puts row
-      locations = (row/'table.itemTable tr' ).map do |loc|
-        tds = loc/'td'
-        #puts "empty row" if tds.empty?
-        pp [(tds[0]/'a').inner_html.strip, tds[2].inner_html.strip] unless tds.empty?
-        [(tds[0]/'a').inner_html.strip, tds[2].inner_html.strip] unless tds.empty?
+      more_links = (row/'.ThresholdContainer a')
+      ajax_re = /return tapestry.linkOnClick\(this.href,/
+      more_links &&= more_links[1]
+      if more_links && more_links.attributes['onclick'] =~ ajax_re
+        puts "better fetch #{more_links.attributes['href']}"
       end
-      puts "empty locations" if locations.empty?
-      puts "--------------"
-      locations = locations.reject {|i| i.nil? || i.empty?}.flatten
+      
+      locations = get_locations(row).flatten
       {:title => title, :locations => Hash[*locations]} 
     end
-  }.reject(&:nil?)
+  end
 
+end
+
+def get_locations(row)
+  (row/'table.itemTable tr' ).map { |loc|
+    tds = loc/'td'
+    [(tds[0]/'a').inner_html.strip, tds[2].inner_html.strip] unless tds.empty?
+  }.reject(&:nil?)
 end
 
 def search_url(title, author)
