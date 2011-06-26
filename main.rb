@@ -8,21 +8,35 @@ require 'cgi'
 require 'haml'
 require 'pp'
 
-def find(title, author) 
-  open(search_url(title, author)) do |body|
-    (Hpricot(body)/'table.browseResult').map do |row|
-      title = (row/'.dpBibTitle').inner_html
+def fetch(uri, headers=nil)
+  uri = URI::parse(uri)
+  req = Net::HTTP::Get.new(uri.path+'?'+uri.query, headers)
+  res = Net::HTTP.start(uri.host, uri.port) {|http|
+    http.request(req)
+  } 
+  return res
+end
 
-      more_links = (row/'.ThresholdContainer a')
-      ajax_re = /return tapestry.linkOnClick\(this.href,/
-      more_links &&= more_links[1]
-      if more_links && more_links.attributes['onclick'] =~ ajax_re
-        puts "better fetch #{more_links.attributes['href']}"
-      end
-      
+def find(title, author) 
+  res = fetch(search_url(title, author))
+  body = res.body
+  pp res['Set-Cookie']
+
+  (Hpricot(body)/'table.browseResult').map do |row|
+    title = (row/'.dpBibTitle').inner_html
+
+    more_links = (row/'.ThresholdContainer a')
+    ajax_re = /return tapestry.linkOnClick\(this.href,/
+    more_links &&= more_links[1]
+    if more_links && more_links.attributes['onclick'] =~ ajax_re
+      #locations = fetch_ajax_locations(cookie, more_links.attributes['href'])
+      locations = []
+      puts "better fetch #{more_links.attributes['href']}"
+    else 
       locations = get_locations(row).flatten
-      {:title => title, :locations => Hash[*locations]} 
     end
+    
+    {:title => title, :locations => Hash[*locations]} 
   end
 
 end
