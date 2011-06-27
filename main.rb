@@ -8,20 +8,22 @@ require 'cgi'
 require 'haml'
 require 'pp'
 
-def fetch(uri, headers=nil)
+@cookies = ''
+def fetch(uri)
+  headers ||= {}
   uri = URI::parse(uri)
-  req = Net::HTTP::Get.new(uri.path+'?'+uri.query, headers)
+  req = Net::HTTP::Get.new(uri.path+'?'+uri.query, {'@cookies' => @cookies})
   res = Net::HTTP.start(uri.host, uri.port) {|http|
     http.request(req)
   } 
+  @cookies = res['Set-Cookie'] if res['Set-Cookie']
+  sleep 1
   return res
 end
 
 def find(title, author) 
   res = fetch(search_url(title, author))
   body = res.body
-  pp res['Set-Cookie']
-
   (Hpricot(body)/'table.browseResult').map do |row|
     title = (row/'.dpBibTitle').inner_html
 
@@ -29,13 +31,13 @@ def find(title, author)
     ajax_re = /return tapestry.linkOnClick\(this.href,/
     more_links &&= more_links[1]
     if more_links && more_links.attributes['onclick'] =~ ajax_re
-      #locations = fetch_ajax_locations(cookie, more_links.attributes['href'])
-      locations = []
-      puts "better fetch #{more_links.attributes['href']}"
+      res = fetch("http://find.minlib.net/#{more_links.attributes['href']}")
+      locations = get_locations(Hpricot(res.body)).flatten
     else 
       locations = get_locations(row).flatten
     end
     
+    pp locations if locations.empty?
     {:title => title, :locations => Hash[*locations]} 
   end
 
@@ -57,14 +59,13 @@ config = YAML::load(File.open('config.yml'))
 Goodreads.configure(config['api_key'])
 client = Goodreads::Client.new
 
-#items = client.shelf(config['user_id'], 'to-read')
-items = [client.shelf(config['user_id'], 'to-read').first]
+items = client.shelf(config['user_id'], 'to-read')
 books = items.map do |entry| 
   title = entry.book.title.strip
   author = entry.book.authors.author.name.strip
   puts "checking #{title} / #{author} ..."
   results = find(title, author)
-  puts "Found #{results.length} possible candidates"
+  puts "Found #{results.length} possible candidates\n---"
   {:title => title,
    :author => author,
    :results => results
