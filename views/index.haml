@@ -2,16 +2,8 @@
 %html
   %head
     %script{:src => 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'}
-    :css
-      .locations {display: none;}
-    :javascript
-      $(document).ready(function(){
-        $('.show').click(function(e){
-          $(e.target).siblings('.locations').toggle();
-          e.preventDefault();
-          return false;
-        });
-      });
+    %script{:src => '/javascript/home.js'}
+    %link{:href => '/style.css', :rel => 'stylesheet'}
   %body
     - books.each do |book|
       - results = book[:results]
@@ -19,7 +11,7 @@
         .book
           %h2= book[:title]
           %p 
-            Found #{results.length} candidates with title search. 
+            Found #{results.length} possible matches. 
           %ul.results
             - results.each do |r|
               %li

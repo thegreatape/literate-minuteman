@@ -5,7 +5,6 @@ require 'net/http'
 require 'uri'
 require 'hpricot'
 require 'cgi'
-require 'haml'
 require 'pp'
 require 'getoptlong'
 
@@ -73,31 +72,9 @@ def lookup
   end
 end
 
-def render(books)
-  haml = Object.new
-  engine = Haml::Engine.new(File.read('to-read.haml'))
-  engine.def_method(haml, :render, :books, :search_url)
-    
-  file = File.open(@config['out_file'] || 'to-read.html', 'w')
-  file.write(haml.render({
-    :books => books, 
-    :search_url => lambda  {|i| search_url(i)} 
-  }))
-  file.close
-end
-
-def read_from_cache
-  if File.exists? 'cache.yml'
-    YAML::load(IO.read('cache.yml'))
-  else
-    {}
-  end
-end
-
 def write_to_cache(books)
    File.open('cache.yml','w') { |f| f << YAML::dump(books) }
 end
-
 
 @config = YAML::load(File.open('config.yml'))
 opts = GetoptLong.new(
@@ -113,4 +90,3 @@ opts.each do |opt, arg|
   end
 end
 
-render books
