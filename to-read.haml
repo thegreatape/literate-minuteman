@@ -1,14 +1,32 @@
-- books.each do |book|
-  .book
-    %h2= book[:title]
-    - results = book[:results]
-    - unless results.empty?
-      %p Found #{results.length} candidates with title search:
-      %ul
-        - results.each do |r|
-          %li
-            = r[:title]
-            %p At locations:
-            %ul
-              - r[:locations].each do |branch, status|
-                %li #{branch} : #{status}
+!!!
+%html
+  %head
+    %script{:src => 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'}
+    :css
+      .locations {display: none;}
+    :javascript
+      $(document).ready(function(){
+        $('.show').click(function(e){
+          $(e.target).siblings('.locations').toggle();
+          e.preventDefault();
+          return false;
+        });
+      });
+  %body
+    - books.each do |book|
+      - results = book[:results]
+      - unless results.empty?
+        .book
+          %h2= book[:title]
+          %p 
+            Found #{results.length} candidates with title search. 
+          %ul.results
+            - results.each do |r|
+              %li
+                = r[:title]
+                %a{:href => '', :class => 'show'} Show
+                %ul.locations
+                  - r[:locations].each do |branch, status|
+                    %li #{branch} : #{status}
+      - else
+        No results found for #{book.title} :-(

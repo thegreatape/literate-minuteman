@@ -7,6 +7,7 @@ require 'hpricot'
 require 'cgi'
 require 'haml'
 require 'pp'
+require 'getoptlong'
 
 @cookies = ''
 def fetch(uri)
@@ -37,7 +38,6 @@ def find(title, author)
       locations = get_locations(row).flatten
     end
     
-    pp locations if locations.empty?
     {:title => title, :locations => Hash[*locations]} 
   end
 
@@ -55,30 +55,62 @@ def search_url(title, author)
   "http://find.minlib.net/iii/encore/search/C%7CS#{title}%7COrightresult%7CU1?lang=eng&suite=pearl"
 end
 
-config = YAML::load(File.open('config.yml'))
-Goodreads.configure(config['api_key'])
-client = Goodreads::Client.new
+def lookup
+  Goodreads.configure(@config['api_key'])
+  client = Goodreads::Client.new
 
-items = client.shelf(config['user_id'], 'to-read')
-books = items.map do |entry| 
-  title = entry.book.title.strip
-  author = entry.book.authors.author.name.strip
-  puts "checking #{title} / #{author} ..."
-  results = find(title, author)
-  puts "Found #{results.length} possible candidates\n---"
-  {:title => title,
-   :author => author,
-   :results => results
-  }
+  items = client.shelf(@config['user_id'], 'to-read')
+  return items.map do |entry| 
+    title = entry.book.title.strip
+    author = entry.book.authors.author.name.strip
+    puts "checking #{title} / #{author} ..."
+    results = find(title, author)
+    puts "Found #{results.length} possible candidates\n---"
+    {:title => title,
+     :author => author,
+     :results => results
+    }
+  end
 end
 
-haml = Object.new
-engine = Haml::Engine.new(File.read('to-read.haml'))
-engine.def_method(haml, :render, :books, :search_url)
-  
-file = File.open(config['out_file'] || 'to-read.html', 'w')
-file.write(haml.render({
-  :books => books, 
-  :search_url => lambda  {|i| search_url(i)} 
-}))
-file.close
+def render(books)
+  haml = Object.new
+  engine = Haml::Engine.new(File.read('to-read.haml'))
+  engine.def_method(haml, :render, :books, :search_url)
+    
+  file = File.open(@config['out_file'] || 'to-read.html', 'w')
+  file.write(haml.render({
+    :books => books, 
+    :search_url => lambda  {|i| search_url(i)} 
+  }))
+  file.close
+end
+
+def read_from_cache
+  if File.exists? 'cache.yml'
+    YAML::load(IO.read('cache.yml'))
+  else
+    {}
+  end
+end
+
+def write_to_cache(books)
+   File.open('cache.yml','w') { |f| f << YAML::dump(books) }
+end
+
+
+@config = YAML::load(File.open('config.yml'))
+opts = GetoptLong.new(
+  ['--lookup', '-l', GetoptLong::NO_ARGUMENT]
+)
+
+books = read_from_cache
+opts.each do |opt, arg|
+  case opt
+  when '--lookup'
+    books = lookup
+    write_to_cache(books)
+  end
+end
+
+render books
