@@ -6,7 +6,6 @@ require 'uri'
 require 'hpricot'
 require 'cgi'
 require 'pp'
-require 'getoptlong'
 
 @cookies = ''
 def fetch(uri)
@@ -58,7 +57,7 @@ def lookup
   Goodreads.configure(@config['api_key'])
   client = Goodreads::Client.new
 
-  items = client.shelf(@config['user_id'], 'to-read')
+  items = client.shelf(@config['user_id'], 'to-read', :per_page => 100).books
   return items.map do |entry| 
     title = entry.book.title.strip
     author = entry.book.authors.author.name.strip
@@ -77,16 +76,4 @@ def write_to_cache(books)
 end
 
 @config = YAML::load(File.open('config.yml'))
-opts = GetoptLong.new(
-  ['--lookup', '-l', GetoptLong::NO_ARGUMENT]
-)
-
-books = read_from_cache
-opts.each do |opt, arg|
-  case opt
-  when '--lookup'
-    books = lookup
-    write_to_cache(books)
-  end
-end
-
+write_to_cache(lookup)
