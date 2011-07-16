@@ -62,8 +62,8 @@ def lookup
   Goodreads.configure(@config['api_key'])
   client = Goodreads::Client.new
 
-  #items = client.shelf(@config['user_id'], 'to-read', :per_page => 100).books
-  items = [client.shelf(@config['user_id'], 'to-read', :per_page => 100).books.first]
+  items = client.shelf(@config['user_id'], 'to-read', :per_page => 100).books
+  #items = [client.shelf(@config['user_id'], 'to-read', :per_page => 100).books.first]
   return items.map do |entry| 
     title = entry.book.title.strip
     author = entry.book.authors.author.name.strip
