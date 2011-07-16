@@ -41,10 +41,15 @@ def find(title, author)
 
 end
 
+def titleize(str)
+  str.downcase.gsub(/\b\w/){$&.upcase}
+end
+
 def get_locations(row)
   (row/'table.itemTable tr' ).map { |loc|
     tds = loc/'td'
-    [(tds[0]/'a').inner_html.strip, tds[2].inner_html.strip.scan(/^(\w+).*/).first.first] unless tds.empty?
+    [(tds[0]/'a').inner_html.strip.split("/").map{ |v| titleize(v) }[0..-2].join(' / '), 
+     titleize(tds[2].inner_html.strip.scan(/^(\w+).*/).first.first)] unless tds.empty?
   }.reject(&:nil?)
 end
 
