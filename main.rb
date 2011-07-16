@@ -44,7 +44,7 @@ end
 def get_locations(row)
   (row/'table.itemTable tr' ).map { |loc|
     tds = loc/'td'
-    [(tds[0]/'a').inner_html.strip, tds[2].inner_html.strip] unless tds.empty?
+    [(tds[0]/'a').inner_html.strip, tds[2].inner_html.strip.scan(/^(\w+).*/).first.first] unless tds.empty?
   }.reject(&:nil?)
 end
 
@@ -57,7 +57,8 @@ def lookup
   Goodreads.configure(@config['api_key'])
   client = Goodreads::Client.new
 
-  items = client.shelf(@config['user_id'], 'to-read', :per_page => 100).books
+  #items = client.shelf(@config['user_id'], 'to-read', :per_page => 100).books
+  items = [client.shelf(@config['user_id'], 'to-read', :per_page => 100).books.first]
   return items.map do |entry| 
     title = entry.book.title.strip
     author = entry.book.authors.author.name.strip
@@ -72,7 +73,7 @@ def lookup
 end
 
 def write_to_cache(books)
-   File.open('cache.yml','w') { |f| f << YAML::dump(books) }
+   File.open('cache.json','w') { |f| f << books.to_json }
 end
 
 @config = YAML::load(File.open('config.yml'))
