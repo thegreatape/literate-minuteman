@@ -24,7 +24,7 @@ def find(title, author)
   res = fetch(search_url(title, author))
   body = res.body
   (Hpricot(body)/'table.browseResult').map do |row|
-    title = (row/'.dpBibTitle').inner_html
+    title = (row/'.dpBibTitle').text.strip.gsub(/\s\s+/, ' ')
 
     more_links = (row/'.ThresholdContainer a')
     ajax_re = /return tapestry.linkOnClick\(this.href,/
