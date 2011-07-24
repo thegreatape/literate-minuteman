@@ -1,24 +1,37 @@
 !!!
 %html
   %head
+    %title Literate Minuteman
     %script{:src => 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'}
     %script{:src => '/javascript/home.js'}
     %link{:href => '/style.css', :rel => 'stylesheet'}
   %body
-    - books.each do |book|
-      .book
-        %h2= book[:title]
-      - results = book[:results]
-      - unless results.empty?
-        %p 
-          Found #{results.length} possible matches. 
-        %ul.results
-          - results.each do |r|
-            %li
-              = r[:title]
-              %a{:href => '', :class => 'show'} Show
-              %ul.locations
-                - r[:locations].each do |branch, status|
-                  %li #{branch} : #{status}
-      - else
-        No results found :-(
+    #wrap
+      %h1 Literate Minuteman
+      - books.each do |book|
+        .book
+          %h2= book[:title]
+          - results = book[:results]
+          - unless results.empty?
+            %p.matches
+              Found #{results.length} possible matches. 
+            %ul.results
+              - results.each do |r|
+                - available =  r[:locations].select {|k,v| v == 'Available'}
+                - out = r[:locations].select {|k,v| v == 'Out'}
+                %li.result
+                  .title.cell= r[:title]
+                  - unless available.empty?
+                    .available.locations.cell
+                      Available at: 
+                      %ul
+                        - available.each do |branch, status|
+                          %li #{branch} 
+                  - unless out.empty?
+                    .out.locations.cell
+                      Out at:
+                      %ul
+                        - out.each do |branch, status|
+                          %li #{branch} 
+          - else
+            %p.matches No results found :-(

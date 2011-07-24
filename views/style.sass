@@ -1,2 +1,91 @@
-.locations 
-  display: none
+$bg: #D1DBBD
+$fg:  #FCFFF5
+$light: #91AA9D
+$medium: #3E606F
+$dark: #193441
+
+body
+  background: $bg
+  font:
+    face: Georgia
+    size: 16px
+ul
+  padding-left: 0px
+  li 
+    list-style-type: none
+  
+h1 
+  font-size: 48px
+  text-align: center
+  background: $dark
+  color: $fg
+  -webkit-border-radius: 3px
+h2
+  margin: 0px
+  font-size: 36px
+  text-align: center
+h3 
+  font-size: 24px
+  text-align: center
+h4
+  font-size: 21px
+  text-align: center
+h5 
+  font-size: 18px
+  text-align: center
+
+.results
+  .title 
+    width: 200px
+    font-weight: bold
+  li.result
+    clear: both
+    border-top: 1px dotted $dark 
+    padding-top: 10px 
+    margin-bottom: 10px
+    overflow: auto
+  .cell
+    padding-right: 5px
+    width: 200px
+    float: left
+    display: inline
+  .available
+    width: 275px
+  .out
+    width: 150px
+
+.locations
+  ul
+    li
+      font-size: 14px
+      display: inline-block 
+      background: #669
+      padding: 4px
+      -webkit-border-radius: 5px
+      margin-top: 5px
+.out 
+  ul
+    li
+      font:
+        style: italic
+      background: #aab
+      color: #557
+.book
+  clear: both
+  overflow: auto
+  -webkit-border-radius: 3px
+  background: $fg
+  padding:
+    top: 10px
+    bottom: 10px
+    left: 20px
+    right: 20px
+  margin:
+    bottom: 10px
+  .matches
+    text-align: center
+
+
+#wrap
+  width: 700px
+  margin: 0 auto
