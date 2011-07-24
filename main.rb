@@ -23,7 +23,7 @@ end
 def find(title, author) 
   res = fetch(search_url(title, author))
   body = res.body
-  (Hpricot(body)/'table.browseResult').map do |row|
+  (Hpricot(body)/'table.browseResult').map { |row|
     title = (row/'.dpBibTitle').text.strip.gsub(/\s\s+/, ' ')
 
     more_links = (row/'.ThresholdContainer a')
@@ -36,8 +36,8 @@ def find(title, author)
       locations = get_locations(row).flatten
     end
     
-    {:title => title, :locations => Hash[*locations]} 
-  end
+    {:title => title, :locations => Hash[*locations]} unless locations.empty?
+  }.reject(&:nil?)
 
 end
 
@@ -68,7 +68,7 @@ def lookup
     title = entry.book.title.strip
     author = entry.book.authors.author.name.strip
     puts "checking #{title} / #{author} ..."
-    results = find(title, author)
+    results = find(title, author) 
     puts "Found #{results.length} possible candidates\n---"
     {:title => title,
      :author => author,

@@ -6,19 +6,19 @@
     %link{:href => '/style.css', :rel => 'stylesheet'}
   %body
     - books.each do |book|
+      .book
+        %h2= book[:title]
       - results = book[:results]
       - unless results.empty?
-        .book
-          %h2= book[:title]
-          %p 
-            Found #{results.length} possible matches. 
-          %ul.results
-            - results.each do |r|
-              %li
-                = r[:title]
-                %a{:href => '', :class => 'show'} Show
-                %ul.locations
-                  - r[:locations].each do |branch, status|
-                    %li #{branch} : #{status}
+        %p 
+          Found #{results.length} possible matches. 
+        %ul.results
+          - results.each do |r|
+            %li
+              = r[:title]
+              %a{:href => '', :class => 'show'} Show
+              %ul.locations
+                - r[:locations].each do |branch, status|
+                  %li #{branch} : #{status}
       - else
-        No results found for #{book.title} :-(
+        No results found :-(
