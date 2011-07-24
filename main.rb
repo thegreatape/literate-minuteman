@@ -78,7 +78,7 @@ def lookup
 end
 
 def write_to_cache(books)
-   File.open('cache.json','w') { |f| f << books.to_json }
+   File.open('cache.yml','w') { |f| f << YAML::dump(books) }
 end
 
 @config = YAML::load(File.open('config.yml'))
