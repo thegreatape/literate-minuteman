@@ -54,7 +54,8 @@ def get_locations(row)
 end
 
 def search_url(title, author)
-  title = CGI::escape("#{title} / #{author}")
+  title.gsub!(/\(.*\)/,'')
+  title = CGI::escape("#{title} #{author}")
   "http://find.minlib.net/iii/encore/search/C%7CS#{title}%7COrightresult%7CU1?lang=eng&suite=pearl"
 end
 
