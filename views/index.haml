@@ -8,6 +8,10 @@
   %body
     #wrap
       %h1 Literate Minuteman
+      %select#locations
+        %option Filter by branch...
+        - locations.each do |loc|
+          %option{:value => "/branch/#{loc.gsub(/\s*\/\s*/,'-').downcase}"}= loc
       - books.each do |book|
         .book
           %h2= book[:title]
