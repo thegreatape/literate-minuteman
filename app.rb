@@ -20,25 +20,34 @@ def locations(books)
   set
 end
 
+def build_results(books, branch=nil)
+  locs = locations(books)
+  if branch
+    books = books.map do |b| 
+      b[:results] = b[:results].select do |r|
+        locations = r[:locations].select {|name, avail| avail == "Available"}
+        locations = locations.map {|l| l[0].gsub(/\s*\/\s*/, '-').downcase }
+        locations.member? branch
+      end
+      b
+    end
+  end
+  no_results, books = books.partition {|b| b[:results].empty?}
+
+  {:books => books, 
+   :no_results => no_results,
+   :locations => locations(books),
+   :branch => branch}
+end
+
 get '/style.css' do
   sass :style
 end
 
 get '/branch/:branch' do |branch|
-  books = read_from_cache
-  locs = locations(books)
-  books = books.map do |b| 
-    b[:results] = b[:results].select do |r|
-      locations = r[:locations].select {|name, avail| avail == "Available"}
-      locations = locations.map {|l| l[0].gsub(/\s*\/\s*/, '-').downcase }
-      locations.member? branch
-    end
-    b
-  end
-  haml :index, :locals => {:books => books, :locations => locs}
+  haml :index, :locals => build_results(read_from_cache, branch) 
 end
 
 get '/' do
-  books = read_from_cache
-  haml :index, :locals => {:books => read_from_cache, :locations => locations(books)}
+  haml :index, :locals => build_results(read_from_cache) 
 end
