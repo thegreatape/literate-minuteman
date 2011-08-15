@@ -36,7 +36,7 @@ def build_results(books, branch=nil)
 
   {:books => books, 
    :no_results => no_results,
-   :locations => locations(books),
+   :locations => locs,
    :branch => branch}
 end
 
