@@ -1,17 +1,17 @@
+ENV['RACK_ENV'] = 'test'
+ENV['REDIS_URL'] = 'redis://127.0.0.1:6379/1'
+
 require 'app'
-require 'sinatra/redis'
 require 'test/unit'
 require 'rack/test'
 
-ENV['RACK_ENV'] = 'test'
-ENV['REDIS_URL'] = 'redis://127.0.0.1:6379/minuteman-test'
-
 module RedisTest 
   def setup
+    uri = URI(ENV['REDIS_URL']) 
     @redis = Redis.new(
-      :host => '127.0.0.1',
-      :port => '6379',
-      :db => 'minuteman-test'
+      :host => uri.host,
+      :port => uri.port, 
+      :db => uri.path[1..-1] 
     )
   end
 

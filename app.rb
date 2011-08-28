@@ -8,7 +8,7 @@ require 'set'
 require 'bcrypt'
 require 'pp'
 
-set :redis, 'redis://127.0.0.1:6379/minuteman-test' 
+set :redis, ENV['REDIS_URL'] || 'redis://127.0.0.1:6379/0' 
 
 def signup(username, password)
   redis.hset("user:#{username}", 'username', username)
