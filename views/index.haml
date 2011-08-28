@@ -5,15 +5,18 @@
     %script{:src => 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'}
     %script{:src => '/javascript/home.js'}
     %link{:href => '/style.css', :rel => 'stylesheet'}
-  %body
+  %body{:class => branch ? 'branch' : 'main'}
     #wrap
       %h1 Literate Minuteman
       .book
-        Pick a branch to filter by:
-        %select#locations
-          - locations.each do |loc|
-            - b = loc.gsub(/\s*\/\s*/,'-').downcase
-            %option{:value => "/branch/#{b}", :selected => (branch == b) }= loc
+        - at = branch ? "available now at <b>#{branch}</b>" : "available system-wide"
+        %p Showing books from your to-read list #{at}. 
+        %p
+          Pick a branch to filter by:
+          %select#locations
+            - locations.each do |loc|
+              - b = loc.gsub(/\s*\/\s*/,'-').downcase
+              %option{:value => b.empty? ? "/" : "/branch/#{b}", :selected => (branch == b) }= loc
       - unless no_results.empty?
         .book.no-results
           %h2 Didn't Find These Books :-(
@@ -31,16 +34,17 @@
               - available =  r[:locations].select {|k,v| v == 'Available'}
               - out = r[:locations].select {|k,v| v == 'Out'}
               %li.result
-                .title.cell= r[:title]
-                - unless available.empty?
-                  .available.locations.cell
-                    Available at: 
-                    %ul
-                      - available.each do |branch, status|
-                        %li #{branch} 
-                - unless out.empty?
-                  .out.locations.cell
-                    Out at:
-                    %ul
-                      - out.each do |branch, status|
-                        %li #{branch} 
+                .title.cell= r[:title] 
+                - if branch.nil? || branch.empty? 
+                  - unless available.empty?
+                    .available.locations.cell
+                      Available at: 
+                      %ul
+                        - available.each do |loc, status|
+                          %li #{loc} 
+                  - unless out.empty?
+                    .out.locations.cell
+                      Out at:
+                      %ul
+                        - out.each do |loc, status|
+                          %li #{loc} 
