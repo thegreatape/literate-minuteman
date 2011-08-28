@@ -1,10 +1,29 @@
 require 'rubygems'
 require 'sinatra'
+require 'sinatra/redis'
 require 'haml'
 require 'yaml'
 require 'sass'
 require 'set'
+require 'bcrypt'
 require 'pp'
+
+set :redis, 'redis://127.0.0.1:6379/minuteman-test' 
+
+def signup(username, password)
+  redis.hset("user:#{username}", 'username', username)
+  redis.hmset("user:#{username}", 'password', BCrypt::Password.create(password))
+  {'username' => username}
+end
+
+def authenticate(username, password)
+  user = redis.hgetall "user:#{username}"
+  unless user.empty?
+    if BCrypt::Password.new(user['password']) == password
+      {'username' => user['username']} 
+    end
+  end
+end
 
 def read_from_cache
    File.exists?('cache.yml') ?  YAML::load(IO.read('cache.yml')) : {}
