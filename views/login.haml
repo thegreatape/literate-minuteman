@@ -1,0 +1,9 @@
+%h1 Literate Minuteman
+.book.login
+  %h2 Login
+  %form{:method => 'POST'}
+    %label{:for => 'username'} Username:
+    %input{:name => 'username'}
+    %label{:for => 'password'} Password:
+    %input{:name => 'password', :type => 'password'}
+    %input{:type => 'submit', :value => 'Login'}

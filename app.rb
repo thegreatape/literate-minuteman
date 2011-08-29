@@ -67,6 +67,10 @@ get '/branch/:branch' do |branch|
   haml :index, :locals => build_results(read_from_cache, branch) 
 end
 
+get '/login' do
+  haml :login
+end
+
 get '/' do
   haml :index, :locals => build_results(read_from_cache) 
 end

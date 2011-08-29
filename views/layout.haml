@@ -5,6 +5,7 @@
     %script{:src => 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'}
     %script{:src => '/javascript/home.js'}
     %link{:href => '/style.css', :rel => 'stylesheet'}
+  - branch ||= nil
   %body{:class => branch ? 'branch' : 'main'}
     #wrap
       = yield

@@ -54,4 +54,14 @@ class AppTest < Test::Unit::TestCase
     assert_nil authenticate('not-bob', 'not-password')
   end
 
+  def test_get_login
+    get '/login'
+    assert last_response.ok?
+  end
+
+  def test_post_login
+    signup('bob', 'password')
+    post '/login', :username => 'bob', :password => 'password')
+  end
+
 end
