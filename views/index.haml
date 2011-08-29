@@ -1,50 +1,41 @@
-!!!
-%html
-  %head
-    %title Literate Minuteman
-    %script{:src => 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'}
-    %script{:src => '/javascript/home.js'}
-    %link{:href => '/style.css', :rel => 'stylesheet'}
-  %body{:class => branch ? 'branch' : 'main'}
-    #wrap
-      %h1 Literate Minuteman
-      .book
-        - at = branch ? "available now at <b>#{branch}</b>" : "available system-wide"
-        %p Showing books from your to-read list #{at}. 
-        %p
-          Pick a branch to filter by:
-          %select#locations
-            - locations.each do |loc|
-              - b = loc.gsub(/\s*\/\s*/,'-').downcase
-              %option{:value => b.empty? ? "/" : "/branch/#{b}", :selected => (branch == b) }= loc
-      - unless no_results.empty?
-        .book.no-results
-          %h2 Didn't Find These Books :-(
-          %ul 
-            - no_results.each do |book|
-              %li= book[:title]
-      - books.each do |book|
-        .book
-          %h2= book[:title]
-          - results = book[:results]
-          %p.matches
-            Found #{results.length} possible matches. 
-          %ul.results
-            - results.each do |r|
-              - available =  r[:locations].select {|k,v| v == 'Available'}
-              - out = r[:locations].select {|k,v| v == 'Out'}
-              %li.result
-                .title.cell= r[:title] 
-                - if branch.nil? || branch.empty? 
-                  - unless available.empty?
-                    .available.locations.cell
-                      Available at: 
-                      %ul
-                        - available.each do |loc, status|
-                          %li #{loc} 
-                  - unless out.empty?
-                    .out.locations.cell
-                      Out at:
-                      %ul
-                        - out.each do |loc, status|
-                          %li #{loc} 
+%h1 Literate Minuteman
+.book
+  - at = branch ? "available now at <b>#{branch}</b>" : "available system-wide"
+  %p Showing books from your to-read list #{at}. 
+  %p
+    Pick a branch to filter by:
+    %select#locations
+      - locations.each do |loc|
+        - b = loc.gsub(/\s*\/\s*/,'-').downcase
+        %option{:value => b.empty? ? "/" : "/branch/#{b}", :selected => (branch == b) }= loc
+- unless no_results.empty?
+  .book.no-results
+    %h2 Didn't Find These Books :-(
+    %ul 
+      - no_results.each do |book|
+        %li= book[:title]
+- books.each do |book|
+  .book
+    %h2= book[:title]
+    - results = book[:results]
+    %p.matches
+      Found #{results.length} possible matches. 
+    %ul.results
+      - results.each do |r|
+        - available =  r[:locations].select {|k,v| v == 'Available'}
+        - out = r[:locations].select {|k,v| v == 'Out'}
+        %li.result
+          .title.cell= r[:title] 
+          - if branch.nil? || branch.empty? 
+            - unless available.empty?
+              .available.locations.cell
+                Available at: 
+                %ul
+                  - available.each do |loc, status|
+                    %li #{loc} 
+            - unless out.empty?
+              .out.locations.cell
+                Out at:
+                %ul
+                  - out.each do |loc, status|
+                    %li #{loc} 
