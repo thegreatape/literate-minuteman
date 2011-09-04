@@ -9,6 +9,7 @@ require 'bcrypt'
 require 'pp'
 
 set :redis, ENV['REDIS_URL'] || 'redis://127.0.0.1:6379/0' 
+enable :sessions
 
 def signup(username, password)
   redis.hset("user:#{username}", 'username', username)
@@ -68,9 +69,24 @@ get '/branch/:branch' do |branch|
 end
 
 get '/login' do
-  haml :login
+  haml :login, :locals => {:username => '', :errors => []}
+end
+
+post '/login' do
+  user = authenticate(params[:username], params[:password])
+  if user
+    session[:username] = user['username'] 
+    redirect '/' 
+  else
+    haml :login, :locals => {:username => params[:username], 
+                             :errors => ['Username and password combination not found.']}
+  end
 end
 
 get '/' do
-  haml :index, :locals => build_results(read_from_cache) 
+  if session[:username]
+    haml :index, :locals => build_results(read_from_cache) 
+  else
+    haml :intro
+  end
 end

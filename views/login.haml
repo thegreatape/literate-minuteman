@@ -1,9 +1,12 @@
 %h1 Literate Minuteman
 .book.login
   %h2 Login
+  - if errors.any?
+    - errors.each do |e|
+      .error= e
   %form{:method => 'POST'}
     %label{:for => 'username'} Username:
-    %input{:name => 'username'}
+    %input{:name => 'username', :value => username }
     %label{:for => 'password'} Password:
     %input{:name => 'password', :type => 'password'}
     %input{:type => 'submit', :value => 'Login'}

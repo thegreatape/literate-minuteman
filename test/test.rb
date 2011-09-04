@@ -61,7 +61,19 @@ class AppTest < Test::Unit::TestCase
 
   def test_post_login
     signup('bob', 'password')
-    post '/login', :username => 'bob', :password => 'password')
+    post '/login', :username => 'bob', :password => 'password'
+    assert last_response.redirect?
+    assert_equal '/', URI.parse(last_response.location).path
+  end
+
+  def test_post_login_bad_credentials
+    signup('bob', 'sldfkjsdlkfj')
+    post '/login', :username => 'bob', :password => 'password'
+    assert last_response.ok?
+    assert /Username and password combination not found/ =~ last_response.body
+  end
+
+  def test_get_signup
   end
 
 end
