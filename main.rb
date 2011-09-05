@@ -1,11 +1,14 @@
 require 'rubygems'
-require 'goodreads'
 require 'open-uri'
 require 'net/http'
 require 'uri'
 require 'hpricot'
 require 'cgi'
 require 'pp'
+
+require 'bundler'
+Bundler.setup
+require 'goodreads'
 
 @cookies = ''
 def fetch(uri)
