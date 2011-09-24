@@ -16,8 +16,8 @@ require 'goodreads'
 set :redis, ENV['REDIS_URL'] || 'redis://127.0.0.1:6379/0' 
 enable :sessions
 
-@@config = YAML::load(IO.read('config.yml'))
-Goodreads.configure(@@config['api_key'])
+@@conf = YAML::load(IO.read('config.yml'))
+Goodreads::Client.configure({ :api_key => @@conf['api_key'] })
 
 def signup(username, password)
   redis.hset("user:#{username}", 'username', username)
@@ -90,10 +90,10 @@ post '/signup' do
    
   if errors.empty?
     signup(username, password)
-    consumer = OAuth::Consumer.new(@@config['api_key'], @@config['secret_key'], :site => 'http://www.goodreads.com')
+    consumer = OAuth::Consumer.new(@@conf['api_key'], @@conf['secret_key'], :site => 'http://www.goodreads.com')
     request_token = consumer.get_request_token
     redis.hset("oauth:#{request_token.token}", 'username', username)
-    redis.hset("oauth:#{request_token.token}", 'secret', request_token.secret)
+    redis.hset("oauth:#{request_token.token}", 'token', Marshal.dump(request_token))
     redirect request_token.authorize_url
   else
     haml :signup, :locals => {:errors => errors}
@@ -102,15 +102,13 @@ end
 
 get '/oauth-callback' do
   data = redis.hgetall("oauth:#{params[:oauth_token]}")
-  consumer = OAuth::Consumer.new(@@config['api_key'], @@config['secret_key'], :site => 'http://www.goodreads.com')
-  request_token = OAuth::RequestToken.new(consumer, params[:oauth_token], data['secret'])
-  access_token = request_token.get_access_token 
+  request_token = Marshal.load(data['token'])
+  access_token = request_token.get_access_token
   redis.hset("user:#{data['username']}", 'oauth_access_token', access_token.token)  
   redis.hset("user:#{data['username']}", 'oauth_access_secret', access_token.secret)  
-
-  #client = Goodreads::Client.new params[:oauth_token]
-  #redis.hset("user:#{data['username']}", 'goodreads_id', goodreads_id)  
-  #goodreads_id = client 
+  client = Goodreads::Client.new(access_token)
+  goodreads_id = client.user_id
+  redis.hset("user:#{data['username']}", 'goodreads_id', goodreads_id)  
   session[:username] = data['username'] 
   redirect '/'
 end
