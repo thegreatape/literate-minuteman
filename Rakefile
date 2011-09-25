@@ -1,3 +1,3 @@
-require 'main'
+require 'lookup'
 require 'resque/tasks'
 
