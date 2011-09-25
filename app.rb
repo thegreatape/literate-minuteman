@@ -41,6 +41,7 @@ end
 def locations(books)
   set = SortedSet.new
   books.each do |book|
+    p book
     book[:results].each do |result|
       set.merge result[:locations].keys
     end
