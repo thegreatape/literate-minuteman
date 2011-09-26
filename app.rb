@@ -29,19 +29,18 @@ def authenticate(username, password)
   user = redis.hgetall "user:#{username}"
   unless user.empty?
     if BCrypt::Password.new(user['password']) == password
-      {'username' => user['username']} 
+      {:username => user['username'], :goodreads_id => user['goodreads_id']} 
     end
   end
 end
 
 def read_from_cache
-   File.exists?('cache.yml') ?  YAML::load(IO.read('cache.yml')) : {}
+  YAML.load(redis.hget("books:#{session[:goodreads_id]}", 'results')) || []
 end
 
 def locations(books)
   set = SortedSet.new
   books.each do |book|
-    p book
     book[:results].each do |result|
       set.merge result[:locations].keys
     end
@@ -111,6 +110,7 @@ get '/oauth-callback' do
   goodreads_id = client.user_id
   redis.hset("user:#{data['username']}", 'goodreads_id', goodreads_id)  
   session[:username] = data['username'] 
+  session[:goodreads_id] = goodreads_id
   redirect '/'
 end
 
@@ -121,7 +121,7 @@ end
 post '/login' do
   user = authenticate(params[:username], params[:password])
   if user
-    session[:username] = user['username'] 
+    session.merge!(user)
     redirect '/' 
   else
     haml :login, :locals => {:username => params[:username], 

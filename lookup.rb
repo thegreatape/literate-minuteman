@@ -21,7 +21,7 @@ end
 
 class ShelfLookup
   
-  def initialize(user_id, api_key)
+ def initialize(user_id, api_key)
     @user_id = user_id
     @api_key = api_key
     @cookies = ''
@@ -98,6 +98,8 @@ class ShelfLookup
   end
 
   def write_to_cache(books)
-     File.open('cache.yml','w') { |f| f << YAML::dump(books) }
+    client = Redis.new
+    client.hset("books:#{@user_id}", 'results', YAML::dump(books))
+    client.hset("books:#{@user_id}", 'last_updated', Time.now.to_s)
   end
 end
