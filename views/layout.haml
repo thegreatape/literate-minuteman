@@ -9,3 +9,12 @@
   %body{:class => branch ? 'branch' : 'main'}
     #wrap
       = yield
+      .book
+        Created by 
+        %a{:href => 'http://zen-hacking.com/'} Thomas Mayfield
+        |
+        Code on 
+        %a{:href => 'https://github.com/thegreatape/literate-minuteman'} Github
+        | 
+        It's effing broken? 
+        %a{:href => 'https://github.com/thegreatape/literate-minuteman/issues'} File a bug
