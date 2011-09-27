@@ -9,5 +9,7 @@ gem 'hpricot', '>=0.8.4'
 gem 'goodreads', :git => 'git://github.com/thegreatape/goodreads.git', :ref => '6f1b374'
 gem 'oauth', '>=0.4.5'
 gem 'resque'
+gem 'resque-scheduler'
 gem 'SystemTimer'
 gem 'rack-test'
+

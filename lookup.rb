@@ -10,6 +10,19 @@ require 'bundler'
 Bundler.setup
 require 'goodreads'
 
+class LookupAllUsers
+  @queue = :lookup
+
+  def self.perform
+    client = Redis.new
+    client.keys('user:*').each do |key|
+      user = client.hgetall(key)
+      puts "enqueuing #{user['username']} - #{user['goodreads_id']}"
+      Resque.enqueue(ShelfLookupWorker, user['goodreads_id'])
+    end
+  end
+end
+
 class ShelfLookupWorker
   @queue = :lookup
 
