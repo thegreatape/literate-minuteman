@@ -120,8 +120,9 @@ end
 
 post '/login' do
   user = authenticate(params[:username], params[:password])
+  pp user
   if user
-    session.merge!(user)
+    user.each {|k,v| session[k] = v}
     redirect '/' 
   else
     haml :login, :locals => {:username => params[:username], 
