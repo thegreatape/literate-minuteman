@@ -135,8 +135,14 @@ post '/login' do
 end
 
 get '/' do
+  pp session
   if session[:username]
-    haml :index, :locals => build_results(read_from_cache) 
+    cache = read_from_cache
+    if cache
+      haml :index, :locals => build_results(cache) 
+    else
+      haml :wait
+    end
   else
     haml :intro
   end
