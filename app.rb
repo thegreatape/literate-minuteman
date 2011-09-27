@@ -8,6 +8,8 @@ require 'set'
 require 'bcrypt'
 require 'pp'
 require 'oauth'
+require 'resque'
+require 'lookup'
 
 require 'bundler'
 Bundler.setup
@@ -35,7 +37,8 @@ def authenticate(username, password)
 end
 
 def read_from_cache
-  YAML.load(redis.hget("books:#{session[:goodreads_id]}", 'results')) || []
+  books = redis.hget("books:#{session[:goodreads_id]}", 'results')
+  YAML.load(books) if books
 end
 
 def locations(books)
@@ -111,6 +114,7 @@ get '/oauth-callback' do
   redis.hset("user:#{data['username']}", 'goodreads_id', goodreads_id)  
   session[:username] = data['username'] 
   session[:goodreads_id] = goodreads_id
+  Resque.enqueue(ShelfLookupWorker, goodreads_id)
   redirect '/'
 end
 
