@@ -141,7 +141,6 @@ post '/login' do
 end
 
 get '/' do
-  pp session
   if session[:username]
     cache = read_from_cache
     unless cache.empty?
