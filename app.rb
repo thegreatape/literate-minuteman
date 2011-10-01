@@ -15,6 +15,9 @@ require 'bundler'
 Bundler.setup
 require 'goodreads'
 
+require 'padrino-helpers'
+Sinatra.register Padrino::Helpers
+
 set :redis, ENV['REDIS_URL'] || 'redis://127.0.0.1:6379/0' 
 enable :sessions
 
@@ -37,8 +40,9 @@ def authenticate(username, password)
 end
 
 def read_from_cache
-  books = redis.hget("books:#{session[:goodreads_id]}", 'results')
-  YAML.load(books) if books
+  books = redis.hgetall("books:#{session[:goodreads_id]}")
+  books['results'] = YAML.load(books['results']) if books['results']
+  books
 end
 
 def locations(books)
@@ -51,7 +55,8 @@ def locations(books)
   set
 end
 
-def build_results(books, branch=nil)
+def build_results(data, branch=nil)
+  books = data['results']
   locs = locations(books)
   if branch
     books = books.map do |b| 
@@ -66,6 +71,7 @@ def build_results(books, branch=nil)
   no_results, books = books.partition {|b| b[:results].empty?}
 
   {:books => books, 
+   :last_updated => data['last_updated'],
    :no_results => no_results,
    :locations => locs,
    :branch => branch}
@@ -138,7 +144,7 @@ get '/' do
   pp session
   if session[:username]
     cache = read_from_cache
-    if cache
+    unless cache.empty?
       haml :index, :locals => build_results(cache) 
     else
       haml :wait

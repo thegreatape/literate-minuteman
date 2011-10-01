@@ -12,4 +12,5 @@ gem 'resque'
 gem 'resque-scheduler'
 gem 'SystemTimer'
 gem 'rack-test'
+gem 'padrino-helpers'
 

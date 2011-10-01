@@ -1,7 +1,7 @@
 %h1 Literate Minuteman
 .book
   - at = branch ? "available now at <b>#{branch}</b>" : "available system-wide"
-  %p Showing books from your to-read list #{at}. 
+  %p Showing books from your to-read list #{at}. This list was last updated by the gruff-but-friendly robot army #{time_ago_in_words(Time.parse(last_updated))} ago.
   %p
     Pick a branch to filter by:
     %select#locations
