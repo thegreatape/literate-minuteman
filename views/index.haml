@@ -12,27 +12,26 @@
   .book
     %h2= book[:title]
     - results = book[:results]
+    - elsewhere = book[:elsewhere]
     %p.matches
-      Found #{results.length} possible matches. 
+      = succeed "." do 
+        Found #{results.length} possible matches #{branch.nil? ? "" : "at #{branch}"}
+        - unless elsewhere.nil? || elsewhere.empty?
+          and #{elsewhere.length}
+          %a.elsewhere-toggle{:href=>"#"} elsewhere 
+          in the system
     %ul.results
-      - results.each do |r|
-        - available =  r[:locations].select {|k,v| v == 'Available'}
-        - out = r[:locations].select {|k,v| v == 'Out'}
-        %li.result
-          .title.cell= r[:title] 
-          - if branch.nil? || branch.empty? 
-            - unless available.empty?
-              .available.locations.cell
-                Available at: 
-                %ul
-                  - available.each do |loc, status|
-                    %li #{loc} 
-            - unless out.empty?
-              .out.locations.cell
-                Out at:
-                %ul
-                  - out.each do |loc, status|
-                    %li #{loc} 
+      = haml :list, :locals => {:results => results, :branch => branch}
+      - unless elsewhere.nil? || elsewhere.empty?
+        %ul.elsewhere
+          %h4 At Other Branches:
+          = haml :list, :locals => {:results => elsewhere, :branch => nil}
+- unless only_elsewhere.empty?
+  .book.no-results
+    %h2 Found these books at other branches
+    %ul 
+      - only_elsewhere.each do |book|
+        %li= book[:title]
 - unless no_results.empty?
   .book.no-results
     %h2 Didn't Find These Books :-(

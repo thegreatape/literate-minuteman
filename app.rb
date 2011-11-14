@@ -60,7 +60,7 @@ def build_results(data, branch=nil)
   locs = locations(books)
   if branch
     books = books.map do |b| 
-      b[:results] = b[:results].select do |r|
+      b[:results], b[:elsewhere] = b[:results].partition do |r|
         locations = r[:locations].select {|name, avail| avail == "Available"}
         locations = locations.map {|l| l[0].gsub(/\s*\/\s*/, '-').downcase }
         locations.member? branch
@@ -68,11 +68,14 @@ def build_results(data, branch=nil)
       b
     end
   end
-  no_results, books = books.partition {|b| b[:results].empty?}
+
+  no_results, books = books.partition {|b| b[:results].empty? && (b[:elsewhere] || []).empty?}
+  only_elsewhere, books = books.partition {|b| b[:results].empty? }
 
   {:books => books, 
    :last_updated => data['last_updated'],
    :no_results => no_results,
+   :only_elsewhere => only_elsewhere,
    :locations => locs,
    :branch => branch}
 end

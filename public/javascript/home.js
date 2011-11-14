@@ -5,4 +5,10 @@ $(document).ready(function(){
       window.location = url;
     }
   });
+
+  $('.elsewhere-toggle').click(function(e){
+    e.preventDefault();
+    $(e.target).closest('.book').find('.elsewhere').toggle()
+
+  });
 });
