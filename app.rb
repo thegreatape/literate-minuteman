@@ -57,13 +57,16 @@ end
 
 def build_results(data, branch=nil)
   books = data['results']
-  locs = locations(books)
-  if branch
+  enabled = get_enabled_branches
+  enabled_keys = enabled.map {|e| e.gsub(/\s*\/\s*/, '-').downcase }
+  locs = enabled || locations(books)
+
+  unless !branch && enabled.empty?
     books = books.map do |b| 
       b[:results], b[:elsewhere] = b[:results].partition do |r|
-        locations = r[:locations].select {|name, avail| avail == "Available"}
+        locations = r[:locations].select { |name, avail| (avail == "Available") }
         locations = locations.map {|l| l[0].gsub(/\s*\/\s*/, '-').downcase }
-        locations.member? branch
+        (locations.member? branch) || (enabled_keys.any? {|k| locations.member? k })
       end
       b
     end
@@ -77,7 +80,18 @@ def build_results(data, branch=nil)
    :no_results => no_results,
    :only_elsewhere => only_elsewhere,
    :locations => locs,
+   :enabled => enabled,
    :branch => branch}
+end
+
+def save_enabled_branches(branches)
+  username = session[:username]
+  redis.del("user:#{username}:branches")
+  branches.each {|b| redis.sadd("user:#{username}:branches", b)}
+end
+
+def get_enabled_branches
+  redis.smembers("user:#{session[:username]}:branches")
 end
 
 get '/style.css' do
@@ -86,6 +100,17 @@ end
 
 get '/branch/:branch' do |branch|
   haml :index, :locals => build_results(read_from_cache, branch) 
+end
+
+get '/branches' do
+  branches = locations(read_from_cache['results'])
+  enabled = get_enabled_branches
+  haml :branches, :locals => {:branches => branches, :enabled => enabled}
+end
+
+post '/branches' do
+  save_enabled_branches(params.keys)
+  redirect '/branches' 
 end
 
 get '/signup' do 
