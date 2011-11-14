@@ -61,12 +61,12 @@ def build_results(data, branch=nil)
   enabled_keys = enabled.map {|e| e.gsub(/\s*\/\s*/, '-').downcase }
   locs = locations(books)
 
-  unless !branch && enabled.empty?
+  unless !branch 
     books = books.map do |b| 
       b[:results], b[:elsewhere] = b[:results].partition do |r|
         locations = r[:locations].select { |name, avail| (avail == "Available") }
         locations = locations.map {|l| l[0].gsub(/\s*\/\s*/, '-').downcase }
-        (locations.member? branch) || (enabled_keys.any? {|k| locations.member? k })
+        (locations.member? branch) 
       end
       b
     end
@@ -77,11 +77,12 @@ def build_results(data, branch=nil)
 
   unless enabled.empty?
     books.each do |b|
+      b[:elsewhere] ||= []
       b[:results].each do |r|
         r[:locations].each do |name, avail| 
           unless enabled.member? name
             r[:locations].delete name
-            elsewhere = b[:elsewhere].first {|i| i[:title] == r[:title]} 
+            elsewhere = b[:elsewhere].find {|i| i[:title] == r[:title]} 
             if elsewhere
               elsewhere[:locations][name] = avail
             else
@@ -91,6 +92,9 @@ def build_results(data, branch=nil)
         end
       end
     end
+  end
+  books.each do |b|
+    b[:results].delete_if {|r| r[:locations].empty? }
   end
 
   {:books => books, 
