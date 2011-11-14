@@ -59,7 +59,7 @@ def build_results(data, branch=nil)
   books = data['results']
   enabled = get_enabled_branches
   enabled_keys = enabled.map {|e| e.gsub(/\s*\/\s*/, '-').downcase }
-  locs = enabled || locations(books)
+  locs = locations(books)
 
   unless !branch && enabled.empty?
     books = books.map do |b| 
@@ -74,6 +74,24 @@ def build_results(data, branch=nil)
 
   no_results, books = books.partition {|b| b[:results].empty? && (b[:elsewhere] || []).empty?}
   only_elsewhere, books = books.partition {|b| b[:results].empty? }
+
+  unless enabled.empty?
+    books.each do |b|
+      b[:results].each do |r|
+        r[:locations].each do |name, avail| 
+          unless enabled.member? name
+            r[:locations].delete name
+            elsewhere = b[:elsewhere].first {|i| i[:title] == r[:title]} 
+            if elsewhere
+              elsewhere[:locations][name] = avail
+            else
+              b[:elsewhere].push({:title => r[:title], :locations => {name => avail}})
+            end
+          end
+        end
+      end
+    end
+  end
 
   {:books => books, 
    :last_updated => data['last_updated'],
@@ -110,7 +128,7 @@ end
 
 post '/branches' do
   save_enabled_branches(params.keys)
-  redirect '/branches' 
+  redirect '/' 
 end
 
 get '/signup' do 
