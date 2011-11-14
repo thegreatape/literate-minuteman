@@ -8,12 +8,6 @@
       - locations.each do |loc|
         - b = loc.gsub(/\s*\/\s*/,'-').downcase
         %option{:value => b.empty? ? "/" : "/branch/#{b}", :selected => (branch == b) }= loc
-- unless no_results.empty?
-  .book.no-results
-    %h2 Didn't Find These Books :-(
-    %ul 
-      - no_results.each do |book|
-        %li= book[:title]
 - books.each do |book|
   .book
     %h2= book[:title]
@@ -39,3 +33,9 @@
                 %ul
                   - out.each do |loc, status|
                     %li #{loc} 
+- unless no_results.empty?
+  .book.no-results
+    %h2 Didn't Find These Books :-(
+    %ul 
+      - no_results.each do |book|
+        %li= book[:title]
