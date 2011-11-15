@@ -109,11 +109,11 @@ end
 def save_enabled_branches(branches)
   username = session[:username]
   redis.del("user:#{username}:branches")
-  branches.each {|b| redis.sadd("user:#{username}:branches", b)}
+  branches.each {|b| redis.sadd("branches:#{username}", b)}
 end
 
 def get_enabled_branches
-  redis.smembers("user:#{session[:username]}:branches")
+  redis.smembers("branches:#{session[:username]}")
 end
 
 get '/style.css' do
