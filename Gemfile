@@ -1,16 +1,33 @@
-source :rubygems
-gem 'sinatra', '>=1.2.6'
-gem 'sinatra-redis', '>=0.3.0'
-gem 'haml', '>=3.1.2'
-gem 'bcrypt-ruby', '>=3.0.0'
-gem 'sass', '>=3.1.7'
-gem 'json', '>=1.5.4'
-gem 'hpricot', '>=0.8.4'
-gem 'goodreads', :git => 'git://github.com/thegreatape/goodreads.git', :ref => '6f1b374'
-gem 'oauth', '>=0.4.5'
-gem 'resque'
-gem 'resque-scheduler'
-gem 'SystemTimer'
-gem 'rack-test'
-gem 'padrino-helpers'
+source 'http://rubygems.org'
+
+gem 'rails', '3.1.2'
+
+# Bundle edge Rails instead:
+# gem 'rails',     :git => 'git://github.com/rails/rails.git'
+
+gem 'sqlite3'
+
+gem 'json'
+
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails',   '~> 3.1.5.rc.2'
+  gem 'coffee-rails', '~> 3.1.1'
+  gem 'uglifier', '>= 1.0.3'
+end
+
+gem 'jquery-rails'
+
+# To use ActiveModel has_secure_password
+# gem 'bcrypt-ruby', '~> 3.0.0'
+
+# Use unicorn as the web server
+# gem 'unicorn'
+
+# Deploy with Capistrano
+# gem 'capistrano'
+
+# To use debugger
+# gem 'ruby-debug'
 
