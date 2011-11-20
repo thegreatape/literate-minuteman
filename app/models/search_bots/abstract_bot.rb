@@ -1,4 +1,4 @@
-module SeachBots
+module SearchBots
   class AbstractBot
     def initialize(user_id, api_key)
       @user_id = user_id
@@ -11,6 +11,9 @@ module SeachBots
     end
 
     def fetch(uri)
+      #puts '------'
+      #puts uri
+      #puts '------'
       headers ||= {}
       uri = URI::parse(uri)
       req = Net::HTTP::Get.new(uri.path+'?'+uri.query, {'@cookies' => @cookies})
@@ -18,7 +21,11 @@ module SeachBots
         http.request(req)
       } 
       @cookies = res['Set-Cookie'] if res['Set-Cookie']
+
+      # be nice to library servers!
       sleep 1
+      #puts res
+      #puts '------'
       return res
     end
 

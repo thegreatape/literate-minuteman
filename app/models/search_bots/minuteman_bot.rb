@@ -1,4 +1,11 @@
-module SeachBots
+require 'open-uri'
+require 'net/http'
+require 'uri'
+require 'hpricot'
+require 'cgi'
+require 'uri'
+
+module SearchBots
   class MinutemanBot < AbstractBot
 
     def find(title, author) 
@@ -26,7 +33,7 @@ module SeachBots
     def get_locations(row)
       (row/'table.itemTable tr' ).map { |loc|
         tds = loc/'td'
-        [(tds[0]/'a').inner_html.strip.split("/").map(&:titleize) }[0..-2].join(' / '), 
+        [(tds[0]/'a').inner_html.strip.split("/").map(&:titleize)[0..-2].join(' / '), 
          tds[2].inner_html.strip.scan(/^(\w+).*/).first.first.titleize] unless tds.empty?
       }.reject(&:nil?)
     end
