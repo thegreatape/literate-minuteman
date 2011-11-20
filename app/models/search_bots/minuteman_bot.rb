@@ -11,7 +11,7 @@ module SearchBots
     def find(title, author) 
       res = fetch(search_url(title, author))
       body = res.body
-      (Hpricot(body)/'table.browseResult').map { |row|
+      copies = (Hpricot(body)/'table.browseResult').map { |row|
         title = (row/'.dpBibTitle').text.strip.gsub(/\s\s+/, ' ')
 
         more_links = (row/'.ThresholdContainer a')
@@ -19,13 +19,13 @@ module SearchBots
         more_links &&= more_links[1]
         if more_links && more_links.attributes['onclick'] =~ ajax_re
           res = fetch("http://find.minlib.net/#{more_links.attributes['href']}")
-          locations = get_locations(Hpricot(res.body)).flatten
+          locations = get_locations(Hpricot(res.body))
         else 
-          locations = get_locations(row).flatten
+          locations = get_locations(row)
         end
         
-        {:title => title, :locations => Hash[*locations]} unless locations.empty?
-      }.reject(&:nil?)
+        locations.map{ |l| {:title => title, :location => l[0], :status => l[1]}}
+      }.flatten
 
     end
 

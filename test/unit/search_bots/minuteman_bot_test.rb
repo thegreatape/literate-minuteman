@@ -14,6 +14,17 @@ class MinutemanBotTest < ActiveSupport::TestCase
     bot.stubs(:fetch).with(uri).returns(response)
 
     results = bot.find("Gardens of the Moon", "Steven Erikson")
-    assert_equal 3, results.length
+    assert_equal 8, results.length
+    [["Available","Waltham"],
+     ["Available","Natick"],
+     ["Available","Wellesley"],
+     ["Available","Wellesley"],
+     ["Out","Cambridge"],
+     ["In","Needham"],
+     ["Out","Newton"],
+     ["In","Wellesley"]].each do |pair|
+      assert results.any? {|i| i[:status] == pair[0] && i[:location] == pair[1]}
+     end
+    
   end
 end
