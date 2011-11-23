@@ -21,8 +21,11 @@ group :assets do
 end
 
 group :test do
+  gem 'test-unit'
   gem 'mocha'
   gem 'hashie'
+  gem 'shoulda'
+  gem 'factory_girl_rails'
 end
 
 gem 'jquery-rails'
