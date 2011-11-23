@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   has_many :books
+  validates_uniqueness_of :username
+  validates_uniqueness_of :goodreads_id
 
   def sync_book_list(list)
     now = Time.now
