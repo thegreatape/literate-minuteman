@@ -13,7 +13,7 @@ class UserTest < ActiveSupport::TestCase
          :copies => []}
       ]
       @user = Factory(:user)
-      @user.sync_book_list @list
+      @user.sync_books @list
     end
 
     should "produce Books" do
@@ -21,12 +21,12 @@ class UserTest < ActiveSupport::TestCase
     end
 
     should "not duplicate Books" do
-      @user.sync_book_list @list
+      @user.sync_books @list
       assert_equal 2, @user.reload.books.length
     end
 
     should "delete books no longer on the list" do
-      @user.sync_book_list [@list.first]
+      @user.sync_books [@list.first]
       assert_equal 1, @user.reload.books.length
       assert_equal @list.first[:title], @user.books.first.title
     end
