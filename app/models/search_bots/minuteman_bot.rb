@@ -24,12 +24,23 @@ module SearchBots
           locations = get_locations(row)
         end
         
-        locations.map{ |l| {:title => title, :location => l[0], :status => l[1]}}
-      }.flatten
+        locations.map{ |l| {:title => title, 
+                            :location => l[0], 
+                            :status => normalize_status(l[1])}}
+      }.flatten.uniq
 
     end
 
     private
+    def normalize_status(s)
+      case s
+      when /available/i 
+        return "In"
+      else 
+        return s
+      end
+    end
+
     def get_locations(row)
       (row/'table.itemTable tr' ).map { |loc|
         tds = loc/'td'

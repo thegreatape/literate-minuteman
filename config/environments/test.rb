@@ -36,4 +36,7 @@ Minuteman::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # don't allow real http calls in test environment
+  FakeWeb.allow_net_connect = false
 end

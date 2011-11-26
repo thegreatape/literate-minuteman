@@ -1,8 +1,8 @@
 module SearchBots
   class AbstractBot
-    def initialize(user_id, api_key)
+    def initialize(user_id)
       @user_id = user_id
-      @api_key = api_key
+      @api_key = GOODREADS_API_KEY
       @cookies = ''
     end
 

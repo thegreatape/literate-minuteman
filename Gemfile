@@ -27,6 +27,7 @@ group :test do
   gem 'hashie'
   gem 'shoulda'
   gem 'factory_girl_rails'
+  gem 'fakeweb'
 end
 
 gem 'jquery-rails'
