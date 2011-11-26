@@ -1,0 +1,17 @@
+%h1 Literate Minuteman
+.book.login
+  %h2 Sign Up
+  = form_for :user, :method => 'post', :url => signup_url do |f|
+    .label-container
+      = f.label :username, "Username <span>This will be your username here on Literate Minuteman.</span>".html_safe
+    = f.text_field :username
+    .label-container
+      = f.label :password, "Password <span>Make this different than your Goodreads password</span>".html_safe
+    = f.password_field :password
+    .label-container
+      = f.label :password_confirmation, "Confirm Password"
+    = f.password_field :password_confirmation
+    .label-container
+      .spacer
+        &nbsp;
+    = f.submit 'Sign In To Goodreads With OAuth'

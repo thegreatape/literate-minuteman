@@ -1,4 +1,6 @@
 Minuteman::Application.routes.draw do
+  match 'signup' => 'users#signup', :as => :signup
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

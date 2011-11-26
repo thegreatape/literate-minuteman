@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :books
   validates_uniqueness_of :username
   validates_uniqueness_of :goodreads_id
+  validates :password, :presence => true, :length => {:minimum => 6}, :confirmation => true
 
   def sync_books(list)
     return if list.empty?

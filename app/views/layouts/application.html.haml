@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    %title Literate Minuteman
+    %script{:src => 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'}
+    %script{:src => '/javascript/home.js'}
+    = stylesheet_link_tag 'style' 
+    = csrf_meta_tags
+  - branch ||= nil
+  %body{:class => branch ? 'branch' : 'main'}
+    #wrap
+      = yield
+      .book
+        Created by 
+        %a{:href => 'http://zen-hacking.com/'} Thomas Mayfield
+        |
+        Code on 
+        %a{:href => 'https://github.com/thegreatape/literate-minuteman'} Github
+        | 
+        It's effing broken? 
+        %a{:href => 'https://github.com/thegreatape/literate-minuteman/issues'} File a bug

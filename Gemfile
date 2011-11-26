@@ -5,6 +5,7 @@ gem 'pg'
 gem 'haml'
 gem 'hpricot'
 gem 'goodreads', :git => 'file:///Users/tmayfield/Code/goodreads', :ref => '762a1487556f'
+gem 'oauth'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
