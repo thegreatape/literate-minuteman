@@ -2,6 +2,7 @@
 .book.login
   %h2 Sign Up
   = form_for :user, :method => 'post', :url => signup_url do |f|
+    = f.error_messages
     .label-container
       = f.label :username, "Username <span>This will be your username here on Literate Minuteman.</span>".html_safe
     = f.text_field :username

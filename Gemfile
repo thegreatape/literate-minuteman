@@ -6,6 +6,7 @@ gem 'haml'
 gem 'hpricot'
 gem 'goodreads', :git => 'file:///Users/tmayfield/Code/goodreads', :ref => '762a1487556f'
 gem 'oauth'
+gem 'dynamic_form'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
