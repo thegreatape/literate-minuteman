@@ -1,7 +1,7 @@
 %h1 Literate Minuteman
 .book.login
   %h2 Login
-  = form_tag :method => 'post' do |f|
+  = form_tag :method => 'post' do 
     - errors ||= []
     - if errors.any?
       .errorExplanation
