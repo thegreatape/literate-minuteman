@@ -61,4 +61,27 @@ class UsersControllerTest < ActionController::TestCase
       assert_equal 1, User.where(:email => @email).count
     end
   end
+
+  context "logging in" do
+    context "with good credentials" do
+      setup do
+        @user = Factory(:user, :password => 'hi')
+        post :login, :email => @user.email, :password => 'hi'
+      end
+      should "set the user id in the session" do
+        assert_equal @user.id, session[:user_id]
+      end
+
+      should "redirect properly" do
+        assert_redirected_to '/'
+      end
+    end
+
+    should "fail with bad credentials" do
+      @user = Factory(:user, :password => 'hi')
+      post :login, :email => @user.email, :password => 'NOPE'
+      assert_nil session[:user_id]
+      assert_template :login
+    end
+  end
 end

@@ -1,0 +1,19 @@
+%h1 Literate Minuteman
+.book.login
+  %h2 Login
+  = form_tag :method => 'post' do |f|
+    - errors ||= []
+    - if errors.any?
+      .errorExplanation
+        - errors.each do |e|
+          .error= e
+    .label-container
+      = label_tag :email, "Email:"
+    = text_field_tag :email, params[:email]
+    .label-container
+      = label_tag :password, "Password:"
+    = password_field_tag :password
+    .label-container
+      .spacer
+        &nbsp;
+    = submit_tag 'Login'

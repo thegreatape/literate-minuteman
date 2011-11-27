@@ -26,8 +26,16 @@ class UsersController < ApplicationController
     redirect_to '/'
   end
 
-
   def login
+    render :login && return if request.get?
+
+    user = User.authenticate(params[:email], params[:password]) 
+    if user
+      session[:user_id] = user.id
+      redirect_to '/'
+    else
+      render :login, :locals => {:errors => "Email and password combination not found."}
+    end
   end
 
   private 
