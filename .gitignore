@@ -2,3 +2,4 @@ config.yml
 database.yml
 tmp
 log
+config/initializers/goodreads.rb
