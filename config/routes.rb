@@ -1,6 +1,7 @@
 Minuteman::Application.routes.draw do
   match 'login' => 'users#login', :as => :login
   match 'signup' => 'users#signup', :as => :signup
+  match 'save_library_systems' => 'users#save_library_systems', :as => :save_library_systems
   match 'oauth-callback' => 'users#oauth_callback', :as => :oauth_callback
 
   resources :books

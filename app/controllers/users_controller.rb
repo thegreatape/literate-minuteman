@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_filter :require_login, :except => [:signup, :login]
+
   def signup
     render :signup && return unless request.post?
 
@@ -23,7 +25,7 @@ class UsersController < ApplicationController
                             :oauth_token => access_token.token,
                             :oauth_secret => access_token.secret)
     Resque.enqueue(UpdateUser, @user.id)
-    redirect_to '/'
+    redirect_to :controller => :books, :action => :index
   end
 
   def login
@@ -36,6 +38,9 @@ class UsersController < ApplicationController
     else
       render :login, :locals => {:errors => "Email and password combination not found."}
     end
+  end
+
+  def save_library_systems
   end
 
   private 
