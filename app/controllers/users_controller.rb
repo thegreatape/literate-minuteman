@@ -7,6 +7,7 @@ class UsersController < ApplicationController
       request_token = get_consumer.get_request_token
       @user.update_attribute(:oauth_token, request_token.token)
       @user.update_attribute(:oauth_secret, request_token.secret)
+      session[:user_id] = @user.id
       redirect_to request_token.authorize_url
     else
       render :signup
@@ -21,7 +22,7 @@ class UsersController < ApplicationController
     @user.update_attributes(:goodreads_id => client.user_id,
                             :oauth_token => access_token.token,
                             :oauth_secret => access_token.secret)
-    #Resque.enqueue(ShelfLookupWorker, goodreads_id)
+    Resque.enqueue(UpdateUser, @user.id)
     redirect_to '/'
   end
 

@@ -29,4 +29,9 @@ class User < ActiveRecord::Base
     sync_books books
   end
 
+  def self.authenticate(email, password)
+    find_by_email(email).try(:authenticate, password)
+  end
+  
+
 end

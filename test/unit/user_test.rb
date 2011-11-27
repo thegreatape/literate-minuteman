@@ -35,7 +35,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "username should be unique" do
     user = Factory(:user)
-    assert_raises(ActiveRecord::RecordInvalid) {Factory(:user, :username => user.username)}
+    assert_raises(ActiveRecord::RecordInvalid) {Factory(:user, :email => user.email)}
   end
 
   test "goodreads_id should be unique" do
