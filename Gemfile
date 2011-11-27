@@ -38,7 +38,7 @@ end
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -47,5 +47,5 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'ruby-debug'
+gem 'ruby-debug'
 

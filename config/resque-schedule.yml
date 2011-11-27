@@ -1,0 +1,7 @@
+queue_users_for_lookup:
+  cron: "0 * * * *"
+  class: QueueAllUsers 
+  queue: lookup
+  args: 
+  description: "Enqueue all users for bookshelf lookup"
+

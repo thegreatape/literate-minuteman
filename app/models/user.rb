@@ -1,9 +1,13 @@
 class User < ActiveRecord::Base
   has_and_belongs_to_many :library_systems
   has_many :books
-  validates_uniqueness_of :username
+
+  validates_uniqueness_of :email
+  validates_presence_of   :email
   validates_uniqueness_of :goodreads_id
-  validates :password, :presence => true, :length => {:minimum => 6}, :confirmation => true
+
+  has_secure_password
+  attr_accessible :email, :password, :password_confirmation
 
   def sync_books(list)
     return if list.empty?

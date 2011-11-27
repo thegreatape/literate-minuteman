@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111126220606) do
+ActiveRecord::Schema.define(:version => 20111127015924) do
 
   create_table "books", :force => true do |t|
     t.string   "title"
@@ -46,8 +46,8 @@ ActiveRecord::Schema.define(:version => 20111126220606) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "username"
-    t.string   "password"
+    t.string   "email"
+    t.string   "password_digest"
     t.string   "oauth_access_token"
     t.string   "oauth_access_secret"
     t.string   "goodreads_id"
