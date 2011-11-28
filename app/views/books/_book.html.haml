@@ -1,0 +1,17 @@
+- book.copies.group_by(&:title).each do |title, copies|
+  - available = copies.select {|c| c.status == "In"}
+  - out = copies.select {|c| c.status == "Out"}
+  %li.result
+    .title.cell= title
+    - unless available.empty?
+      .available.locations.cell
+        Available at: 
+        %ul
+          - available.each do |copy|
+            %li #{copy.location} 
+    - unless out.empty?
+      .out.locations.cell
+        Out at:
+        %ul
+          - out.each do |copy|
+            %li #{copy.location}
