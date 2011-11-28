@@ -33,7 +33,7 @@ module SearchBots
       Goodreads.configure(@api_key)
       client = Goodreads::Client.new
 
-      items = [client.shelf(@user_id, 'to-read', :per_page => 100).books.first]
+      items = client.shelf(@user_id, 'to-read', :per_page => 100).books
       items.map do |entry| 
         title = entry.book.title.strip
         author = entry.book.authors.author.name.strip
