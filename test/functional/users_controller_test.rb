@@ -84,4 +84,54 @@ class UsersControllerTest < ActionController::TestCase
       assert_template :login
     end
   end
+
+  context "saving library systems" do
+
+    setup do
+      @user = Factory(:user)
+      login @user
+      @system1 = Factory(:library_system)
+      @system2 = Factory(:library_system)
+      @system3 = Factory(:library_system)
+    end
+
+    should "work for a single system" do
+      save_systems @system1
+      assert @user.library_systems.member? @system1
+      assert_equal 1, @user.library_systems.length
+    end
+
+    should "work for multiple systems" do
+      save_systems @system1, @system2, @system3
+      assert @user.library_systems.member? @system1
+      assert @user.library_systems.member? @system2
+      assert @user.library_systems.member? @system3
+      assert_equal 3, @user.library_systems.length
+    end
+
+    should "be able to change systems" do
+      save_systems @system1, @system2
+      save_systems @system2, @system3
+      assert @user.library_systems.member? @system2
+      assert @user.library_systems.member? @system3
+      assert_equal 2, @user.library_systems.length
+    end
+
+    should "be able to de-select all systems" do
+      save_systems @system1, @system2
+      save_systems
+      assert_equal 0, @user.library_systems.length
+    end
+
+    should "redirect back to books index" do
+      save_systems @system1
+      assert_redirected_to :controller => :books, :action => :index
+    end
+  end
+
+  def save_systems(*args)
+    systems = Hash[ args.map{|s| [s.id, true]} ]
+    post :save_library_systems, :systems => systems
+    @user.reload
+  end
 end

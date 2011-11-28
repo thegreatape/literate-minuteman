@@ -41,6 +41,13 @@ class UsersController < ApplicationController
   end
 
   def save_library_systems
+    @user.library_systems.clear
+    if params[:systems]
+      params[:systems].each do |id, val|
+        @user.library_systems << LibrarySystem.find(id) if val
+      end
+    end
+    redirect_to :controller => :books, :action => :index
   end
 
   private 

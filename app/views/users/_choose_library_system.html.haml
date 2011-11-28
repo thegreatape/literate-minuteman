@@ -1,7 +1,8 @@
 %h2 Choose your library system
-What library systems are you a part of?
+Check the library systems that you're a part of, and we'll search those for books on your to-read list.
 = form_tag :controller => :users, :action => :save_library_systems do
   - LibrarySystem.all.each do |system|
-    = label_tag "system[#{system.id}]", system.name
-    = check_box_tag("system[#{system.id}]")
+    .check-box-container
+      = check_box_tag("systems[#{system.id}]")
+      = label_tag "systems[#{system.id}]", system.name
   = submit_tag "Save"
