@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_and_belongs_to_many :library_systems
-  has_many :books
+  has_many :books, :dependent => :destroy
 
   validates_uniqueness_of :email
   validates_presence_of   :email

@@ -21,10 +21,10 @@ class UsersController < ApplicationController
     request_token = OAuth::RequestToken.new(get_consumer, @user.oauth_token, @user.oauth_secret)
     access_token = request_token.get_access_token
     client = Goodreads::Client.new(access_token)
-    @user.update_attributes(:goodreads_id => client.user_id,
-                            :oauth_token => access_token.token,
-                            :oauth_secret => access_token.secret)
-    Resque.enqueue(UpdateUser, @user.id)
+    @user.goodreads_id = client.user_id
+    @user.oauth_token = access_token.token
+    @user.oauth_secret = access_token.secret
+    @user.save
     redirect_to :controller => :books, :action => :index
   end
 
@@ -46,6 +46,7 @@ class UsersController < ApplicationController
       params[:systems].each do |id, val|
         @user.library_systems << LibrarySystem.find(id) if val
       end
+      Resque.enqueue(UpdateUser, @user.id)
     end
     redirect_to :controller => :books, :action => :index
   end
