@@ -1,5 +1,5 @@
-Display books
 Filter books by branch
 Pick branches
 Styling on system picker
 Logging 
+Better logout / session expiration

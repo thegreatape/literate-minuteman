@@ -10,6 +10,7 @@ gem 'dynamic_form'
 gem 'resque'
 gem 'resque-scheduler'
 gem 'SystemTimer'
+gem 'will_paginate'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'

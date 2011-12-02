@@ -1,4 +1,6 @@
 class Book < ActiveRecord::Base
+  @per_page = 25
+  default_scope :order => 'title ASC'
   belongs_to :user
   validates_presence_of :user
 

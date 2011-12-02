@@ -6,7 +6,7 @@ class BooksController < ApplicationController
   
   private
   def find_books
-    @books = @user.books.with_copies
+    @books = @user.books.with_copies.paginate(:page => params[:page])
     @not_found = @user.books.without_copies
   end
 end

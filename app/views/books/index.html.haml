@@ -10,6 +10,8 @@
   .book
     - at = @branch ? "available now at <b>#{@branch}</b>" : "available system-wide"
     %p Showing books from your to-read list #{at}. This list was last updated by the gruff-but-friendly robot army #{time_ago_in_words @user.updated_at} ago.
+    .pagination
+      = will_paginate @books
     -#%p
       -#Pick a branch to filter by:
       -#%select#locations
@@ -43,6 +45,10 @@
       -#%ul 
         -#- only_elsewhere.each do |book|
           -#%li= book[:title]
+  .book
+    .pagination
+      = will_paginate @books
+
   - unless @not_found.empty?
     .book.no-results
       %h2 Didn't Find These Books :-(
