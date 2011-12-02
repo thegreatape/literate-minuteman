@@ -4,6 +4,13 @@ class Book < ActiveRecord::Base
 
   has_many :copies
 
+  scope :with_copies, lambda{ 
+    where('books.id in (select distinct(copies.book_id) from copies)') 
+  }
+  scope :without_copies, lambda{ 
+    where('books.id not in (select distinct(copies.book_id) from copies)') 
+  }
+
   def sync_copies(list)
     now = Time.now
     list.each do |c|

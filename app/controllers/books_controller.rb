@@ -6,6 +6,7 @@ class BooksController < ApplicationController
   
   private
   def find_books
-    @books = @user.books
+    @books = @user.books.with_copies
+    @not_found = @user.books.without_copies
   end
 end
