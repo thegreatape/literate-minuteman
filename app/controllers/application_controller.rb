@@ -1,8 +1,12 @@
 class ApplicationController < ActionController::Base
+  before_filter :find_user
   protect_from_forgery
 
   def require_login
-    @user = User.find(session[:user_id]) unless session[:user_id].nil?
     redirect_to :controller => :users, :action => :login unless @user
+  end
+
+  def find_user
+    @user = User.find(session[:user_id]) unless session[:user_id].nil?
   end
 end
