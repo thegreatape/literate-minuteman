@@ -1,5 +1,5 @@
 GIT
-  remote: file:///Users/tmayfield/Code/goodreads
+  remote: git://github.com/thegreatape/goodreads.git
   revision: 762a1487556fae6e14e3b4b985d6c00653626c40
   ref: 762a1487556f
   specs:
