@@ -21,33 +21,13 @@
       -#%p 
         -#%a{:href => "/branches"} Change which branches to show by default
   - @books.each do |book|
-    .book
+    .book.book-result
       %h2 
         = book[:title]
         %span.divider / 
         = book[:author]
-      -#- results = book[:results]
-      -#- elsewhere = book[:elsewhere]
-      -#%p.matches
-        -#= succeed "." do 
-          -#Found #{book.copies.length} possible matches #{branch.nil? ? "" : "at #{branch}"}
-          -#- unless elsewhere.nil? || elsewhere.empty?
-            -#and #{elsewhere.length}
-            -#%a.elsewhere-toggle{:href=>"#"} elsewhere 
-            -#in the system
       %ul.results
         = render :partial => "book", :locals => {:book => book}
-        -#= haml :list, :locals => {:results => results, :branch => branch}
-        -#- unless elsewhere.nil? || elsewhere.empty?
-          -#%ul.elsewhere
-            -#%h4 At Other Branches:
-            -#= haml :list, :locals => {:results => elsewhere, :branch => nil}
-  -#- unless only_elsewhere.empty?
-    -#.book.no-results
-      -#%h2 Found these books at other branches
-      -#%ul 
-        -#- only_elsewhere.each do |book|
-          -#%li= book[:title]
   .book
     .pagination
       = will_paginate @books
