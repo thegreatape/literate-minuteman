@@ -22,7 +22,10 @@
         -#%a{:href => "/branches"} Change which branches to show by default
   - @books.each do |book|
     .book
-      %h2= book[:title]
+      %h2 
+        = book[:title]
+        %span.divider / 
+        = book[:author]
       -#- results = book[:results]
       -#- elsewhere = book[:elsewhere]
       -#%p.matches
