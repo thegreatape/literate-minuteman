@@ -1,0 +1,8 @@
+- copies = book.copies.at_location(@location)
+%p.matches
+  Found #{pluralize(copies.count, 'possible matching title')} at this location.
+- copies.each do |copy|
+  %li.result
+    = copy.title 
+    \:
+    %b= copy.status

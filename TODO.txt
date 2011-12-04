@@ -2,10 +2,11 @@
 Filter books by branch
 Pick branches
 Styling on system picker
-Logging 
 Better logout / session expiration
-BUG: Odd pagination on refresh right after signup?
 Tests for syncing between two systems
+Don't use User#updated_at for last sync time
+BPL seachbot
 
 == Later ==
 Pick custom shelves (but default to to-read)
+Logging 

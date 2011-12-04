@@ -3,7 +3,7 @@
   %head
     %title Literate Minuteman
     %script{:src => 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js'}
-    %script{:src => '/javascript/home.js'}
+    = javascript_include_tag 'home'
     = stylesheet_link_tag 'application' 
     = csrf_meta_tags
   - branch ||= nil

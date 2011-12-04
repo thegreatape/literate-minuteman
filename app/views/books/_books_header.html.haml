@@ -1,0 +1,12 @@
+- at = @location ? "available now at #{@location.name}" : "available system-wide"
+%p Showing books from your to-read list #{at}. This list was last updated by the gruff-but-friendly robot army #{time_ago_in_words @user.updated_at} ago.
+.pagination
+  = will_paginate @books
+%p
+  Pick a branch to filter by:
+  %select#locations
+    %option{:value => books_url, :selected => (!@location) } All Locations 
+    - @locations.each do |loc|
+      %option{:value => location_url(loc), :selected => (@location ? @location.id == loc.id : false) }= loc.name
+  %p 
+    %a{:href => "/branches"} Change which branches to show by default

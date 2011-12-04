@@ -6,6 +6,7 @@ Minuteman::Application.routes.draw do
   match 'oauth-callback' => 'users#oauth_callback', :as => :oauth_callback
 
   resources :books
+  resources :locations
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

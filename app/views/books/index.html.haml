@@ -7,17 +7,7 @@
     %p Our army of gruff-but-friendly robots is checking your to-read list against your library's records. Check back in a few minutes!
 - else
   .book
-    - at = @branch ? "available now at <b>#{@branch}</b>" : "available system-wide"
-    %p Showing books from your to-read list #{at}. This list was last updated by the gruff-but-friendly robot army #{time_ago_in_words @user.updated_at} ago.
-    .pagination
-      = will_paginate @books
-    %p
-      Pick a branch to filter by:
-      %select#locations
-        - @locations.each do |loc|
-          %option{:value => loc.id, :selected => false }= loc.name
-      %p 
-        %a{:href => "/branches"} Change which branches to show by default
+    = render :partial => 'books_header'
   - @books.each do |book|
     .book.book-result
       %h2 

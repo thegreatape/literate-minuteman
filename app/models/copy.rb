@@ -6,4 +6,7 @@ class Copy < ActiveRecord::Base
   scope :for_library_system, lambda{|system|
     joins(:location).where(:locations => {:library_system_id => system.id})
   }
+  scope :at_location, lambda{|location|
+    where(:location_id => location.id)
+  }
 end
