@@ -9,25 +9,34 @@ class User < ActiveRecord::Base
   has_secure_password
   attr_accessible :email, :password, :password_confirmation
 
-  def sync_books(list)
+  def sync_books(list, library_system)
     return if list.empty?
 
-    now = Time.now
     list.each do |b|
       book = books.find_or_create_by_title_and_author(b[:title], b[:author])
-      book.update_attributes(:last_synced_at => now)
-      book.sync_copies b[:copies]
+      book.update_attributes(:last_synced_at => Time.now)
+      book.sync_copies b[:copies], library_system
     end
-    books.where('last_synced_at < ?', now).destroy_all
   end
 
   def update!
-    books = library_systems.inject([]) do |list, system|
+    results = []
+    library_systems.each do |system|
       bot = system.search_bot(goodreads_id)
-      list + bot.lookup
+      results = bot.lookup
+      sync_books results, system
     end
-    sync_books books
+    delete_books_not_on_list results
   end
+
+  def delete_books_not_on_list(list)
+    b = books
+    list.each do |book|
+      b = b.where('NOT (books.author = ? AND books.title = ?)', book[:author], book[:title])
+    end
+    b.destroy_all
+  end
+
 
   def self.authenticate(email, password)
     find_by_email(email).try(:authenticate, password)

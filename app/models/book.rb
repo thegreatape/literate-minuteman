@@ -13,12 +13,13 @@ class Book < ActiveRecord::Base
     where('books.id not in (select distinct(copies.book_id) from copies)') 
   }
 
-  def sync_copies(list)
+  def sync_copies(list, library_system)
     now = Time.now
     list.each do |c|
-      copy = copies.find_or_create_by_location_and_title(c[:location], c[:title])
+      location = Location.find_or_create_by_name_and_library_system_id(c[:location], library_system.id)
+      copy = copies.find_or_create_by_location_id_and_title(location.id, c[:title])
       copy.update_attributes(:last_synced_at => now, :status => c[:status])
     end
-    copies.where('last_synced_at < ?', now).destroy_all
+    copies.for_library_system(library_system).where('last_synced_at < ?', now).destroy_all
   end
 end

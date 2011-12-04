@@ -13,7 +13,8 @@ class UserTest < ActiveSupport::TestCase
          :copies => []}
       ]
       @user = Factory(:user)
-      @user.sync_books @list
+      @library_system = Factory(:library_system)
+      @user.sync_books @list, @library_system
     end
 
     should "produce Books" do
@@ -21,14 +22,13 @@ class UserTest < ActiveSupport::TestCase
     end
 
     should "not duplicate Books" do
-      @user.sync_books @list
+      @user.sync_books @list, @library_system
       assert_equal 2, @user.reload.books.length
     end
 
-    should "delete books no longer on the list" do
-      @user.sync_books [@list.first]
-      assert_equal 1, @user.reload.books.length
-      assert_equal @list.first[:title], @user.books.first.title
+    should "not delete or duplicate books from other library systems" do
+      @user.sync_books @list, Factory(:library_system)
+      assert_equal 2, @user.reload.books.length
     end
 
   end

@@ -12,26 +12,31 @@ class BookTest < ActiveSupport::TestCase
          :location => "Allston"}
       ]
       @book = Factory(:book)
-      @book.sync_copies @list
+      @library_system = Factory(:library_system)
+      @book.sync_copies @list, @library_system
     end
 
     should "produce Copies" do
       assert_equal 2, @book.reload.copies.length
+      @book.copies.each do |copy| 
+        assert_not_nil copy.location
+        assert_equal @library_system, copy.location.library_system
+      end
     end
 
     should "not duplicate copies" do
-      @book.sync_copies @list
+      @book.sync_copies @list, @library_system
       assert_equal 2, @book.reload.copies.length
     end
 
     should "delete copies no longer on the list" do
-      @book.sync_copies [@list.first]
+      @book.sync_copies [@list.first], @library_system
       assert_equal 1, @book.reload.copies.length
       assert_equal @list.first[:title], @book.copies.first.title
     end
 
     should "update status" do
-      @book.sync_copies [@list.first.merge(:status => 'Out')]
+      @book.sync_copies [@list.first.merge(:status => 'Out')], @library_system
       assert_equal "Out", @book.reload.copies.first.status
     end
 

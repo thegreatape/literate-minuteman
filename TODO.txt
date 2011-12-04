@@ -1,7 +1,11 @@
+== For Release == 
 Filter books by branch
 Pick branches
-Pick custom shelves (but default to to-read)
 Styling on system picker
 Logging 
 Better logout / session expiration
 BUG: Odd pagination on refresh right after signup?
+Tests for syncing between two systems
+
+== Later ==
+Pick custom shelves (but default to to-read)

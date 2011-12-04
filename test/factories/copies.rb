@@ -1,5 +1,5 @@
 Factory.define :copy do |f|
-  f.location    "location name"
+  f.association :location
   f.status      "In"
   f.association :book
 end

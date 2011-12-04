@@ -8,10 +8,10 @@
         Available at: 
         %ul
           - available.each do |copy|
-            %li #{copy.location} 
+            %li #{copy.location.name} 
     - unless out.empty?
       .out.locations.cell
         Out at:
         %ul
           - out.each do |copy|
-            %li #{copy.location}
+            %li #{copy.location.name}
