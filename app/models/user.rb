@@ -37,6 +37,10 @@ class User < ActiveRecord::Base
     b.destroy_all
   end
 
+  def locations
+    library_systems.collect(&:locations).flatten.sort_by(&:name)
+  end
+
 
   def self.authenticate(email, password)
     find_by_email(email).try(:authenticate, password)

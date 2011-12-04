@@ -12,14 +12,13 @@
     %p Showing books from your to-read list #{at}. This list was last updated by the gruff-but-friendly robot army #{time_ago_in_words @user.updated_at} ago.
     .pagination
       = will_paginate @books
-    -#%p
-      -#Pick a branch to filter by:
-      -#%select#locations
-        -#- locations.each do |loc|
-          -#- b = loc.gsub(/\s*\/\s*/,'-').downcase
-          -#%option{:value => b.empty? ? "/" : "/branch/#{b}", :selected => (branch == b) }= loc
-      -#%p 
-        -#%a{:href => "/branches"} Change which branches to show by default
+    %p
+      Pick a branch to filter by:
+      %select#locations
+        - @locations.each do |loc|
+          %option{:value => loc.id, :selected => false }= loc.name
+      %p 
+        %a{:href => "/branches"} Change which branches to show by default
   - @books.each do |book|
     .book.book-result
       %h2 
