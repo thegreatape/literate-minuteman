@@ -1,5 +1,4 @@
 == For Release == 
-Filter books by branch
 Pick branches
 Styling on system picker
 Better logout / session expiration
