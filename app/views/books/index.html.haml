@@ -19,10 +19,24 @@
   .book
     .pagination
       = will_paginate @books
+  - if @user.locations.any?
+    - elsewhere = @user.books.without_copies_at(@user.locations).with_copies
+    - unless elsewhere.empty?
+      .book.no-results
+        %h2 Found These Books At Other Locations 
+        %ul 
+          - elsewhere.each do |book|
+            %li 
+              = book[:title]
+              %span.divider / 
+              = book[:author]
 
   - unless @not_found.empty?
     .book.no-results
       %h2 Didn't Find These Books :-(
       %ul 
         - @not_found.each do |book|
-          %li= book[:title]
+          %li 
+            = book[:title]
+            %span.divider / 
+            = book[:author]
