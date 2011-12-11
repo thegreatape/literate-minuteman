@@ -51,6 +51,17 @@ class UsersController < ApplicationController
     redirect_to :controller => :books, :action => :index
   end
 
+  def locations
+  end
+
+  def save_locations
+    @user.locations.clear
+    if params[:locations]
+      @user.locations = params[:locations].map {|l| Location.find(l) } 
+    end
+    redirect_to :controller => :books, :action => :index
+  end
+
   private 
   def get_consumer 
     OAuth::Consumer.new(GOODREADS_API_KEY, 

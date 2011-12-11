@@ -4,7 +4,7 @@ class LocationsController < ApplicationController
     @books = @user.books.with_copies_at(@location).paginate(:page => params[:page])
     @books_elsewhere = @user.books.without_copies_at(@location).paginate(:page => params[:page])
     @not_found = @user.books.without_copies
-    @locations = @user.locations
+    @locations = @user.selected_locations
   end
 
   private

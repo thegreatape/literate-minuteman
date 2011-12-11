@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   has_and_belongs_to_many :library_systems
+  has_and_belongs_to_many :locations
+
   has_many :books, :dependent => :destroy
 
   validates_uniqueness_of :email
@@ -37,7 +39,7 @@ class User < ActiveRecord::Base
     b.destroy_all
   end
 
-  def locations
+  def selected_locations
     library_systems.collect(&:locations).flatten.sort_by(&:name)
   end
 

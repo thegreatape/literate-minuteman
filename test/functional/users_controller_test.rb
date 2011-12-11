@@ -129,6 +129,35 @@ class UsersControllerTest < ActionController::TestCase
     end
   end
 
+  context "preferred locations" do
+    setup do
+      @library_system = Factory(:library_system)
+      @loc1 = Factory(:location, :library_system => @library_system)
+      @loc2 = Factory(:location, :library_system => @library_system)
+      @loc3 = Factory(:location, :library_system => @library_system)
+      @user = Factory(:user)
+      login @user
+    end
+
+    should "save correctly" do 
+      post :save_locations, :locations => [@loc1, @loc2]
+      assert_equal 2, @user.locations.length
+      assert @user.locations.member? @loc1
+      assert @user.locations.member? @loc2
+      assert_redirected_to books_url
+    end
+
+    should "overwrite existing choices" do
+      @user.locations = [@loc1, @loc2]
+      post :save_locations, :locations => [@loc2, @loc3]
+      assert_equal 2, @user.locations.length
+      assert @user.locations.member? @loc1
+      assert @user.locations.member? @loc2
+      assert_redirected_to books_url
+    end
+  end
+
+  private
   def save_systems(*args)
     systems = Hash[ args.map{|s| [s.id, true]} ]
     post :save_library_systems, :systems => systems

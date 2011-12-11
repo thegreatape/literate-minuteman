@@ -9,4 +9,4 @@
     - @locations.each do |loc|
       %option{:value => location_url(loc), :selected => (@location ? @location.id == loc.id : false) }= loc.name
   %p 
-    %a{:href => "/branches"} Change which branches to show by default
+    %a{:href => user_locations_url} Change which branches to show by default
