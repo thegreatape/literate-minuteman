@@ -41,4 +41,48 @@ class BooksControllerTest < ActionController::TestCase
     end
   end
 
+  context "with custom locations set" do
+    setup do
+      @user = Factory(:user)
+      @list = [
+        {:title => "The Areas of My Expertise",
+         :author => "John Hodgeman",
+         :copies => [
+           {:title => "The Areas of My Expertise",
+            :status => "In",
+            :location => "Cambridge"}
+          ]},
+        {:title => "Foucault's Pendulum",
+         :author => "Umberto Eco",
+         :copies => [
+           {:title => "Foucault's Pendulum",
+            :status => "In",
+            :location => "Cambridge"},
+           {:title => "Foucault's Pendulum",
+            :status => "In",
+            :location => "Concord"}
+          ]}
+      ]
+      @library_system = Factory(:library_system)
+      @user.sync_books @list, @library_system 
+      login @user
+    end
+
+    should "only show books with copies at my locations" do
+      @user.locations = [Location.find_by_name("Concord")]
+      get :index
+      assert_select ".book-result h2", /#{@list[1][:title]}/
+      assert_select ".book-result h2", :text => /#{@list[0][:title]}/, :count => 0
+    end
+
+    should "only show the copies of the books at my locations" do
+      @user.locations = [Location.find_by_name("Cambridge")]
+      get :index
+      assert_select ".book-result h2", /#{@list[0][:title]}/
+      assert_select ".book-result h2", /#{@list[1][:title]}/
+      assert_select ".locations ul li", :text => "Cambridge", :count => 2
+      assert_select ".locations ul li", :text => "Concord", :count => 0
+    end
+  end
+
 end

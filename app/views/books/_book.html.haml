@@ -1,4 +1,5 @@
-- book.copies.group_by(&:title).each do |title, copies|
+- copies = @user.locations.any? ? book.copies.at_location(@user.locations) : book.copies
+- copies.group_by(&:title).each do |title, copies|
   - available = copies.select {|c| c.status == "In"}
   - out = copies.select {|c| c.status == "Out"}
   %li.result

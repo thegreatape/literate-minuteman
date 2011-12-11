@@ -40,7 +40,11 @@ class User < ActiveRecord::Base
   end
 
   def selected_locations
-    library_systems.collect(&:locations).flatten.sort_by(&:name)
+    if locations.any?
+      locations
+    else
+      library_systems.collect(&:locations).flatten.sort_by(&:name)
+    end
   end
 
 
