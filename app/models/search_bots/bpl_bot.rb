@@ -11,19 +11,21 @@ module SearchBots
       res = fetch(search_url(title, author))
       (Hpricot(res.body)/'.searchResults .listItem').map { |row|
         title = (row/'.title a').first.attributes['title']
-        availability_url = (row/'.availability a').first.attributes['href']
+        availability_link = (row/'.availability a').first
+        next if !availability_link
+        availability_url = availability_link.attributes['href']
         location_html = fetch("http://bostonpl.bibliocommons.com#{availability_url}").body
         location_table = (Hpricot(location_html)/'.branch table').first
         (location_table/'tr').map { |loc|
           cells = loc/'td'
-          if cells.length >= 3
+          if cells.compact.length > 3
             {:title => title,
              :location => cells[0].inner_text.gsub(/\(\d+\)\s*$/, '').strip,
              :status => cells[3].inner_text.strip
             }
           end
-        }.compact 
-      }.flatten.uniq
+        }
+      }.flatten.compact.uniq
     end
 
     def search_url(title, author)
