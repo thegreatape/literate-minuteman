@@ -16,16 +16,26 @@ module SearchBots
         availability_url = availability_link.attributes['href']
         location_html = fetch("http://bostonpl.bibliocommons.com#{availability_url}").body
         location_table = (Hpricot(location_html)/'.branch table').first
+        status_idx = (location_table / 'th').index {|i| i.attributes['class'] == 'status'}
         (location_table/'tr').map { |loc|
           cells = loc/'td'
           if cells.compact.length > 3
             {:title => title,
              :location => cells[0].inner_text.gsub(/\(\d+\)\s*$/, '').strip,
-             :status => cells[3].inner_text.strip
+             :status => normalize_status(cells[status_idx].inner_text.strip)
             }
           end
         }
       }.flatten.compact.uniq
+    end
+    
+    def normalize_status(str)
+      case str
+      when "In Library"
+        "In"
+      else
+        "Out"
+      end
     end
 
     def search_url(title, author)
