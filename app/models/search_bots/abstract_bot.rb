@@ -11,9 +11,6 @@ module SearchBots
     end
 
     def fetch(uri)
-      #puts '------'
-      #puts uri
-      #puts '------'
       headers ||= {}
       uri = URI::parse(uri)
       req = Net::HTTP::Get.new(uri.path+'?'+uri.query, {'@cookies' => @cookies})
@@ -24,8 +21,6 @@ module SearchBots
 
       # be nice to library servers!
       sleep 1
-      #puts res
-      #puts '------'
       return res
     end
 
