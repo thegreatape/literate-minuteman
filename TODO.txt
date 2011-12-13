@@ -1,10 +1,6 @@
 == For Release == 
-Pick branches
-Styling on system picker
 Better logout / session expiration
-Tests for syncing between two systems
 Don't use User#updated_at for last sync time
-BPL seachbot
 
 == Later ==
 Pick custom shelves (but default to to-read)

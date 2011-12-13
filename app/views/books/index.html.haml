@@ -6,8 +6,7 @@
     %h2 Thanks for signing up!
     %p Our army of gruff-but-friendly robots is checking your to-read list against your library's records. Check back in a few minutes!
 - else
-  .book
-    = render :partial => 'books_header'
+  = render :partial => 'books_header'
   - @books.each do |book|
     .book.book-result
       %h2 

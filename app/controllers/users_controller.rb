@@ -40,6 +40,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def logout
+    session[:user_id] = nil
+    redirect_to '/'
+  end
+
+  def library_systems
+  end
+
   def save_library_systems
     @user.library_systems.clear
     if params[:systems]
