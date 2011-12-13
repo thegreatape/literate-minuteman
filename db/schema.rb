@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111212005309) do
+ActiveRecord::Schema.define(:version => 20111213043656) do
 
   create_table "books", :force => true do |t|
     t.string   "title"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20111212005309) do
     t.datetime "updated_at"
     t.string   "oauth_token"
     t.string   "oauth_secret"
+    t.datetime "last_synced_at"
   end
 
 end

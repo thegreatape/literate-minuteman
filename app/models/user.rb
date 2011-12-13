@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
       book.update_attributes(:last_synced_at => Time.now)
       book.sync_copies b[:copies], library_system
     end
+    update_attribute(:last_synced_at, Time.now)
   end
 
   def update!

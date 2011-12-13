@@ -1,6 +1,9 @@
 - at = @location ? "available now at #{@location.name}" : "available system-wide"
 .book
-  %p Showing books from your to-read list #{at}. This list was last updated by the gruff-but-friendly robot army #{time_ago_in_words @user.updated_at} ago.
+  %p 
+    Showing books from your to-read list #{at}. 
+    - if @user.last_synced_at
+      This list was last updated by the gruff-but-friendly robot army #{time_ago_in_words @user.last_synced_at} ago.
   %p.nav 
     = link_to 'Change which branches to show by default', user_locations_url
     %span.divider= " | "
