@@ -37,16 +37,22 @@ module SearchBots
       when /available/i 
         return "In"
       else 
-        return s
+        return "Out"
       end
     end
 
     def get_locations(row)
-      (row/'table.itemTable tr' ).map { |loc|
-        tds = loc/'td'
-        [(tds[0]/'a').inner_html.strip.split("/").map(&:titleize)[0..-2].join(' / '), 
-         tds[2].inner_html.strip.scan(/^(\w+).*/).first.first.titleize] unless tds.empty?
-      }.reject(&:nil?)
+      link = (row/'.dpBibTitle a')[0]
+      return [] unless link
+      href = link.attributes['href']
+      id = CGI::unescape(href).match(/C\|R([^\|]*)\|S/)[1]
+      res = fetch("http://library.minlib.net/record=#{id}").body
+      File.open("#{Rails.root}/test/fixtures/search_bots/minuteman_bot/gardens_of_the_moon_records.html", 'w') {|f| f.write(res) }
+      (Hpricot(res)/'table.bibItems .bibItemsEntry').map do |row|
+        tds = row/'td'
+        [(tds[0]/'a').inner_html.strip.split("/").map(&:titleize)[0..-2].join(' / '),
+         tds[2].inner_html.strip.scan(/^(?:<!-- field % -->&nbsp;)(\w+).*/).first.first.titleize] unless tds.empty?
+      end.reject(&:nil?)
     end
 
     def search_url(title, author)

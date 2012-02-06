@@ -13,7 +13,7 @@ module SearchBots
     def fetch(uri)
       headers ||= {}
       uri = URI::parse(uri)
-      req = Net::HTTP::Get.new(uri.path+'?'+uri.query, {'@cookies' => @cookies})
+      req = Net::HTTP::Get.new(uri.path+'?'+(uri.query||''), {'@cookies' => @cookies})
       res = Net::HTTP.start(uri.host, uri.port) {|http|
         http.request(req)
       } 

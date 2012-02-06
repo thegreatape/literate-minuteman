@@ -50,6 +50,8 @@ class UserTest < ActiveSupport::TestCase
                            :body => fixture_file('goodreads_responses/gardens_of_the_moon.xml'))
       FakeWeb.register_uri(:get, %r|find.minlib.net.*Gardens\+of\+the\+Moon\+\+Steven\+Erikson|,
                            :body => fixture_file('search_bots/minuteman_bot/gardens_of_the_moon.html'))
+      FakeWeb.register_uri(:get, %r|library.minlib.net/record=.*|,
+                           :body => fixture_file('search_bots/minuteman_bot/gardens_of_the_moon_records.html'))
       @user = Factory(:user, 
                       :library_systems => [Factory(:library_system)], 
                       :goodreads_id => '2003928')
@@ -65,8 +67,8 @@ class UserTest < ActiveSupport::TestCase
       assert_equal 1, @user.books.length
     end
 
-    should "create 6 copies" do
-      assert_equal 6, @user.books.first.copies.length
+    should "create 4 copies" do
+      assert_equal 4, @user.books.first.copies.length
     end
 
   end
