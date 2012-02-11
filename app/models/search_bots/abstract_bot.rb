@@ -21,7 +21,12 @@ module SearchBots
 
       # be nice to library servers!
       sleep 1
-      return res
+      case res
+      when Net::HTTPFound: 
+        return fetch(res['location'] || res['Location'])
+      else 
+        return res
+      end
     end
 
     def lookup

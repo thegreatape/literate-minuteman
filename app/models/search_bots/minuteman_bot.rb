@@ -45,7 +45,7 @@ module SearchBots
       link = (row/'.dpBibTitle a')[0]
       return [] unless link
       href = link.attributes['href']
-      id = CGI::unescape(href).match(/C\|R([^\|]*)\|S/)[1]
+      id = CGI::unescape(href).match(/C__R([^_]*)__S/)[1] 
       res = fetch("http://library.minlib.net/record=#{id}").body
       File.open("#{Rails.root}/test/fixtures/search_bots/minuteman_bot/gardens_of_the_moon_records.html", 'w') {|f| f.write(res) }
       (Hpricot(res)/'table.bibItems .bibItemsEntry').map do |row|
@@ -58,7 +58,7 @@ module SearchBots
     def search_url(title, author)
       title.gsub!(/\(.*\)/,'')
       title = CGI::escape("#{title} #{author}")
-      "http://find.minlib.net/iii/encore/search/C%7CS#{title}%7COrightresult%7CU1?lang=eng&suite=pearl"
+      "http://find.minlib.net/iii/encore/search/C__S#{title}__Orightresult__U1?lang=eng&suite=pearl"
     end
 
   end
