@@ -78,9 +78,11 @@ task :precompile_assets, :roles => :app do
   run "cd #{release_path} && bundle exec rake assets:precompile"
 end
 
-after "deploy:restart", :restart_resque_workers
-desc "restart resque workers"
-task :restart_resque_workers, :roles => :app do
+after "deploy:restart", :restart_resque
+desc "restart resque"
+task :restart_resque, :roles => :app do
   run "sudo stop resque-worker"
   run "sudo start resque-worker"
+  run "sudo stop resque-scheduler"
+  run "sudo start resque-scheduler"
 end
