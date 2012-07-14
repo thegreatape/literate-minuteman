@@ -1,0 +1,7 @@
+test: &test
+  adapter: postgresql
+  database: minuteman_test
+  host: localhost
+  username: postgres
+  password: 
+  min_messages: warning
