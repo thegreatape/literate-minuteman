@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GoodreadsResponse>
+  <Request>
+    <authentication>true</authentication>
+      <key><![CDATA[nope]]></key>
+    <method><![CDATA[nope]]></method>
+  </Request>
+  <user>
+  <id>2003928</id>
+  <name>Thomas</name>
+  <user_name><![CDATA[twitchdotnet]]></user_name>
+  <link><![CDATA[http://www.goodreads.com/user/show/2003928-thomas]]></link>
+  <image_url><![CDATA[http://photo.goodreads.com/users/1233964714p3/2003928.jpg]]></image_url>
+  <small_image_url><![CDATA[http://photo.goodreads.com/users/1233964714p2/2003928.jpg]]></small_image_url>
+    <about></about>
+    <age>28</age>
+    <gender>male</gender>
+    <location>Cambridge, MA</location>
+    <website><![CDATA[http://zen-hacking.com]]></website>
+    <joined>02/2009</joined>
+    <last_active>07/2012</last_active>
+    <interests></interests>
+    <favorite_books></favorite_books>
+    <favorite_authors>
+    </favorite_authors>
+    <updates_rss_url><![CDATA[http://www.goodreads.com/user/updates_rss/2003928.xml?key=4c7e9f5c7dfe6d950fbed3cc6f1db52455400c38]]></updates_rss_url>
+    <reviews_rss_url><![CDATA[http://www.goodreads.com/review/list_rss/2003928.xml?key=4c7e9f5c7dfe6d950fbed3cc6f1db52455400c38&shelf=%23ALL%23]]></reviews_rss_url>
+    <friends_count type="integer">19</friends_count>
+    <groups_count>1</groups_count>
+    <reviews_count type="integer">183</reviews_count>
+    <user_shelves type="array">
+  <user_shelf>
+    <book_count type="integer">92</book_count>
+    <description nil="true"></description>
+    <display_fields></display_fields>
+    <exclusive_flag type="boolean">true</exclusive_flag>
+    <featured type="boolean">true</featured>
+    <id type="integer">6009744</id>
+    <name>read</name>
+    <order nil="true"></order>
+    <per_page type="integer" nil="true"></per_page>
+    <recommend_for type="boolean">true</recommend_for>
+    <sort nil="true"></sort>
+    <sticky type="boolean" nil="true"></sticky>
+  </user_shelf>
+  <user_shelf>
+    <book_count type="integer">3</book_count>
+    <description nil="true"></description>
+    <display_fields></display_fields>
+    <exclusive_flag type="boolean">true</exclusive_flag>
+    <featured type="boolean">false</featured>
+    <id type="integer">4369959</id>
+    <name>currently-reading</name>
+    <order nil="true"></order>
+    <per_page type="integer" nil="true"></per_page>
+    <recommend_for type="boolean">true</recommend_for>
+    <sort nil="true"></sort>
+    <sticky type="boolean" nil="true"></sticky>
+  </user_shelf>
+  <user_shelf>
+    <book_count type="integer">87</book_count>
+    <description nil="true"></description>
+    <display_fields></display_fields>
+    <exclusive_flag type="boolean">true</exclusive_flag>
+    <featured type="boolean">false</featured>
+    <id type="integer">4369958</id>
+    <name>to-read</name>
+    <order>d</order>
+    <per_page type="integer" nil="true"></per_page>
+    <recommend_for type="boolean">true</recommend_for>
+    <sort>position</sort>
+    <sticky type="boolean" nil="true"></sticky>
+  </user_shelf>
+  <user_shelf>
+    <book_count type="integer">2</book_count>
+    <description nil="true"></description>
+    <display_fields></display_fields>
+    <exclusive_flag type="boolean">false</exclusive_flag>
+    <featured type="boolean">false</featured>
+    <id type="integer">10785453</id>
+    <name>photography</name>
+    <order nil="true"></order>
+    <per_page type="integer" nil="true"></per_page>
+    <recommend_for type="boolean">true</recommend_for>
+    <sort nil="true"></sort>
+    <sticky type="boolean" nil="true"></sticky>
+  </user_shelf>
+  <user_shelf>
+    <book_count type="integer">28</book_count>
+    <description nil="true"></description>
+    <display_fields></display_fields>
+    <exclusive_flag type="boolean">false</exclusive_flag>
+    <featured type="boolean">false</featured>
+    <id type="integer">14841814</id>
+    <name>wishlist</name>
+    <order nil="true"></order>
+    <per_page type="integer" nil="true"></per_page>
+    <recommend_for type="boolean">true</recommend_for>
+    <sort nil="true"></sort>
+    <sticky type="boolean" nil="true"></sticky>
+  </user_shelf>
+</user_shelves>
+      <updates type="array">
+      <update type="review">
+      <action_text><![CDATA[is currently reading: <a href="http://www.goodreads.com/book/show/31555.Phantoms_in_the_Brain">Phantoms in the Brain: Probing the Mysteries of the Human Mind (Paperback)</a> by <a href="http://www.goodreads.com/author/show/17674.V_S_Ramachandran">V.S. Ramachandran</a>]]></action_text>
+      <link>http://www.goodreads.com/review/show/365633217</link>
+      <image_url>http://photo.goodreads.com/books/1168280454s/31555.jpg</image_url>
+        <actor>
+  <id type="integer">2003928</id>
+  <name>Thomas</name>
+  <image_url>http://photo.goodreads.com/users/1233964714p2/2003928.jpg</image_url>
+  <link>http://www.goodreads.com/user/show/2003928-thomas</link>
+</actor>
+      <updated_at>Tue, 10 Jul 2012 18:42:43 -0700</updated_at>
+          <action type="added">
+            <shelf name="currently-reading" />
+          </action>
+        <object>
+          <book>
+            <id>31555</id>
+            <title><![CDATA[Phantoms in the Brain: Probing the Mysteries of the Human Mind]]></title>
+            <link>http://www.goodreads.com/book/show/31555.Phantoms_in_the_Brain</link>
+            <authors>
+  <author>
+    <id>17674</id>
+    <name>V.S. Ramachandran</name>
+    <image_url><![CDATA[http://photo.goodreads.com/authors/1222678593p5/17674.jpg]]></image_url>
+    <small_image_url><![CDATA[http://photo.goodreads.com/authors/1222678593p2/17674.jpg]]></small_image_url>
+    <link><![CDATA[http://www.goodreads.com/author/show/17674.V_S_Ramachandran]]></link>
+    <average_rating>4.23</average_rating>
+    <ratings_count>4290</ratings_count>
+    <text_reviews_count>409</text_reviews_count>
+  </author>
+</authors>
+          </book>
+        </object>
+    </update>
+      <update type="review">
+      <action_text><![CDATA[is currently reading: <a href="http://www.goodreads.com/book/show/9265453-embassytown">Embassytown (Hardcover)</a> by <a href="http://www.goodreads.com/author/show/33918.China_Mi_ville">China Miéville</a>]]></action_text>
+      <link>http://www.goodreads.com/review/show/195308962</link>
+      <image_url>http://photo.goodreads.com/books/1320470326s/9265453.jpg</image_url>
+        <actor>
+  <id type="integer">2003928</id>
+  <name>Thomas</name>
+  <image_url>http://photo.goodreads.com/users/1233964714p2/2003928.jpg</image_url>
+  <link>http://www.goodreads.com/user/show/2003928-thomas</link>
+</actor>
+      <updated_at>Sat, 07 Jul 2012 06:55:22 -0700</updated_at>
+          <action type="added">
+            <shelf name="currently-reading" />
+          </action>
+        <object>
+          <book>
+            <id>9265453</id>
+            <title>Embassytown</title>
+            <link>http://www.goodreads.com/book/show/9265453-embassytown</link>
+            <authors>
+  <author>
+    <id>33918</id>
+    <name>China Miéville</name>
+    <image_url><![CDATA[http://photo.goodreads.com/authors/1243988363p5/33918.jpg]]></image_url>
+    <small_image_url><![CDATA[http://photo.goodreads.com/authors/1243988363p2/33918.jpg]]></small_image_url>
+    <link><![CDATA[http://www.goodreads.com/author/show/33918.China_Mi_ville]]></link>
+    <average_rating>3.85</average_rating>
+    <ratings_count>62123</ratings_count>
+    <text_reviews_count>8437</text_reviews_count>
+  </author>
+</authors>
+          </book>
+        </object>
+    </update>
+      <update type="review">
+      <action_text><![CDATA[marked as to-read: <a href="http://www.goodreads.com/book/show/43713.Structure_and_Interpretation_of_Computer_Programs">Structure and Interpretation of Computer Programs (MIT Electrical Engineering and Computer Science)</a> by <a href="http://www.goodreads.com/author/show/5409448.Harold_Abelson">Harold Abelson</a>]]></action_text>
+      <link>http://www.goodreads.com/review/show/362792338</link>
+      <image_url>http://photo.goodreads.com/books/1170211338s/43713.jpg</image_url>
+        <actor>
+  <id type="integer">2003928</id>
+  <name>Thomas</name>
+  <image_url>http://photo.goodreads.com/users/1233964714p2/2003928.jpg</image_url>
+  <link>http://www.goodreads.com/user/show/2003928-thomas</link>
+</actor>
+      <updated_at>Fri, 06 Jul 2012 19:48:29 -0700</updated_at>
+          <action type="added">
+            <shelf name="to-read" />
+          </action>
+        <object>
+          <book>
+            <id>43713</id>
+            <title><![CDATA[Structure and Interpretation of Computer Programs (MIT Electrical Engineering and Computer Science)]]></title>
+            <link>http://www.goodreads.com/book/show/43713.Structure_and_Interpretation_of_Computer_Programs</link>
+            <authors>
+  <author>
+    <id>5409448</id>
+    <name>Harold Abelson</name>
+    <image_url><![CDATA[http://www.goodreads.com/assets/nophoto/nophoto-U-200x266.jpg]]></image_url>
+    <small_image_url><![CDATA[http://www.goodreads.com/assets/nophoto/nophoto-U-50x66.jpg]]></small_image_url>
+    <link><![CDATA[http://www.goodreads.com/author/show/5409448.Harold_Abelson]]></link>
+    <average_rating>4.44</average_rating>
+    <ratings_count>181</ratings_count>
+    <text_reviews_count>4</text_reviews_count>
+  </author>
+</authors>
+          </book>
+        </object>
+    </update>
+      <update type="review">
+      <action_text><![CDATA[marked as to-read: <a href="http://www.goodreads.com/book/show/17861.The_Family_Trade">The Family Trade (The Merchant Princes, #1)</a> by <a href="http://www.goodreads.com/author/show/8794.Charles_Stross">Charles Stross</a>]]></action_text>
+      <link>http://www.goodreads.com/review/show/362789739</link>
+      <image_url>http://photo.goodreads.com/books/1316637838s/17861.jpg</image_url>
+        <actor>
+  <id type="integer">2003928</id>
+  <name>Thomas</name>
+  <image_url>http://photo.goodreads.com/users/1233964714p2/2003928.jpg</image_url>
+  <link>http://www.goodreads.com/user/show/2003928-thomas</link>
+</actor>
+      <updated_at>Fri, 06 Jul 2012 19:43:55 -0700</updated_at>
+          <action type="added">
+            <shelf name="to-read" />
+          </action>
+        <object>
+          <book>
+            <id>17861</id>
+            <title><![CDATA[The Family Trade (The Merchant Princes, #1)]]></title>
+            <link>http://www.goodreads.com/book/show/17861.The_Family_Trade</link>
+            <authors>
+  <author>
+    <id>8794</id>
+    <name>Charles Stross</name>
+    <image_url><![CDATA[http://photo.goodreads.com/authors/1218218373p5/8794.jpg]]></image_url>
+    <small_image_url><![CDATA[http://photo.goodreads.com/authors/1218218373p2/8794.jpg]]></small_image_url>
+    <link><![CDATA[http://www.goodreads.com/author/show/8794.Charles_Stross]]></link>
+    <average_rating>3.76</average_rating>
+    <ratings_count>35431</ratings_count>
+    <text_reviews_count>3707</text_reviews_count>
+  </author>
+</authors>
+          </book>
+        </object>
+    </update>
+      <update type="review">
+      <action_text><![CDATA[marked as to-read: <a href="http://www.goodreads.com/book/show/14150.The_Jennifer_Morgue">The Jennifer Morgue (Laundry Files, #2)</a> by <a href="http://www.goodreads.com/author/show/8794.Charles_Stross">Charles Stross</a>]]></action_text>
+      <link>http://www.goodreads.com/review/show/362789192</link>
+      <image_url>http://photo.goodreads.com/books/1328838439s/14150.jpg</image_url>
+        <actor>
+  <id type="integer">2003928</id>
+  <name>Thomas</name>
+  <image_url>http://photo.goodreads.com/users/1233964714p2/2003928.jpg</image_url>
+  <link>http://www.goodreads.com/user/show/2003928-thomas</link>
+</actor>
+      <updated_at>Fri, 06 Jul 2012 19:43:03 -0700</updated_at>
+          <action type="added">
+            <shelf name="to-read" />
+          </action>
+        <object>
+          <book>
+            <id>14150</id>
+            <title><![CDATA[The Jennifer Morgue (Laundry Files, #2)]]></title>
+            <link>http://www.goodreads.com/book/show/14150.The_Jennifer_Morgue</link>
+            <authors>
+  <author>
+    <id>8794</id>
+    <name>Charles Stross</name>
+    <image_url><![CDATA[http://photo.goodreads.com/authors/1218218373p5/8794.jpg]]></image_url>
+    <small_image_url><![CDATA[http://photo.goodreads.com/authors/1218218373p2/8794.jpg]]></small_image_url>
+    <link><![CDATA[http://www.goodreads.com/author/show/8794.Charles_Stross]]></link>
+    <average_rating>3.76</average_rating>
+    <ratings_count>35431</ratings_count>
+    <text_reviews_count>3707</text_reviews_count>
+  </author>
+</authors>
+          </book>
+        </object>
+    </update>
+      <update type="review">
+      <action_text><![CDATA[marked as to-read: <a href="http://www.goodreads.com/book/show/1032724.The_Art_of_SQL">The Art of SQL (Paperback)</a> by <a href="http://www.goodreads.com/author/show/515350.Stephane_Faroult">Stephane Faroult</a>]]></action_text>
+      <link>http://www.goodreads.com/review/show/362761106</link>
+      <image_url>http://photo.goodreads.com/books/1328834469s/1032724.jpg</image_url>
+        <actor>
+  <id type="integer">2003928</id>
+  <name>Thomas</name>
+  <image_url>http://photo.goodreads.com/users/1233964714p2/2003928.jpg</image_url>
+  <link>http://www.goodreads.com/user/show/2003928-thomas</link>
+</actor>
+      <updated_at>Fri, 06 Jul 2012 18:53:49 -0700</updated_at>
+          <action type="added">
+            <shelf name="to-read" />
+          </action>
+        <object>
+          <book>
+            <id>1032724</id>
+            <title>The Art of SQL</title>
+            <link>http://www.goodreads.com/book/show/1032724.The_Art_of_SQL</link>
+            <authors>
+  <author>
+    <id>515350</id>
+    <name>Stephane Faroult</name>
+    <image_url><![CDATA[http://www.goodreads.com/assets/nophoto/nophoto-U-200x266.jpg]]></image_url>
+    <small_image_url><![CDATA[http://www.goodreads.com/assets/nophoto/nophoto-U-50x66.jpg]]></small_image_url>
+    <link><![CDATA[http://www.goodreads.com/author/show/515350.Stephane_Faroult]]></link>
+    <average_rating>3.80</average_rating>
+    <ratings_count>30</ratings_count>
+    <text_reviews_count>4</text_reviews_count>
+  </author>
+</authors>
+          </book>
+        </object>
+    </update>
+      <update type="userstatus">
+      <action_text><![CDATA[is on page 257 of 328 of <a href="http://www.goodreads.com/book/show/7912517-seven-languages-in-seven-weeks">Seven Languages in Seven Weeks</a>]]></action_text>
+      <link>http://www.goodreads.com/user_status/show/15546058</link>
+      <image_url>http://photo.goodreads.com/users/1233964714p2/2003928.jpg</image_url>
+        <actor>
+  <id type="integer">2003928</id>
+  <name>Thomas</name>
+  <image_url>http://photo.goodreads.com/users/1233964714p2/2003928.jpg</image_url>
+  <link>http://www.goodreads.com/user/show/2003928-thomas</link>
+</actor>
+      <updated_at>Fri, 06 Jul 2012 18:23:18 -0700</updated_at>
+        <object>
+          <user_status>
+  <body></body>
+  <book_id type="integer">7912517</book_id>
+  <chapter type="integer" nil="true"></chapter>
+  <comments_count type="integer">0</comments_count>
+  <created_at type="datetime">2012-07-07T01:23:18+00:00</created_at>
+  <id type="integer">15546058</id>
+  <last_comment_at type="datetime" nil="true"></last_comment_at>
+  <page type="integer">257</page>
+  <percent type="integer">78</percent>
+  <ratings_count type="integer">0</ratings_count>
+  <updated_at type="datetime">2012-07-07T01:23:18+00:00</updated_at>
+  <user_id type="integer">2003928</user_id>
+  <work_id type="integer">11194134</work_id>
+  <review_id type="integer">259017351</review_id>
+  <book>
+    <asin nil="true"></asin>
+    <author_id type="integer">1326270</author_id>
+    <author_id_updater_user_id type="integer">-44</author_id_updater_user_id>
+    <author_role nil="true"></author_role>
+    <author_role_updater_user_id type="integer" nil="true"></author_role_updater_user_id>
+    <book_authors_count type="integer">0</book_authors_count>
+    <created_at type="datetime">2010-03-25T03:02:34+00:00</created_at>
+    <description>Ruby, Io, Prolog, Scala, Erlang, Clojure, Haskell. With &lt;i&gt;Seven Languages in Seven Weeks,&lt;/i&gt; by Bruce A. Tate, you'll go beyond the syntax-and beyond the 20-minute tutorial you'll find someplace online. This book has an audacious goal: to present a meaningful exploration of seven languages within a single book. Rather than serve as a complete reference or installation guide, &lt;i&gt;Seven Languages&lt;/i&gt; hits what's essential and unique about each language. Moreover, this approach will help teach you how to grok new languages.&lt;br&gt;&lt;br&gt; For each language, you'll solve a nontrivial problem, using techniques that show off the language's most important features. As the book proceeds, you'll discover the strengths and weaknesses of the languages, while dissecting the process of learning languages quickly--for example, finding the typing and programming models, decision structures, and how you interact with them.&lt;br&gt;&lt;br&gt; Among this group of seven, you'll explore the most critical programming models of our time. Learn the dynamic typing that makes Ruby, Python, and Perl so flexible and compelling. Understand the underlying prototype system that's at the heart of JavaScript. See how pattern matching in Prolog shaped the development of Scala and Erlang. Discover how pure functional programming in Haskell is different from the Lisp family of languages, including Clojure.&lt;br&gt;&lt;br&gt; Explore the concurrency techniques that are quickly becoming the backbone of a new generation of Internet applications. Find out how to use Erlang's let-it-crash philosophy for building fault-tolerant systems. Understand the actor model that drives concurrency design in Io and Scala. Learn how Clojure uses versioning to solve some of the most difficult concurrency problems.&lt;br&gt;&lt;br&gt; It's all here, all in one place. Use the concepts from one language to find creative solutions in another-or discover a language that may become one of your favorites.</description>
+    <description_updater_user_id type="integer">-44</description_updater_user_id>
+    <edition_information nil="true"></edition_information>
+    <edition_information_updater_user_id type="integer" nil="true"></edition_information_updater_user_id>
+    <format>Paperback</format>
+    <format_updater_user_id type="integer">-44</format_updater_user_id>
+    <id type="integer">7912517</id>
+    <image_updater_user_id type="integer">-30</image_updater_user_id>
+    <image_uploaded_at type="datetime">2010-08-11T22:47:36+00:00</image_uploaded_at>
+    <isbn>193435659X</isbn>
+    <isbn13>9781934356593</isbn13>
+    <isbn13_updater_user_id type="integer">-44</isbn13_updater_user_id>
+    <isbn_updater_user_id type="integer">-44</isbn_updater_user_id>
+    <language_code>eng</language_code>
+    <language_updater_user_id type="integer">-110</language_updater_user_id>
+    <num_pages type="integer">328</num_pages>
+    <num_pages_updater_user_id type="integer">-44</num_pages_updater_user_id>
+    <publication_date_updater_user_id type="integer">-44</publication_date_updater_user_id>
+    <publication_day type="integer">17</publication_day>
+    <publication_month type="integer">11</publication_month>
+    <publication_year type="integer">2010</publication_year>
+    <publisher>Pragmatic Bookshelf</publisher>
+    <publisher_updater_user_id type="integer">-44</publisher_updater_user_id>
+    <ratings_count type="integer">160</ratings_count>
+    <ratings_sum type="integer">627</ratings_sum>
+    <reviews_count type="integer">687</reviews_count>
+    <s3_image_at type="datetime">2010-08-11T22:47:36+00:00</s3_image_at>
+    <sort_by_title>seven languages in seven weeks: a pragmatic guide to learning programming languages</sort_by_title>
+    <source_url nil="true"></source_url>
+    <text_reviews_count type="integer">23</text_reviews_count>
+    <title>Seven Languages in Seven Weeks: A Pragmatic Guide to Learning Programming Languages</title>
+    <title_updater_user_id type="integer">-44</title_updater_user_id>
+    <updated_at type="datetime">2012-07-13T23:19:17+00:00</updated_at>
+    <url nil="true"></url>
+    <url_updater_user_id type="integer" nil="true"></url_updater_user_id>
+    <work_id type="integer">11194134</work_id>
+    <author>
+      <about nil="true"></about>
+      <author_program_at type="datetime" nil="true"></author_program_at>
+      <best_book_id type="integer">7912517</best_book_id>
+      <books_count type="integer">7</books_count>
+      <born_at type="datetime" nil="true"></born_at>
+      <country_code nil="true"></country_code>
+      <created_at type="datetime">2008-03-26T00:26:20+00:00</created_at>
+      <died_at type="datetime" nil="true"></died_at>
+      <fanships_count type="integer">0</fanships_count>
+      <gender nil="true"></gender>
+      <genre1 nil="true"></genre1>
+      <genre2 nil="true"></genre2>
+      <genre3 nil="true"></genre3>
+      <hometown nil="true"></hometown>
+      <id type="integer">1326270</id>
+      <image_copyright nil="true"></image_copyright>
+      <image_uploaded_at type="datetime" nil="true"></image_uploaded_at>
+      <influences nil="true"></influences>
+      <name>Bruce A. Tate</name>
+      <postal_code nil="true"></postal_code>
+      <rating_dist>5:3|4:7|3:5|2:0|1:0|total:15</rating_dist>
+      <ratings_count type="integer">159</ratings_count>
+      <ratings_sum type="integer">623</ratings_sum>
+      <reviews_count type="integer">693</reviews_count>
+      <s3_image_at type="datetime" nil="true"></s3_image_at>
+      <searched_for_at type="datetime">2009-07-29T02:20:52+00:00</searched_for_at>
+      <text_reviews_count type="integer">23</text_reviews_count>
+      <updated_at type="datetime">2012-07-13T23:19:17+00:00</updated_at>
+      <uploader_user_id type="integer">0</uploader_user_id>
+      <url nil="true"></url>
+      <user_id type="integer" nil="true"></user_id>
+      <works_count type="integer">7</works_count>
+    </author>
+  </book>
+</user_status>
+        </object>
+    </update>
+      <update type="review">
+      <action_text><![CDATA[marked as to-read: <a href="http://www.goodreads.com/book/show/327.Why_Zebras_Don_t_Get_Ulcers">Why Zebras Don't Get Ulcers (Paperback)</a> by <a href="http://www.goodreads.com/author/show/187.Robert_M_Sapolsky">Robert M. Sapolsky</a>]]></action_text>
+      <link>http://www.goodreads.com/review/show/362564948</link>
+      <image_url>http://photo.goodreads.com/books/1316132077s/327.jpg</image_url>
+        <actor>
+  <id type="integer">2003928</id>
+  <name>Thomas</name>
+  <image_url>http://photo.goodreads.com/users/1233964714p2/2003928.jpg</image_url>
+  <link>http://www.goodreads.com/user/show/2003928-thomas</link>
+</actor>
+      <updated_at>Fri, 06 Jul 2012 13:06:16 -0700</updated_at>
+          <action type="added">
+            <shelf name="to-read" />
+          </action>
+        <object>
+          <book>
+            <id>327</id>
+            <title>Why Zebras Don&apos;t Get Ulcers</title>
+            <link>http://www.goodreads.com/book/show/327.Why_Zebras_Don_t_Get_Ulcers</link>
+            <authors>
+  <author>
+    <id>187</id>
+    <name>Robert M. Sapolsky</name>
+    <image_url><![CDATA[http://photo.goodreads.com/authors/1234040721p5/187.jpg]]></image_url>
+    <small_image_url><![CDATA[http://photo.goodreads.com/authors/1234040721p2/187.jpg]]></small_image_url>
+    <link><![CDATA[http://www.goodreads.com/author/show/187.Robert_M_Sapolsky]]></link>
+    <average_rating>4.21</average_rating>
+    <ratings_count>3287</ratings_count>
+    <text_reviews_count>561</text_reviews_count>
+  </author>
+</authors>
+          </book>
+        </object>
+    </update>
+      <update type="review">
+      <action_text><![CDATA[marked as to-read: <a href="http://www.goodreads.com/book/show/68429.The_Well_of_Ascension">The Well of Ascension (Mistborn, #2)</a> by <a href="http://www.goodreads.com/author/show/38550.Brandon_Sanderson">Brandon Sanderson</a>]]></action_text>
+      <link>http://www.goodreads.com/review/show/359663520</link>
+      <image_url>http://photo.goodreads.com/books/1317065088s/68429.jpg</image_url>
+        <actor>
+  <id type="integer">2003928</id>
+  <name>Thomas</name>
+  <image_url>http://photo.goodreads.com/users/1233964714p2/2003928.jpg</image_url>
+  <link>http://www.goodreads.com/user/show/2003928-thomas</link>
+</actor>
+      <updated_at>Mon, 02 Jul 2012 05:13:05 -0700</updated_at>
+          <action type="added">
+            <shelf name="to-read" />
+          </action>
+        <object>
+          <book>
+            <id>68429</id>
+            <title><![CDATA[The Well of Ascension (Mistborn, #2)]]></title>
+            <link>http://www.goodreads.com/book/show/68429.The_Well_of_Ascension</link>
+            <authors>
+  <author>
+    <id>38550</id>
+    <name>Brandon Sanderson</name>
+    <image_url><![CDATA[http://photo.goodreads.com/authors/1201547425p5/38550.jpg]]></image_url>
+    <small_image_url><![CDATA[http://photo.goodreads.com/authors/1201547425p2/38550.jpg]]></small_image_url>
+    <link><![CDATA[http://www.goodreads.com/author/show/38550.Brandon_Sanderson]]></link>
+    <average_rating>4.32</average_rating>
+    <ratings_count>183424</ratings_count>
+    <text_reviews_count>17149</text_reviews_count>
+  </author>
+</authors>
+          </book>
+        </object>
+    </update>
+</updates>
+    <user_statuses>
+        <user_status>
+  <body></body>
+  <chapter type="integer" nil="true"></chapter>
+  <comments_count type="integer">0</comments_count>
+  <created_at type="datetime">2012-07-07T01:23:18+00:00</created_at>
+  <id type="integer">15546058</id>
+  <last_comment_at type="datetime" nil="true"></last_comment_at>
+  <page type="integer">257</page>
+  <percent type="integer">78</percent>
+  <ratings_count type="integer">0</ratings_count>
+  <updated_at type="datetime">2012-07-07T01:23:18+00:00</updated_at>
+  <work_id type="integer">11194134</work_id>
+  <review_id type="integer">259017351</review_id>
+  <book>
+    <id type="integer">7912517</id>
+    <num_pages type="integer">328</num_pages>
+    <title>Seven Languages in Seven Weeks: A Pragmatic Guide to Learning Programming Languages</title>
+    <image_url>http://www.goodreads.com/assets/nocover/111x148.png</image_url>
+    <small_image_url>http://www.goodreads.com/assets/nocover/60x80.png</small_image_url>
+<authors><author>    <id>1326270</id>
+    <name>Bruce A. Tate</name>
+</author></authors>  </book>
+</user_status>
+    </user_statuses>
+</user>
+
+</GoodreadsResponse>

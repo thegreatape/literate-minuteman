@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   validates_presence_of   :email
   validates_uniqueness_of :goodreads_id
 
+  serialize :shelves, Array
+
   has_secure_password
   attr_accessible :email, :password, :password_confirmation
 
@@ -51,6 +53,20 @@ class User < ActiveRecord::Base
 
   def self.authenticate(email, password)
     find_by_email(email).try(:authenticate, password)
+  end
+
+  def update_shelves
+    self.shelves = client.user(goodreads_id).user_shelves.map(&:name)
+    save!
+  end
+
+
+  def client
+    consumer = OAuth::Consumer.new(GOODREADS_API_KEY, 
+                                   GOODREADS_API_SECRET, 
+                                   :site => 'http://www.goodreads.com')
+    access_token = OAuth::AccessToken.new(consumer, oauth_access_token, oauth_access_secret)
+    Goodreads::Client.new(access_token)
   end
   
 

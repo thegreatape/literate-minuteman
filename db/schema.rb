@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111213043656) do
+ActiveRecord::Schema.define(:version => 20120714223217) do
 
   create_table "books", :force => true do |t|
     t.string   "title"
@@ -68,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20111213043656) do
     t.string   "oauth_token"
     t.string   "oauth_secret"
     t.datetime "last_synced_at"
+    t.text     "shelves"
   end
 
 end

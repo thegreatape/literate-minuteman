@@ -43,6 +43,15 @@ class UserTest < ActiveSupport::TestCase
     assert_raises(ActiveRecord::RecordInvalid) {Factory(:user, :goodreads_id => user.goodreads_id)}
   end
 
+  test "updating shelves" do
+    user = Factory(:user)
+    FakeWeb.register_uri(:get, %r|/www\.goodreads\.com/user/show|,
+                         :body => fixture_file('goodreads_responses/user_show.xml'))
+    
+    assert user.update_shelves
+    assert_equal ["read", "currently-reading", "to-read", "photography", "wishlist"], user.shelves
+  end
+
   context "a full update of books" do
 
     setup do
