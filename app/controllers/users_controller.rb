@@ -36,7 +36,7 @@ class UsersController < ApplicationController
       session[:user_id] = user.id
       redirect_to '/'
     else
-      render :login, :locals => {:errors => "Email and password combination not found."}
+      render :login, :locals => {:errors => ["Email and password combination not found."]}
     end
   end
 

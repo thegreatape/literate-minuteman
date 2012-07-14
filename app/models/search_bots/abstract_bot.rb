@@ -22,7 +22,7 @@ module SearchBots
       # be nice to library servers!
       sleep 1
       case res
-      when Net::HTTPFound: 
+      when Net::HTTPFound
         return fetch(res['location'] || res['Location'])
       else 
         return res

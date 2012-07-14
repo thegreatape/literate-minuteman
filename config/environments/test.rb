@@ -1,5 +1,3 @@
-require 'ruby-debug' 
-
 Minuteman::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -41,4 +39,8 @@ Minuteman::Application.configure do
 
   # don't allow real http calls in test environment
   FakeWeb.allow_net_connect = false
+
+  # stub goodreads constants
+  GOODREADS_API_KEY = ' '
+  GOODREADS_API_SECRET = ' '
 end
