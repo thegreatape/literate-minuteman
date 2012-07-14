@@ -22,8 +22,8 @@ class UsersController < ApplicationController
     access_token = request_token.get_access_token
     client = Goodreads::Client.new(access_token)
     @user.goodreads_id = client.user_id
-    @user.oauth_token = access_token.token
-    @user.oauth_secret = access_token.secret
+    @user.oauth_access_token = access_token.token
+    @user.oauth_access_secret = access_token.secret
     @user.save
     redirect_to :controller => :books, :action => :index
   end
