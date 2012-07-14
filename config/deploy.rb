@@ -12,10 +12,8 @@ set :domain, 'zen-hacking.com'
 set :application, 'literate-minuteman'
 
 # adjust if you are using RVM, remove if you are not
-#$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
-#require "rvm/capistrano"
-#set :rvm_ruby_string, '1.9.2'
-#set :rvm_type, :user
+require "rvm/capistrano"
+set :rvm_ruby_string, '1.9.3'
 
 # file paths
 set :repository,  "git@github.com:thegreatape/#{application}.git" 
