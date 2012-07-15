@@ -30,7 +30,7 @@ group :test do
   gem 'mocha'
   gem 'turn', :require => false
   gem 'hashie'
-  gem 'shoulda'
+  gem 'shoulda', :require => false
   gem 'factory_girl_rails'
   gem 'fakeweb'
   gem 'capybara-webkit'
