@@ -7,17 +7,24 @@
         .check-box-container
           = check_box_tag "user[library_system_ids][]", system.id, @user.library_systems.member?(system), {id: "user_systems_#{system.id}"}
           = label_tag "user_systems_#{system.id}", system.name
-  - unless @user.library_systems.empty?
-    - @user.library_systems.each do |system| 
-      %h3
-        Preferred branches in the #{system.name}
-      %p Check the branches that you'd like to see books from by default. 
-      - unless system.locations.empty?
-        - system.locations.each_slice(system.locations.length / 3).each do |sublist|
-          %div.branches-part
-            - sublist.each do |location|
-              = check_box_tag 'user[location_ids][]', location.id, @user.locations.member?(location), {id: "user_location_ids_#{location.id}"}
-              = label_tag "user_location_ids_#{location.id}", location.name
-              %br
-        %br{:style => 'clear:both'}
-  = f.submit "Save"
+    %h3 
+      Choose your Goodreads shelves
+    %p Check the shelves with books you'd like to check for availability. 
+    - @user.shelves.each do |shelf|
+      .check-box-container
+        = check_box_tag "user[active_shelves][]", shelf, @user.active_shelves.member?(shelf), {id: "user_shelf_#{shelf}"}
+        = label_tag "user_shelf_#{shelf}", shelf
+    - unless @user.library_systems.empty?
+      - @user.library_systems.each do |system| 
+        %h3
+          Preferred branches in the #{system.name}
+        %p Check the branches that you'd like to see books from by default. 
+        - unless system.locations.empty?
+          - system.locations.each_slice(system.locations.length / 3).each do |sublist|
+            %div.branches-part
+              - sublist.each do |location|
+                = check_box_tag 'user[location_ids][]', location.id, @user.locations.member?(location), {id: "user_location_ids_#{location.id}"}
+                = label_tag "user_location_ids_#{location.id}", location.name
+                %br
+          %br{:style => 'clear:both'}
+    = f.submit "Save"

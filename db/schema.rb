@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120714223217) do
+ActiveRecord::Schema.define(:version => 20120715160327) do
 
   create_table "books", :force => true do |t|
     t.string   "title"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(:version => 20120714223217) do
     t.string   "oauth_secret"
     t.datetime "last_synced_at"
     t.text     "shelves"
+    t.text     "active_shelves"
   end
 
 end

@@ -81,6 +81,17 @@ class UsersIntegrationTest < ActionDispatch::IntegrationTest
       assert_equal books_url, current_url
     end
 
+    should "save active shelves" do
+      @user.shelves = ['to-read', 'wishlist']
+      @user.save
+      
+      visit "/users/#{@user.id}/edit"
+      check 'wishlist'
+      click_on 'Save'
+
+      assert_equal ['wishlist'], @user.reload.active_shelves
+    end
+
     private
     def save_systems(*args)
       visit "/users/#{@user.id}/edit"

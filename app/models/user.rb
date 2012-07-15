@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   has_and_belongs_to_many :library_systems
   has_and_belongs_to_many :locations
-  attr_accessible :location_ids, :library_system_ids
+  attr_accessible :location_ids, :library_system_ids, :active_shelves
 
   has_many :books, :dependent => :destroy
 
@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :goodreads_id
 
   serialize :shelves, Array
+  serialize :active_shelves, Array
 
   has_secure_password
   attr_accessible :email, :password, :password_confirmation
