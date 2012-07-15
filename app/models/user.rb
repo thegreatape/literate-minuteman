@@ -5,15 +5,10 @@ class User < ActiveRecord::Base
 
   has_many :books, :dependent => :destroy
 
-  validates_uniqueness_of :email
-  validates_presence_of   :email
   validates_uniqueness_of :goodreads_id
 
   serialize :shelves, Array
   serialize :active_shelves, Array
-
-  has_secure_password
-  attr_accessible :email, :password, :password_confirmation
 
   def sync_books(list, library_system)
     return if list.empty?

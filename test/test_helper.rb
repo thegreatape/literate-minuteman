@@ -4,7 +4,7 @@ require 'rails/test_help'
 require 'shoulda'
 
 module Resque
-  def enqueue; end
+  def enqueue(*args); end
 end
 
 class ActiveSupport::TestCase
@@ -35,9 +35,9 @@ class ActionDispatch::IntegrationTest
   end
 
   def login(user)
-    visit '/login'
-    fill_in 'email', with: user.email
-    fill_in 'password', with: 'password'
-    click_on 'Login'
+    UsersController.any_instance.stubs(:get_authorized_user).returns(user)
+    User.any_instance.stubs(:update_shelves)
+    visit '/oauth-callback'
+    User.any_instance.unstub(:update_shelves)
   end
 end
