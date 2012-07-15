@@ -4,7 +4,7 @@
 - elsif @user.books.empty?
   .book
     %h2 Thanks for signing up!
-    %p Our army of gruff-but-friendly robots is checking your to-read list against your library's records. Check back in a few minutes!
+    %p Our army of gruff-but-friendly robots is checking your book lists against your library's records. Check back in a few minutes!
 - else
   = render :partial => 'books_header'
   - @books.each do |book|
