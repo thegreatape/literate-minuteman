@@ -1,24 +1,2 @@
 .book
-  = form_for @user do |f|
-    .choose-library-system
-      %h3 Choose your library system
-      %p Check the library systems that you're a part of, and we'll search those for books on your to-read list.
-      = form_tag :controller => :users, :action => :save_library_systems do
-        - LibrarySystem.all.each do |system|
-          .check-box-container
-            = check_box_tag "user[library_system_ids][]", system.id, @user.library_systems.member?(system), {id: "user_systems_#{system.id}"}
-            = label_tag "user_systems_#{system.id}", system.name
-    - unless @user.library_systems.empty?
-      - @user.library_systems.each do |system| 
-        %h3
-          Preferred branches in the #{system.name}
-        %p Check the branches that you'd like to see books from by default. 
-        - unless system.locations.empty?
-          - system.locations.each_slice(system.locations.length / 3).each do |sublist|
-            %div.branches-part
-              - sublist.each do |location|
-                = check_box_tag 'user[location_ids][]', location.id, @user.locations.member?(location), {id: "user_location_ids_#{location.id}"}
-                = label_tag "user_location_ids_#{location.id}", location.name
-                %br
-          %br{:style => 'clear:both'}
-    = f.submit "Save"
+  = render partial: 'users/form'

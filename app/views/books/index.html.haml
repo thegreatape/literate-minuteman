@@ -1,6 +1,6 @@
 - if @user.library_systems.empty?
   .book
-    = render :partial => 'users/choose_library_system'
+    = render partial: 'users/form'
 - elsif @user.books.empty?
   .book
     %h2 Thanks for signing up!

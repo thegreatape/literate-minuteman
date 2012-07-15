@@ -62,20 +62,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def library_systems
-  end
-
-  def save_library_systems
-    @user.library_systems.clear
-    if params[:systems]
-      params[:systems].each do |id, val|
-        @user.library_systems << LibrarySystem.find(id) if val
-      end
-      Resque.enqueue(UpdateUser, @user.id)
-    end
-    redirect_to :controller => :books, :action => :index
-  end
-
   private 
   def get_consumer 
     OAuth::Consumer.new(GOODREADS_API_KEY, 
