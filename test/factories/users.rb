@@ -1,5 +1,5 @@
 Factory.sequence :goodreads_id do |n|
-  n
+  n.to_s
 end
 Factory.sequence :email do |n|
   "user#{n}@test.com"

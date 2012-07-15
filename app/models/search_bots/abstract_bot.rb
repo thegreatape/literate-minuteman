@@ -33,8 +33,14 @@ module SearchBots
       Goodreads.configure(@api_key)
       client = Goodreads::Client.new
 
-      items = client.shelf(@user_id, 'to-read', :per_page => 100).books
-      items.map do |entry| 
+      shelves = User.find_by_goodreads_id(@user_id).active_shelves
+      shelves = ['to-read'] if shelves.empty?
+
+      items = shelves.collect do |shelf| 
+        client.shelf(@user_id, shelf, :per_page => 100).books
+      end
+
+      items.flatten.map do |entry| 
         title = entry.book.title.strip
         author = entry.book.authors.author.name.strip
         puts "checking #{title} / #{author} ..."

@@ -3,8 +3,9 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'shoulda'
 
-Resque.stubs(:enqueue)
-
+module Resque
+  def enqueue; end
+end
 
 class ActiveSupport::TestCase
   def fixture_file(path)
