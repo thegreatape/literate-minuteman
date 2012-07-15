@@ -27,8 +27,8 @@ group :assets do
 end
 
 group :test do
-  gem 'test-unit'
   gem 'mocha'
+  gem 'turn', :require => false
   gem 'hashie'
   gem 'shoulda'
   gem 'factory_girl_rails'
