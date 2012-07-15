@@ -33,6 +33,8 @@ group :test do
   gem 'shoulda'
   gem 'factory_girl_rails'
   gem 'fakeweb'
+  gem 'capybara-webkit'
+  gem 'database_cleaner'
 end
 
 gem 'jquery-rails'
@@ -43,3 +45,4 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 # Deploy with Capistrano
 gem 'capistrano'
 gem 'rvm-capistrano'
+

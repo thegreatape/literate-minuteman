@@ -45,6 +45,22 @@ class UsersController < ApplicationController
     redirect_to '/'
   end
 
+  def edit
+  end
+
+  def update
+    params[:user] ||= {}
+    params[:user][:location_ids] ||= []
+
+    if @user.update_attributes(params[:user])
+      flash[:notice_good] = "Settings updated."
+      redirect_to :controller => :books, :action => :index
+    else 
+      flash[:notice_bad] = "Couldn't save settings."
+      render :edit
+    end
+  end
+
   def library_systems
   end
 
@@ -55,17 +71,6 @@ class UsersController < ApplicationController
         @user.library_systems << LibrarySystem.find(id) if val
       end
       Resque.enqueue(UpdateUser, @user.id)
-    end
-    redirect_to :controller => :books, :action => :index
-  end
-
-  def locations
-  end
-
-  def save_locations
-    @user.locations.clear
-    if params[:locations]
-      @user.locations = params[:locations].map {|l| Location.find(l) } 
     end
     redirect_to :controller => :books, :action => :index
   end

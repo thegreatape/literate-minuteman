@@ -1,0 +1,12 @@
+.book
+  = form_for @user do |f|
+    - @user.library_systems.each do |system| 
+      %h2= system.name
+      - system.locations.each_slice(system.locations.length / 3).each do |sublist|
+        %div.branches-part
+          - sublist.each do |location|
+            = check_box_tag 'user[location_ids][]', location.id, @user.locations.member?(location), {id: "user_location_ids_#{location.id}"}
+            = label_tag "user_location_ids_#{location.id}", location.name
+            %br
+      %br{:style => 'clear:both'}
+      = f.submit "Save"

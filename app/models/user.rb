@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_and_belongs_to_many :library_systems
   has_and_belongs_to_many :locations
+  attr_accessible :location_ids, :library_system_ids
 
   has_many :books, :dependent => :destroy
 
