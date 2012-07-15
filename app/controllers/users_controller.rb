@@ -51,6 +51,7 @@ class UsersController < ApplicationController
   def update
     params[:user] ||= {}
     params[:user][:location_ids] ||= []
+    params[:user][:library_system_ids] ||= []
 
     if @user.update_attributes(params[:user])
       flash[:notice_good] = "Settings updated."

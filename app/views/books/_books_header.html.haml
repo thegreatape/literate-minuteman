@@ -7,8 +7,6 @@
   %p.nav 
     = link_to 'Settings', controller: :users, action: :edit, id: @user.id
     %span.divider= " | "
-    = link_to "Change Library Systems", user_library_systems_url
-    %span.divider= " | "
     = link_to 'Logout', logout_url
 .book
   .pagination

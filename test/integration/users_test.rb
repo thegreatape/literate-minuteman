@@ -3,12 +3,14 @@ require 'test_helper'
 class UsersIntegrationTest < ActionDispatch::IntegrationTest
   context "editing user preferences" do
     setup do
-      @library_system = Factory(:library_system)
-      @loc1 = Factory(:location, library_system: @library_system)
-      @loc2 = Factory(:location, library_system: @library_system)
-      @loc3 = Factory(:location, library_system: @library_system)
+      @system1 = Factory(:library_system)
+      @system2 = Factory(:library_system)
+      @system3 = Factory(:library_system)
+      @loc1 = Factory(:location, library_system: @system1)
+      @loc2 = Factory(:location, library_system: @system1)
+      @loc3 = Factory(:location, library_system: @system1)
 
-      @user = Factory(:user, library_systems: [@library_system])
+      @user = Factory(:user, library_systems: [@system1])
       login @user
     end
 
@@ -32,7 +34,7 @@ class UsersIntegrationTest < ActionDispatch::IntegrationTest
       assert @user.locations.member? @loc2
     end
 
-    should "overwrite existing choices" do
+    should "overwrite existing location choices" do
       @user.locations = [@loc1, @loc2]
 
       visit "/users/#{@user.id}/edit"
@@ -44,6 +46,53 @@ class UsersIntegrationTest < ActionDispatch::IntegrationTest
       assert_equal 2, @user.locations.length
       assert @user.locations.member? @loc1
       assert @user.locations.member? @loc2
+    end
+
+    should "save for a single library system" do
+      save_systems @system1
+      assert @user.library_systems.member? @system1
+      assert_equal 1, @user.library_systems.length
+    end
+
+    should "work for multiple library systems" do
+      save_systems @system1, @system2, @system3
+      assert @user.library_systems.member? @system1
+      assert @user.library_systems.member? @system2
+      assert @user.library_systems.member? @system3
+      assert_equal 3, @user.library_systems.length
+    end
+
+    should "be able to change library systems" do
+      save_systems @system1, @system2
+      save_systems @system2, @system3
+      assert @user.library_systems.member? @system2
+      assert @user.library_systems.member? @system3
+      assert_equal 2, @user.library_systems.length
+    end
+
+    should "be able to de-select all library systems" do
+      save_systems @system1, @system2
+      save_systems
+      assert_equal 0, @user.library_systems.length
+    end
+
+    should "redirect back to books index" do
+      save_systems @system1
+      assert_equal books_url, current_url
+    end
+
+    private
+    def save_systems(*args)
+      visit "/users/#{@user.id}/edit"
+      assert_equal 200, page.status_code
+
+      [@system1, @system2, @system3].each {|s| uncheck(s.name)}
+      args.each do |s| 
+        check(s.name)
+      end
+
+      click_on 'Save'
+      @user.reload
     end
       
   end
