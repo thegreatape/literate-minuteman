@@ -43,13 +43,14 @@ module SearchBots
       items.flatten.map do |entry| 
         title = entry.book.title.strip
         author = entry.book.authors.author.name.strip
-        puts "checking #{title} / #{author} ..."
+
         results = find(title, author) 
-        puts "Found #{results.length} possible candidates\n---"
-        {:title => title,
-         :author => author,
-         :copies => results
-        }
+        {title:           title,
+         author:          author,
+         goodreads_link:  entry.book.link.strip,
+         image_url:       entry.book.image_url.strip,
+         small_image_url: entry.book.small_image_url.strip,
+         copies: results }
       end
     end
 

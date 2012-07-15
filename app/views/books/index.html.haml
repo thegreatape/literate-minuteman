@@ -9,12 +9,16 @@
   = render :partial => 'books_header'
   - @books.each do |book|
     .book.book-result
-      %h2 
-        = book[:title]
-        %span.divider / 
-        = book[:author]
-      %ul.results
-        = render :partial => "book", :locals => {:book => book}
+      - if book.image_url.present?
+        .image 
+          = image_tag book.image_url
+      .data
+        %h2 
+          = book[:title]
+          %span.divider / 
+          = book[:author]
+        %ul.results
+          = render :partial => "book", :locals => {:book => book}
   .book
     .pagination
       = will_paginate @books

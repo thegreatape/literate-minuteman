@@ -15,7 +15,10 @@ class User < ActiveRecord::Base
 
     list.each do |b|
       book = books.find_or_create_by_title_and_author(b[:title], b[:author])
-      book.update_attributes(:last_synced_at => Time.now)
+      book.update_attributes(last_synced_at:  Time.now,
+                             goodreads_link:  b[:goodreads_link],
+                             image_url:       b[:image_url],
+                             small_image_url: b[:small_image_url])
       book.sync_copies b[:copies], library_system
     end
     update_attribute(:last_synced_at, Time.now)
