@@ -67,13 +67,19 @@ end
 after "deploy:update_code", :bundle_install
 desc "install the necessary prerequisites"
 task :bundle_install, :roles => :app do
-  run "cd #{release_path} && bundle install"
+  run "cd #{release_path} && bundle install --without=test"
 end
 
 after "bundle_install", :precompile_assets
 desc "precompile assets"
 task :precompile_assets, :roles => :app do
   run "cd #{release_path} && bundle exec rake assets:precompile"
+end
+
+after "precompile_assets", :db_migrate
+desc "run migrations"
+task :db_migrate, :roles => :app do
+  run "cd #{release_path} && RAILS_ENV=production bundle exec rake db:migrate"
 end
 
 after "deploy:restart", :restart_resque
