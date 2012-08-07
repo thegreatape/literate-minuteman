@@ -17,8 +17,8 @@ ActiveRecord::Schema.define(:version => 20120715212856) do
     t.string   "title"
     t.integer  "user_id"
     t.string   "author"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.datetime "last_synced_at"
     t.string   "goodreads_link"
     t.string   "image_url"
@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(:version => 20120715212856) do
     t.string   "call_number"
     t.integer  "book_id"
     t.string   "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.datetime "last_synced_at"
     t.integer  "location_id"
   end
@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(:version => 20120715212856) do
   create_table "library_systems", :force => true do |t|
     t.string   "search_bot_class"
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "library_systems_users", :force => true do |t|
@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(:version => 20120715212856) do
   create_table "locations", :force => true do |t|
     t.integer  "library_system_id"
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   create_table "locations_users", :force => true do |t|
@@ -65,8 +65,8 @@ ActiveRecord::Schema.define(:version => 20120715212856) do
     t.string   "oauth_access_token"
     t.string   "oauth_access_secret"
     t.string   "goodreads_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.datetime "last_synced_at"
     t.text     "shelves"
     t.text     "active_shelves"

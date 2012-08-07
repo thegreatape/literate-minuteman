@@ -1,9 +1,9 @@
 class AddDefaultLibrarySystems < ActiveRecord::Migration
   def up
     execute("""
-    INSERT INTO library_systems (search_bot_class, name) VALUES 
-      ('SearchBots::MinutemanBot', 'Massachusetts Minuteman Library Network'),
-      ('SearchBots::BplBot',       'Boston Public Library System')
+    INSERT INTO library_systems (search_bot_class, name, created_at, updated_at) VALUES 
+      ('SearchBots::MinutemanBot', 'Massachusetts Minuteman Library Network', NOW(), NOW()),
+      ('SearchBots::BplBot',       'Boston Public Library System', NOW(), NOW())
     """)
   end
 
