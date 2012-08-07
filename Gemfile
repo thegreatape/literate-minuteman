@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.2'
+gem 'rails', '3.2.7'
 gem 'pg'
 gem 'haml'
 gem 'hpricot'
@@ -21,17 +21,18 @@ gem 'json'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.1.5.rc.2'
-  gem 'coffee-rails', '~> 3.1.1'
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
 end
 
 group :test do
-  gem 'mocha'
+  gem 'minitest'
+  gem 'mocha', '0.11.4'
   gem 'turn', :require => false
   gem 'hashie'
   gem 'shoulda', :require => false
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', '1.4.0'
   gem 'fakeweb'
   gem 'capybara-webkit'
   gem 'database_cleaner'

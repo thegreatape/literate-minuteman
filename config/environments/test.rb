@@ -43,4 +43,7 @@ Minuteman::Application.configure do
   # stub goodreads constants
   GOODREADS_API_KEY = ' '
   GOODREADS_API_SECRET = ' '
+
+  # Raise exception on mass assignment protection for Active Record models
+  config.active_record.mass_assignment_sanitizer = :strict
 end

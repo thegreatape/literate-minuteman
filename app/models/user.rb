@@ -21,7 +21,8 @@ class User < ActiveRecord::Base
                              small_image_url: b[:small_image_url])
       book.sync_copies b[:copies], library_system
     end
-    update_attribute(:last_synced_at, Time.now)
+    self.last_synced_at = Time.now
+    save!
   end
 
   def update!
