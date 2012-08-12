@@ -19,7 +19,7 @@ module SearchBots
         next unless availability_link.present?
         avail = fetch(availability_link.attributes['href'])
         title = (tr / '.nsm-brief-primary-title-group').first.inner_text.strip
-        author = (tr / '.nsm-brief-primary-author-group').first.inner_text.strip
+        author = (tr / '.nsm-brief-primary-author-group').first.try(:inner_text).try(:strip)
         
         results = []
         current_loc = ''
