@@ -10,10 +10,11 @@ module SearchBots
       raise NotImplementedError
     end
 
-    def fetch(uri)
-      headers ||= {}
-      uri = URI::parse(uri)
-      req = Net::HTTP::Get.new(uri.path+'?'+uri.query, {'@cookies' => @cookies})
+    def fetch(uri, headers={})
+      uri = URI::parse(uri.gsub(' ', '%20'))
+      query = uri.query ? "?#{uri.query}" : ''
+      req = Net::HTTP::Get.new("#{uri.path}#{query}", {'cookie' => @cookies})
+      headers.each {|k,v| req.add_field(k, v)}
       res = Net::HTTP.start(uri.host, uri.port) {|http|
         http.request(req)
       } 
@@ -23,7 +24,11 @@ module SearchBots
       sleep 1
       case res
       when Net::HTTPFound
-        return fetch(res['location'] || res['Location'])
+        loc = res['location'] || res['Location']
+        unless loc.starts_with? ('http://')
+          loc = "http://#{uri.host}#{loc}"
+        end
+        return fetch loc
       else 
         return res
       end
