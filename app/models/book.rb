@@ -7,13 +7,10 @@ class Book < ActiveRecord::Base
   has_many :copies
 
   scope :with_copies_at, lambda {|locations|
-    locations = [locations] unless locations.is_a?(Enumerable)
-    where("books.id in (select distinct(copies.book_id) from copies where copies.location_id in (#{locations.map(&:id).join(',')}))") 
+    where("books.id in (select distinct(copies.book_id) from copies where copies.location_id in (?))", Array(locations))
   }
   scope :without_copies_at, lambda {|locations|
-    locations = [locations] unless locations.is_a?(Enumerable)
-    where("books.id not in (select distinct(copies.book_id) from copies where copies.location_id in (#{locations.map(&:id).join(',')}))")
-
+    where("books.id not in (select distinct(copies.book_id) from copies where copies.location_id in (?))", Array(locations))
   }
   scope :with_copies, lambda{ 
     where('books.id in (select distinct(copies.book_id) from copies)') 
