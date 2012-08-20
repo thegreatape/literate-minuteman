@@ -7,7 +7,6 @@ class Copy < ActiveRecord::Base
     joins(:location).where(:locations => {:library_system_id => system.id})
   }
   scope :at_location, lambda{|locations|
-    locations = [locations] unless locations.is_a?(Enumerable)
-    where("location_id in (#{locations.map(&:id).join(',')})")
+    where("location_id in (?)", Array(locations))
   }
 end
