@@ -17,11 +17,13 @@ module SearchBots
         location_html = fetch("http://bostonpl.bibliocommons.com#{availability_url}").body
         location_table = (Hpricot(location_html)/'.branch table').first
         status_idx = (location_table / 'th').index {|i| i.attributes['class'] == 'status'}
+        call_number_idx = (location_table / 'th').index {|i| i.attributes['class'] == 'call_no'}
         (location_table/'tr').map { |loc|
           cells = loc/'td'
           if cells.compact.length > 3
             {:title => title,
              :location => cells[0].inner_text.gsub(/\(\d+\)\s*$/, '').strip,
+             :call_number => cells[call_number_idx].inner_text.strip,
              :status => normalize_status(cells[status_idx].inner_text.strip)
             }
           end
