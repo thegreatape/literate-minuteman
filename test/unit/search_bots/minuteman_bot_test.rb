@@ -14,7 +14,7 @@ class MinutemanBotTest < ActiveSupport::TestCase
     bot.stubs(:fetch).with(uri).returns(response)
 
     results = bot.find("Gardens of the Moon", "Steven Erikson")
-    assert_equal 6, results.length
+    assert_equal 7, results.length
     [["In","Waltham"],
      ["In","Natick"],
      ["Out","Cambridge"],

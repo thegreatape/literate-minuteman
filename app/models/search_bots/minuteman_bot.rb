@@ -25,8 +25,9 @@ module SearchBots
         end
         
         locations.map{ |l| {:title => title, 
-                            :location => l[0], 
-                            :status => normalize_status(l[1])}}
+                            :location => l[0],
+                            :call_number => l[1],
+                            :status => normalize_status(l[2])}}
       }.flatten.uniq
 
     end
@@ -45,6 +46,7 @@ module SearchBots
       (row/'table.itemTable tr' ).map { |loc|
         tds = loc/'td'
         [(tds[0]/'a').inner_html.strip.split("/").map(&:titleize)[0..-2].join(' / '), 
+         tds[1].inner_html.strip.split("<b>")[0].gsub("&nbsp;", ""),
          tds[2].inner_html.strip.scan(/^(\w+).*/).first.first.titleize] unless tds.empty?
       }.reject(&:nil?)
     end
