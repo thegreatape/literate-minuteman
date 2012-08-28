@@ -1,3 +1,4 @@
+#encoding: utf-8
 require 'open-uri'
 require 'net/http'
 require 'uri'
@@ -46,7 +47,7 @@ module SearchBots
       (row/'table.itemTable tr' ).map { |loc|
         tds = loc/'td'
         [(tds[0]/'a').inner_html.strip.split("/").map(&:titleize)[0..-2].join(' / '), 
-         tds[1].inner_html.strip.split("<b>")[0].gsub("&nbsp;", ""),
+         tds[1].inner_html.strip.split("<b>")[0].gsub("&nbsp;", "").gsub(" ",""), #that's an nbsp, not a regular space. for some reason strip doesn't strip it.
          tds[2].inner_html.strip.scan(/^(\w+).*/).first.first.titleize] unless tds.empty?
       }.reject(&:nil?)
     end
