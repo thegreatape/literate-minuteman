@@ -28,9 +28,12 @@ module SearchBots
           when 'location'
             current_loc = row.inner_text.strip.gsub(/\n.*$/,'')
           when 'piece'
-            status = (row / 'td')[-2].inner_text.strip
+            tds = row /'td'
+            status = tds[-2].inner_text.strip
+            call_number = tds[0].inner_text.strip
             results.push({ status: normalize_status(status),
                            location: current_loc.clone,
+                           call_number: call_number,
                            title: "#{title} #{author}" })
           end
         end
