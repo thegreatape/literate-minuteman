@@ -55,8 +55,7 @@ module SearchBots
     def search_url(title, author)
       title.gsub!(/\(.*\)/,'')
       title = CGI::escape("#{title} #{author}")
-      "http://find.minlib.net/iii/encore/search/C__S#{title}__Orightresult__U1?lang=eng&suite=pearl"
+      "http://find.minlib.net/iii/encore/search/C__S#{title}__Ff%3Afacetmediatype%3Aa%3Aa%3ABOOK%3A%3A__Orightresult__U1?lang=eng&suite=cobalt"
     end
-
   end
 end

@@ -44,7 +44,7 @@ module SearchBots
       title = title.gsub(/\(.*\)/,'').downcase
       author = author.downcase
       q = CGI::escape("#{title} #{author}")
-      "http://bostonpl.bibliocommons.com/search?t=smart&search_category=keyword&q=#{q}&commit=Search"
+      "http://bostonpl.bibliocommons.com/search?t=smart&search_category=keyword&q=#{q}&commit=Search&formats=BK"
     end
   end
 end
