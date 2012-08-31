@@ -6,3 +6,5 @@
     = copy.title 
     \:
     %b= copy.status
+    -if copy.status == 'In'
+      ="at #{copy.call_number}"

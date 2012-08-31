@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
     return if list.empty?
 
     list.each do |b|
-      book = books.find_or_create_by_title_and_author(b[:title], b[:author])
+      book = self.books.find_or_create_by_title_and_author(b[:title], b[:author])
       book.update_attributes(last_synced_at:  Time.now,
                              goodreads_link:  b[:goodreads_link],
                              image_url:       b[:image_url],
@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   end
 
   def delete_books_not_on_list(list)
-    b = books
+    b = self.books
     list.each do |book|
       b = b.where('NOT (books.author = ? AND books.title = ?)', book[:author], book[:title])
     end

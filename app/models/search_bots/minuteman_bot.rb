@@ -1,3 +1,4 @@
+#encoding: utf-8
 require 'open-uri'
 require 'net/http'
 require 'uri'
@@ -25,8 +26,9 @@ module SearchBots
         end
         
         locations.map{ |l| {:title => title, 
-                            :location => l[0], 
-                            :status => normalize_status(l[1])}}
+                            :location => l[0],
+                            :call_number => l[1],
+                            :status => normalize_status(l[2])}}
       }.flatten.uniq
 
     end
@@ -45,6 +47,7 @@ module SearchBots
       (row/'table.itemTable tr' ).map { |loc|
         tds = loc/'td'
         [(tds[0]/'a').inner_html.strip.split("/").map(&:titleize)[0..-2].join(' / '), 
+         tds[1].inner_html.strip.split("<b>")[0].gsub("&nbsp;", "").gsub(" ",""), #that's an nbsp, not a regular space. for some reason strip doesn't strip it.
          tds[2].inner_html.strip.scan(/^(\w+).*/).first.first.titleize] unless tds.empty?
       }.reject(&:nil?)
     end
@@ -52,8 +55,7 @@ module SearchBots
     def search_url(title, author)
       title.gsub!(/\(.*\)/,'')
       title = CGI::escape("#{title} #{author}")
-      "http://find.minlib.net/iii/encore/search/C__S#{title}__Orightresult__U1?lang=eng&suite=pearl"
+      "http://find.minlib.net/iii/encore/search/C__S#{title}__Ff%3Afacetmediatype%3Aa%3Aa%3ABOOK%3A%3A__Orightresult__U1?lang=eng&suite=cobalt"
     end
-
   end
 end
