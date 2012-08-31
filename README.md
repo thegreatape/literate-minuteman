@@ -6,6 +6,5 @@
 
 # TODO #
 * Mobile version.
-* Lost password reset
 * Less ugly-tree inspired styles.
 * Filter by only branches near me.
