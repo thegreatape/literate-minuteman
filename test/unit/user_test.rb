@@ -69,8 +69,8 @@ class UserTest < ActiveSupport::TestCase
       assert_equal 1, @user.books.length
     end
 
-    should "create 6 copies" do
-      assert_equal 6, @user.books.first.copies.length
+    should "create 7 copies" do
+      assert_equal 7, @user.books.first.copies.length
     end
 
   end

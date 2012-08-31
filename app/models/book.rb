@@ -22,7 +22,7 @@ class Book < ActiveRecord::Base
     now = Time.now
     list.each do |c|
       location = Location.find_or_create_by_name_and_library_system_id(c[:location], library_system.id)
-      copy = copies.find_or_create_by_location_id_and_title(location.id, c[:title])
+      copy = copies.find_or_create_by_location_id_and_call_number_and_title(location.id, c[:call_number], c[:title])
       copy.update_attributes(:last_synced_at => now, :status => c[:status])
     end
     copies.for_library_system(library_system).where('last_synced_at < ?', now).destroy_all

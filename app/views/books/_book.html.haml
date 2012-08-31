@@ -1,7 +1,8 @@
 - copies = @user.locations.any? ? book.copies.at_location(@user.locations) : book.copies
 - copies.group_by(&:title).each do |title, copies|
-  - available = copies.select {|c| c.status == "In"}
+  - available = copies.select {|c| c.status == "In"}.sort_by! {|c| c.location.name }
   - out = copies.select {|c| c.status == "Out"}
+  
   %li.result
     .title.cell= title
     - unless available.empty?
@@ -9,7 +10,10 @@
         Available at: 
         %ul
           - available.each do |copy|
-            %li #{copy.location.name} 
+            %li 
+              %b=copy.location.name 
+              =copy.call_number
+
     - unless out.empty?
       .out.locations.cell
         Out at:

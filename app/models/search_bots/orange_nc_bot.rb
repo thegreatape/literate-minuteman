@@ -28,9 +28,12 @@ module SearchBots
           when 'location'
             current_loc = row.inner_text.strip.gsub(/\n.*$/,'')
           when 'piece'
-            status = (row / 'td')[-2].inner_text.strip
+            tds = row /'td'
+            status = tds[-2].inner_text.strip
+            call_number = tds[0].inner_text.strip
             results.push({ status: normalize_status(status),
                            location: current_loc.clone,
+                           call_number: call_number,
                            title: "#{title} #{author}" })
           end
         end
@@ -53,7 +56,7 @@ module SearchBots
 
     def ref_url(title, author)
       q = URI::encode("#{title} #{author}")
-      "http://catalog.co.orange.nc.us/POLARIS/search/searchresults.aspx?ctx=3.1033.0.0.6&type=Keyword&term=#{q}&by=KW&sort=RELEVANCE&limit=((TOM=*)%20AND%20(AB=3%20OR%20AB=10%20OR%20OWN=3))&query=&page=0"
+      "http://catalog.co.orange.nc.us/POLARIS/search/searchresults.aspx?ctx=3.1033.0.0.6&type=Keyword&term=#{q}&by=KW&sort=RELEVANCE&limit=((TOM=bks)%20AND%20(AB=3%20OR%20AB=10%20OR%20OWN=3))&query=&page=0"
     end
   end
 end
