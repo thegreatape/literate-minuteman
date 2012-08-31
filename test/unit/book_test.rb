@@ -6,9 +6,11 @@ class BookTest < ActiveSupport::TestCase
       @list = [
         {:title => "The Areas of My Expertise",
          :status => 'In',
-         :location => "Cambridge"},
+         :location => "Cambridge",
+         :call_number => 'FICBLAH'},
         {:title => "Foucault's Pendulum",
          :status => 'Out',
+         :call_number=>'FICBLAH2',
          :location => "Allston"}
       ]
       @book = Factory(:book)
@@ -21,6 +23,7 @@ class BookTest < ActiveSupport::TestCase
       @book.copies.each do |copy| 
         assert_not_nil copy.location
         assert_equal @library_system, copy.location.library_system
+        assert_not_nil copy.call_number
       end
     end
 
