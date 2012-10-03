@@ -10,13 +10,13 @@ gem 'dynamic_form'
 gem 'resque'
 gem 'resque-scheduler'
 gem 'will_paginate'
+gem 'thin'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'json'
 
-# Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
