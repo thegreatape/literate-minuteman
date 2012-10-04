@@ -7,7 +7,7 @@ gem 'hpricot'
 gem 'goodreads', :git => 'git://github.com/thegreatape/goodreads.git', :ref => '762a1487556f'
 gem 'oauth'
 gem 'dynamic_form'
-gem 'resque'
+gem 'resque', "~> 1.22.0"
 gem 'resque-scheduler'
 gem 'will_paginate'
 gem 'thin'
