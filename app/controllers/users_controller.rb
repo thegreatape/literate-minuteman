@@ -52,8 +52,9 @@ class UsersController < ApplicationController
     client = Goodreads::Client.new(access_token)
 
     User.find_or_create_by_goodreads_id(client.user_id).tap do |user|
-      user.update_attributes(oauth_access_token: access_token.token,
-                             oauth_access_secret:  access_token.secret)
+      user.oauth_access_token = access_token.token
+      user.oauth_access_secret = access_token.secret
+      user.save
     end
   end
 end
