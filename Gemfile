@@ -11,6 +11,7 @@ gem 'resque', "~> 1.22.0"
 gem 'resque-scheduler'
 gem 'will_paginate'
 gem 'thin'
+gem 'newrelic_rpm'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
