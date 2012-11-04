@@ -2,7 +2,7 @@ require 'test_helper'
 
 class BookTest < ActiveSupport::TestCase
   context "book list syncing" do
-    setup do 
+    setup do
       @list = [
         {:title => "The Areas of My Expertise",
          :status => 'In',
@@ -20,7 +20,7 @@ class BookTest < ActiveSupport::TestCase
 
     should "produce Copies" do
       assert_equal 2, @book.reload.copies.length
-      @book.copies.each do |copy| 
+      @book.copies.each do |copy|
         assert_not_nil copy.location
         assert_equal @library_system, copy.location.library_system
         assert_not_nil copy.call_number
@@ -33,7 +33,9 @@ class BookTest < ActiveSupport::TestCase
     end
 
     should "delete copies no longer on the list" do
-      @book.sync_copies [@list.first], @library_system
+      assert_difference "Copy.count", -1 do 
+        @book.sync_copies [@list.first], @library_system
+      end
       assert_equal 1, @book.reload.copies.length
       assert_equal @list.first[:title], @book.copies.first.title
     end

@@ -30,7 +30,6 @@ class UserTest < ActiveSupport::TestCase
       @user.sync_books @list, Factory(:library_system)
       assert_equal 2, @user.reload.books.length
     end
-
   end
 
   test "goodreads_id should be unique" do
@@ -73,6 +72,34 @@ class UserTest < ActiveSupport::TestCase
       assert_equal 7, @user.books.first.copies.length
     end
 
+  end
+
+  context "with multiple library systems" do
+    setup do
+      @system_a = Factory(:library_system, search_bot_class: 'SearchBots::OrangeNCBot') 
+      @system_b = Factory(:library_system, search_bot_class: 'SearchBots::MinutemanBot') 
+
+      @system_a.search_bot_class.constantize.any_instance.stubs(:lookup).returns( book('Title 1', 'Copley') + book('Title 2', 'Copley') )
+      @system_b.search_bot_class.constantize.any_instance.stubs(:lookup).returns( book('Title 2', 'Alston') )
+      @user = Factory(:user, library_systems: [@system_a, @system_b])
+
+      @user.update!
+      @user.reload
+    end
+
+    should "have copies from both libraries" do
+      assert_equal 2, @user.books.count
+    end
+  end
+
+  def book(title, location)
+    [ {title: title,
+       author: "John Hodgeman",
+       copies: [{title: "The Areas of My Expertise", 
+                 status: "Out",
+                 call_number: 'A325',
+                 location: location }] 
+    } ]
   end
 
 end

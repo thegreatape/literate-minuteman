@@ -29,8 +29,9 @@ class User < ActiveRecord::Base
     results = []
     library_systems.each do |system|
       bot = system.search_bot(goodreads_id)
-      results = bot.lookup
-      sync_books results, system
+      system_results = bot.lookup
+      results += system_results
+      sync_books system_results, system
     end
     delete_books_not_on_list results
   end

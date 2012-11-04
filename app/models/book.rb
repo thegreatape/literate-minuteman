@@ -3,7 +3,7 @@ class Book < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :user
 
-  has_many :copies
+  has_many :copies, dependent: :destroy
 
   scope :with_copies_at, lambda {|locations|
     where("books.id in (select distinct(copies.book_id) from copies where copies.location_id in (?))", Array(locations))
