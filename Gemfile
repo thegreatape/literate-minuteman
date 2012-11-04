@@ -9,6 +9,7 @@ gem 'oauth'
 gem 'dynamic_form'
 gem 'resque', "~> 1.22.0"
 gem 'resque-scheduler'
+gem 'hirefire'
 gem 'will_paginate'
 gem 'thin'
 gem 'newrelic_rpm'
