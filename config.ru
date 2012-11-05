@@ -1,14 +1,14 @@
 # This file is used by Rack-based servers to start the application.
 require ::File.expand_path('../config/environment',  __FILE__)
-require 'resque/server'
+require 'sidekiq/web'
 
-AUTH_PASSWORD = ENV['RESQUE_PASSWORD']
+AUTH_PASSWORD = ENV['SIDEKIQ_PASSWORD']
 if AUTH_PASSWORD
-  Resque::Server.use Rack::Auth::Basic do |username, password|
+  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
     password == AUTH_PASSWORD
   end
 end
 
 run Rack::URLMap.new \
-  "/"       => Minuteman::Application,
-  "/resque" => Resque::Server.new
+  "/"        => Minuteman::Application,
+  "/sidekiq" => Sidekiq::Web

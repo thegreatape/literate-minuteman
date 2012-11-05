@@ -1,7 +1,7 @@
 class UpdateUser
-  @queue = :lookup
+  include Sidekiq::Worker
 
-  def self.perform(user_id)
+  def perform(user_id)
     User.find(user_id).update!
   end
 end

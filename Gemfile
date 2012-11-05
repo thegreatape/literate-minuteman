@@ -7,9 +7,10 @@ gem 'hpricot'
 gem 'goodreads', :git => 'git://github.com/thegreatape/goodreads.git', :ref => '762a1487556f'
 gem 'oauth'
 gem 'dynamic_form'
-gem 'resque', "~> 1.22.0"
-gem 'resque-scheduler'
-gem 'hirefire'
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
+gem 'autoscaler'
 gem 'will_paginate'
 gem 'thin'
 gem 'newrelic_rpm'
