@@ -44,5 +44,8 @@ module Minuteman
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # don't load env and connect to db when precompiling assets
+    config.assets.initialize_on_precompile = false
   end
 end
