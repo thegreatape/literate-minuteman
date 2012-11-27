@@ -14,6 +14,7 @@ gem 'autoscaler'
 gem 'will_paginate'
 gem 'thin'
 gem 'newrelic_rpm'
+gem 'airbrake'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
