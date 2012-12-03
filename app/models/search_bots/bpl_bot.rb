@@ -7,15 +7,18 @@ require 'uri'
 
 module SearchBots
   class BplBot < AbstractBot
-    def find(title, author) 
+    def find(title, author)
       res = fetch(search_url(title, author))
       (Hpricot(res.body)/'.searchResults .listItem').map { |row|
         title = (row/'.title a').first.attributes['title']
         availability_link = (row/'.availability a').first
         next if !availability_link
+
         availability_url = availability_link.attributes['href']
         location_html = fetch("http://bostonpl.bibliocommons.com#{availability_url}").body
         location_table = (Hpricot(location_html)/'.branch table').first
+        next if !location_table
+
         status_idx = (location_table / 'th').index {|i| i.attributes['class'] == 'status'}
         call_number_idx = (location_table / 'th').index {|i| i.attributes['class'] == 'call_no'}
         (location_table/'tr').map { |loc|
@@ -30,7 +33,7 @@ module SearchBots
         }
       }.flatten.compact.uniq
     end
-    
+
     def normalize_status(str)
       case str
       when "In Library"
