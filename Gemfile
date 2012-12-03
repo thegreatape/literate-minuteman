@@ -40,6 +40,10 @@ group :test do
   gem 'database_cleaner'
 end
 
+group :development do
+  gem 'debugger'
+end
+
 gem 'jquery-rails'
 
 # Deploy with Capistrano
