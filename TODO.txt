@@ -1,6 +1,5 @@
 == For Release == 
 Better logout / session expiration
-Don't use User#updated_at for last sync time
 
 == Later ==
 Pick custom shelves (but default to to-read)
