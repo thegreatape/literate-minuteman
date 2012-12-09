@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
                                    GOODREADS_API_SECRET, 
                                    :site => 'http://www.goodreads.com')
     access_token = OAuth::AccessToken.new(consumer, oauth_access_token, oauth_access_secret)
-    Goodreads::Client.new(access_token)
+    Goodreads::Client.new(oauth_token: access_token, api_key: GOODREADS_API_KEY, api_secret: GOODREADS_API_SECRET)
   end
   
 

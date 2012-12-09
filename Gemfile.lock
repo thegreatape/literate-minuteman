@@ -1,13 +1,14 @@
 GIT
   remote: git://github.com/thegreatape/goodreads.git
-  revision: 762a1487556fae6e14e3b4b985d6c00653626c40
-  ref: 762a1487556f
+  revision: 35bec6023c7a64f84de11ff4bfe7a7ef29e7763c
+  ref: 35bec6023c7a64f84de11ff4bfe7a7ef29e7763c
   specs:
-    goodreads (0.1.1)
-      activesupport (>= 3.0.0)
-      hashie (~> 1.0.0)
+    goodreads (0.2.0)
+      activesupport (~> 3)
+      hashie (~> 1.0)
       i18n (~> 0.5)
-      rest-client (~> 1.6.1)
+      oauth (~> 0.4)
+      rest-client (~> 1.6)
 
 GEM
   remote: http://rubygems.org/

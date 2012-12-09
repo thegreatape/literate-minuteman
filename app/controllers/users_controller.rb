@@ -49,7 +49,7 @@ class UsersController < ApplicationController
   def get_authorized_user
     request_token = OAuth::RequestToken.new(get_consumer, session[:oauth_token], session[:oauth_secret])
     access_token = request_token.get_access_token
-    client = Goodreads::Client.new(access_token)
+    client = Goodreads::Client.new(oauth_token: access_token)
 
     User.find_or_create_by_goodreads_id(client.user_id).tap do |user|
       user.oauth_access_token = access_token.token

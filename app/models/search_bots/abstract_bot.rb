@@ -2,7 +2,6 @@ module SearchBots
   class AbstractBot
     def initialize(user_id)
       @user_id = user_id
-      @api_key = GOODREADS_API_KEY
       @cookies = ''
     end
 
@@ -35,8 +34,7 @@ module SearchBots
     end
 
     def lookup
-      Goodreads.configure(@api_key)
-      client = Goodreads::Client.new
+      client = Goodreads::Client.new(api_key: GOODREADS_API_KEY, api_secret: GOODREADS_API_SECRET)
 
       shelves = User.find_by_goodreads_id(@user_id).active_shelves
       shelves = ['to-read'] if shelves.empty?
