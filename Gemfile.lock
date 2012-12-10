@@ -1,15 +1,3 @@
-GIT
-  remote: git://github.com/thegreatape/goodreads.git
-  revision: 35bec6023c7a64f84de11ff4bfe7a7ef29e7763c
-  ref: 35bec6023c7a64f84de11ff4bfe7a7ef29e7763c
-  specs:
-    goodreads (0.2.0)
-      activesupport (~> 3)
-      hashie (~> 1.0)
-      i18n (~> 0.5)
-      oauth (~> 0.4)
-      rest-client (~> 1.6)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -111,6 +99,12 @@ GEM
     girl_friday (0.11.1)
       connection_pool (~> 0.9.0)
       rubinius-actor
+    goodreads (0.2.1)
+      activesupport (~> 3)
+      hashie (~> 1.0)
+      i18n (~> 0.5)
+      oauth (~> 0.4)
+      rest-client (~> 1.6)
     haml (3.1.6)
     hashie (1.0.0)
     heroku-api (0.3.6)
@@ -256,7 +250,7 @@ DEPENDENCIES
   dynamic_form
   factory_girl_rails (= 1.4.0)
   fakeweb
-  goodreads!
+  goodreads
   haml
   hashie
   hpricot
