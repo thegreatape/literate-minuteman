@@ -16,6 +16,7 @@ class BookTest < ActiveSupport::TestCase
       @book = Factory(:book)
       @library_system = Factory(:library_system)
       @book.sync_copies @list, @library_system
+      Copy.update_all last_synced_at: 1.hour.ago
     end
 
     should "produce Copies" do

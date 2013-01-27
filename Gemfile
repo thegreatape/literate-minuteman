@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.11'
 gem 'pg'
 gem 'haml'
 gem 'hpricot'
@@ -30,6 +30,7 @@ end
 
 group :test do
   gem 'minitest'
+  gem 'debugger'
   gem 'mocha', '0.11.4'
   gem 'turn', :require => false
   gem 'hashie'
