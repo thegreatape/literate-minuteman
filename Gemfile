@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
+ruby '2.0.0'
 
 gem 'rails', '3.2.12'
 gem 'pg'
@@ -30,7 +31,6 @@ end
 
 group :test do
   gem 'minitest'
-  gem 'debugger'
   gem 'mocha', '0.11.4'
   gem 'turn', :require => false
   gem 'hashie'
@@ -42,9 +42,12 @@ group :test do
 end
 
 group :development do
-  gem 'debugger'
   gem 'better_errors'
   gem 'binding_of_caller'
+end
+
+group :development, :test do
+  gem 'byebug'
 end
 
 gem 'jquery-rails'

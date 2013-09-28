@@ -36,11 +36,15 @@ GEM
     autoscaler (0.1.0)
       heroku-api
       sidekiq (~> 2.2)
-    better_errors (0.3.2)
+    better_errors (1.0.1)
       coderay (>= 1.0.0)
-      erubis (>= 2.7.0)
-    binding_of_caller (0.6.8)
+      erubis (>= 2.6.6)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     builder (3.0.4)
+    byebug (2.2.2)
+      columnize (~> 0.3.6)
+      debugger-linecache (~> 1.2.0)
     capistrano (2.14.1)
       highline
       net-scp (>= 1.0.0)
@@ -62,7 +66,7 @@ GEM
       timers (>= 1.0.0)
     childprocess (0.3.7)
       ffi (~> 1.0, >= 1.0.6)
-    coderay (1.0.8)
+    coderay (1.1.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -74,13 +78,8 @@ GEM
     connection_pool (1.0.0)
     daemons (1.1.9)
     database_cleaner (0.9.1)
-    debugger (1.2.4)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.1.1)
-      debugger-ruby_core_source (~> 1.1.7)
-    debugger-linecache (1.1.2)
-      debugger-ruby_core_source (>= 1.1.1)
-    debugger-ruby_core_source (1.1.7)
+    debug_inspector (0.0.2)
+    debugger-linecache (1.2.0)
     dynamic_form (1.1.4)
     erubis (2.7.0)
     eventmachine (1.0.0)
@@ -134,7 +133,7 @@ GEM
     net-ssh (2.6.3)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
-    newrelic_rpm (3.5.6.46)
+    newrelic_rpm (3.6.7.159)
     nokogiri (1.5.6)
     oauth (0.4.7)
     pg (0.14.1)
@@ -241,11 +240,11 @@ DEPENDENCIES
   autoscaler
   better_errors
   binding_of_caller
+  byebug
   capistrano
   capybara-webkit
   coffee-rails (~> 3.2.1)
   database_cleaner
-  debugger
   dynamic_form
   factory_girl_rails (= 1.4.0)
   fakeweb
