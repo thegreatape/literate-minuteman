@@ -1,21 +1,21 @@
-require 'test_helper'
+require 'spec_helper'
 
-class AbstractBotTest < ActiveSupport::TestCase
-  def setup
+describe SearchBots::AbstractBot do
+  before do
     @user = Factory(:user)
     @bot = SearchBots::AbstractBot.new(@user.goodreads_id)
   end
 
-  def teardown
+  after do
     Goodreads::Client.any_instance.unstub(:shelf)
   end
 
-  test "using default shelf" do
+  it "using default shelf" do
     expect_shelves 'to-read'
     @bot.lookup
   end
 
-  test "using active shelf" do
+  it "using active shelf" do
     @user.active_shelves = ['wishlist']
     @user.save
 
@@ -23,7 +23,7 @@ class AbstractBotTest < ActiveSupport::TestCase
     @bot.lookup
   end
 
-  test "using multiple active shelves" do
+  it "using multiple active shelves" do
     @user.active_shelves = ['photography', 'wishlist']
     @user.save
 

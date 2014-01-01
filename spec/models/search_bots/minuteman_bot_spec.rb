@@ -1,11 +1,11 @@
-require 'test_helper'
+require 'spec_helper'
 
-class MinutemanBotTest < ActiveSupport::TestCase
-  test "creating a new instance" do
+describe SearchBots::MinutemanBot do
+  it "creates a new instance" do
     assert SearchBots::MinutemanBot.new('209303')
   end
-  
-  test "looking up simple results without ajax" do
+
+  it "looks up simple results without ajax" do
     bot = SearchBots::MinutemanBot.new('209303')
     uri = "http://find.minlib.net/iii/encore/search/C__SGardens+of+the+Moon+Steven+Erikson__Ff%3Afacetmediatype%3Aa%3Aa%3ABOOK%3A%3A__Orightresult__U1?lang=eng&suite=cobalt"
     response = Hashie::Mash.new({
@@ -14,16 +14,17 @@ class MinutemanBotTest < ActiveSupport::TestCase
     bot.stubs(:fetch).with(uri).returns(response)
 
     results = bot.find("Gardens of the Moon", "Steven Erikson")
-    assert_equal 7, results.length
+    expect(results.length).to eq(7)
+
     [["In","Waltham"],
      ["In","Natick"],
      ["Out","Cambridge"],
      ["In","Needham"],
      ["Out","Newton"],
      ["In","Wellesley"]].each do |pair|
-      assert results.any? {|i| i[:status] == pair[0] && i[:location] == pair[1]}
+      expect(results.any? {|i| i[:status] == pair[0] && i[:location] == pair[1]}).to be_true
      end
-     assert results.all? {|r| r[:call_number]}
-    
+     expect(results.all? {|r| r[:call_number]}).to be_true
+
   end
 end

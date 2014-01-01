@@ -1,26 +1,28 @@
-require 'test_helper'
+require 'spec_helper'
 
-class BooksControllerTest < ActionController::TestCase
-  should "redirect to login without auth" do
+describe BooksController do
+  render_views
+
+  it "redirect to login without auth" do
     get :index
     assert_redirected_to :controller => :users, :action => :login
   end
 
-  should "render index when logged in" do
-    login Factory(:user)
+  it "render index when logged in" do
+    session[:user_id] = Factory(:user).id
     get :index
     assert_response :ok
   end
 
-  should "show the library system picker if user has no systems" do
-    login Factory(:user, :library_systems => [])
+  it "show the library system picker if user has no systems" do
+    session[:user_id] = Factory(:user, :library_systems => []).id
     get :index
     assert_response :ok
     assert_select 'body', :matches => /Check the library systems you're a part of/
   end
 
   context "with books" do
-    setup do
+    before do
       @user = Factory(:user)
       3.times do |i|
         book = Factory(:book, :user => @user, :title => "Book #{i}")
@@ -28,21 +30,21 @@ class BooksControllerTest < ActionController::TestCase
       end
       book = Factory(:book, :user => @user, :title => "Book With No Copies")
 
-      login @user
+      session[:user_id] = @user.id
       get :index
     end
 
-    should "display all my books with copies" do
+    it "display all my books with copies" do
       assert_select '.book-result', :count => 3
     end
 
-    should "display all my books without copies" do
+    it "display all my books without copies" do
       assert_select '.no-results', :matches => /Book With No Copies/
     end
   end
 
   context "with custom locations set" do
-    setup do
+    before do
       @user = Factory(:user)
       @list = [
         {:title => "The Areas of My Expertise",
@@ -65,17 +67,17 @@ class BooksControllerTest < ActionController::TestCase
       ]
       @library_system = Factory(:library_system)
       @user.sync_books @list, @library_system 
-      login @user
+      session[:user_id] = @user.id
     end
 
-    should "only show books with copies at my locations" do
+    it "only shows books with copies at my locations" do
       @user.locations = [Location.find_by_name("Concord")]
       get :index
       assert_select ".book-result h2", /#{@list[1][:title]}/
       assert_select ".book-result h2", :text => /#{@list[0][:title]}/, :count => 0
     end
 
-    should "only show the copies of the books at my locations" do
+    it "only shows the copies of the books at my locations" do
       @user.locations = [Location.find_by_name("Cambridge")]
       get :index
       assert_select ".book-result h2", /#{@list[0][:title]}/

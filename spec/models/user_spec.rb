@@ -1,9 +1,13 @@
-require 'test_helper'
+require 'spec_helper'
 
-class UserTest < ActiveSupport::TestCase
+describe User do
+  it "should have a unique goodreads_id" do
+    user = Factory(:user)
+    expect(build(:user, goodreads_id: user.goodreads_id)).to_not be_valid
+  end
 
   context "book list syncing" do
-    setup do 
+    before do
       @list = [
         {:title => "The Areas of My Expertise",
          :author => "John Hodgeman",
@@ -17,67 +21,61 @@ class UserTest < ActiveSupport::TestCase
       @user.sync_books @list, @library_system
     end
 
-    should "produce Books" do
-      assert_equal 2, @user.reload.books.length
+    it "produce Books" do
+      expect(@user.reload.books.length).to eq(2)
     end
 
-    should "not duplicate Books" do
+    it "not duplicate Books" do
       @user.sync_books @list, @library_system
-      assert_equal 2, @user.reload.books.length
+      expect(@user.reload.books.length).to eq(2)
     end
 
-    should "not delete or duplicate books from other library systems" do
+    it "not delete or duplicate books from other library systems" do
       @user.sync_books @list, Factory(:library_system)
-      assert_equal 2, @user.reload.books.length
+      expect(@user.reload.books.length).to eq(2)
     end
   end
 
-  test "goodreads_id should be unique" do
-    user = Factory(:user)
-    assert_raises(ActiveRecord::RecordInvalid) {Factory(:user, :goodreads_id => user.goodreads_id)}
-  end
-
-  test "updating shelves" do
+  it "updates shelves" do
     user = Factory(:user)
     FakeWeb.register_uri(:get, %r|/www\.goodreads\.com/user/show|,
                          :body => fixture_file('goodreads_responses/user_show.xml'))
-    
-    assert user.update_shelves
-    assert_equal ["read", "currently-reading", "to-read", "photography", "wishlist"], user.shelves
+
+    expect(user.update_shelves).to be_true
+    expect(user.shelves).to eq ["read", "currently-reading", "to-read", "photography", "wishlist"]
   end
 
   context "a full update of books" do
-
-    setup do
+    before do
       FakeWeb.register_uri(:get, %r|/www\.goodreads\.com/review/list/|,
                            :body => fixture_file('goodreads_responses/gardens_of_the_moon.xml'))
       FakeWeb.register_uri(:get, %r|find.minlib.net.*Gardens\+of\+the\+Moon\+\+Steven\+Erikson|,
                            :body => fixture_file('search_bots/minuteman_bot/gardens_of_the_moon.html'))
-      @user = Factory(:user, 
-                      :library_systems => [Factory(:library_system)], 
+      @user = Factory(:user,
+                      :library_systems => [Factory(:library_system)],
                       :goodreads_id => '2003928')
       @user.update!
       @user.reload
     end
 
-    teardown do 
+    after do
       FakeWeb.clean_registry
     end
 
-    should "create 1 book" do
-      assert_equal 1, @user.books.length
+    it "create 1 book" do
+      expect(@user.books.length).to eq(1)
     end
 
-    should "create 7 copies" do
-      assert_equal 7, @user.books.first.copies.length
+    it "create 7 copies" do
+      expect(@user.books.first.copies.length).to eq(7)
     end
 
   end
 
   context "with multiple library systems" do
-    setup do
-      @system_a = Factory(:library_system, search_bot_class: 'SearchBots::OrangeNCBot') 
-      @system_b = Factory(:library_system, search_bot_class: 'SearchBots::MinutemanBot') 
+    before do
+      @system_a = Factory(:library_system, search_bot_class: 'SearchBots::OrangeNCBot')
+      @system_b = Factory(:library_system, search_bot_class: 'SearchBots::MinutemanBot')
 
       @system_a.search_bot_class.constantize.any_instance.stubs(:lookup).returns( book('Title 1', 'Copley') + book('Title 2', 'Copley') )
       @system_b.search_bot_class.constantize.any_instance.stubs(:lookup).returns( book('Title 2', 'Alston') )
@@ -87,18 +85,23 @@ class UserTest < ActiveSupport::TestCase
       @user.reload
     end
 
-    should "have copies from both libraries" do
-      assert_equal 2, @user.books.count
+    after do
+      SearchBots::OrangeNCBot.any_instance.unstub(:lookup)
+      SearchBots::MinutemanBot.any_instance.unstub(:lookup)
+    end
+
+    it "have copies from both libraries" do
+      expect(@user.books.count).to eq(2)
     end
   end
 
   def book(title, location)
     [ {title: title,
        author: "John Hodgeman",
-       copies: [{title: "The Areas of My Expertise", 
+       copies: [{title: "The Areas of My Expertise",
                  status: "Out",
                  call_number: 'A325',
-                 location: location }] 
+                 location: location }]
     } ]
   end
 

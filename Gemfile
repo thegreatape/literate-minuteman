@@ -9,7 +9,6 @@ gem 'goodreads'
 gem 'oauth'
 gem 'dynamic_form'
 gem 'sidekiq'
-gem 'sinatra', require: false
 gem 'slim'
 gem 'autoscaler'
 gem 'will_paginate'
@@ -30,7 +29,7 @@ group :assets do
 end
 
 group :test do
-  gem 'minitest'
+  gem 'rspec-rails'
   gem 'mocha'
   gem 'turn', :require => false
   gem 'hashie'

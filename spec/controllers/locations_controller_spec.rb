@@ -1,8 +1,10 @@
-require 'test_helper'
+require 'spec_helper'
 
-class LocationsControllerTest < ActionController::TestCase
+describe LocationsController do
+  render_views
+
   context "with books at different locations" do
-    setup do
+    before do
       @list = [
         {:title => "The Areas of My Expertise",
          :author => "John Hodgeman",
@@ -25,10 +27,10 @@ class LocationsControllerTest < ActionController::TestCase
       @user = Factory(:user)
       @library_system = Factory(:library_system)
       @user.sync_books @list, @library_system
-      login @user
+      session[:user_id] = @user.id
     end
 
-    should "should only show books at first location" do
+    it "should only show books at first location" do
       get :show, :id => Location.find_by_name("Cambridge")
       assert_response :ok
 
@@ -36,7 +38,7 @@ class LocationsControllerTest < ActionController::TestCase
       assert_select 'li.result', /#{@list[1][:title]}/ 
     end
 
-    should "should only show books at second location" do
+    it "should only show books at second location" do
       get :show, :id => Location.find_by_name("Concord")
       assert_response :ok
 
