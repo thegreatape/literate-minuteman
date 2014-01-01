@@ -21,6 +21,8 @@ require 'capybara/rails'
 Capybara.javascript_driver = :webkit
 DatabaseCleaner.strategy = :truncation
 
+UpdateUser.stubs(:perform_async)
+
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
