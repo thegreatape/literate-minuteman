@@ -1,6 +1,20 @@
 require 'test_helper'
 
 class UsersIntegrationTest < ActionDispatch::IntegrationTest
+
+  def save_systems(*args)
+    visit "/users/#{@user.id}/edit"
+    assert_equal 200, page.status_code
+
+    [@system1, @system2, @system3].each {|s| uncheck(s.name)}
+    args.each do |s|
+      check(s.name)
+    end
+
+    click_on 'Save'
+    @user.reload
+  end
+
   context "editing user preferences" do
     setup do
       @system1 = Factory(:library_system)
@@ -84,7 +98,7 @@ class UsersIntegrationTest < ActionDispatch::IntegrationTest
     should "save active shelves" do
       @user.shelves = ['to-read', 'wishlist']
       @user.save
-      
+
       visit "/users/#{@user.id}/edit"
       check 'wishlist'
       click_on 'Save'
@@ -92,19 +106,5 @@ class UsersIntegrationTest < ActionDispatch::IntegrationTest
       assert_equal ['wishlist'], @user.reload.active_shelves
     end
 
-    private
-    def save_systems(*args)
-      visit "/users/#{@user.id}/edit"
-      assert_equal 200, page.status_code
-
-      [@system1, @system2, @system3].each {|s| uncheck(s.name)}
-      args.each do |s| 
-        check(s.name)
-      end
-
-      click_on 'Save'
-      @user.reload
-    end
-      
   end
 end

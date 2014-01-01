@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 ruby '2.0.0'
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.16'
 gem 'pg'
 gem 'haml'
 gem 'hpricot'
@@ -31,7 +31,7 @@ end
 
 group :test do
   gem 'minitest'
-  gem 'mocha', '0.11.4'
+  gem 'mocha'
   gem 'turn', :require => false
   gem 'hashie'
   gem 'shoulda', :require => false

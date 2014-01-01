@@ -9,7 +9,7 @@ require 'uri'
 module SearchBots
   class MinutemanBot < AbstractBot
 
-    def find(title, author) 
+    def find(title, author)
       res = fetch(search_url(title, author))
       body = res.body
       copies = (Hpricot(body)/'table.browseResult').map { |row|
@@ -21,11 +21,11 @@ module SearchBots
         if more_links && more_links.attributes['onclick'] =~ ajax_re
           res = fetch("http://find.minlib.net/#{more_links.attributes['href']}")
           locations = get_locations(Hpricot(res.body))
-        else 
+        else
           locations = get_locations(row)
         end
-        
-        locations.map{ |l| {:title => title, 
+
+        locations.map{ |l| {:title => title,
                             :location => l[0],
                             :call_number => l[1],
                             :status => normalize_status(l[2])}}
@@ -36,9 +36,9 @@ module SearchBots
     private
     def normalize_status(s)
       case s
-      when /available/i 
+      when /available/i
         return "In"
-      else 
+      else
         return s
       end
     end
@@ -46,7 +46,7 @@ module SearchBots
     def get_locations(row)
       (row/'table.itemTable tr' ).map { |loc|
         tds = loc/'td'
-        [(tds[0]/'a').inner_html.strip.split("/").map(&:titleize)[0..-2].join(' / '), 
+        [(tds[0]/'a').inner_html.strip.split("/").map(&:titleize)[0..-2].join(' / '),
          tds[1].inner_html.strip.split("<b>")[0].gsub("&nbsp;", "").gsub(" ",""), #that's an nbsp, not a regular space. for some reason strip doesn't strip it.
          tds[2].inner_html.strip.scan(/^(\w+).*/).first.first.titleize] unless tds.empty?
       }.reject(&:nil?)
