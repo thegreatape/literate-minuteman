@@ -26,11 +26,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    params[:user] ||= {}
-    params[:user][:location_ids] ||= []
-    params[:user][:library_system_ids] ||= []
-
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(user_params)
       flash[:notice_good] = "Settings updated."
       redirect_to :controller => :books, :action => :index
     else 
@@ -40,6 +36,14 @@ class UsersController < ApplicationController
   end
 
   private 
+  def user_params
+    params[:user] ||= {}
+    params[:user][:location_ids] ||= []
+    params[:user][:library_system_ids] ||= []
+
+    params.require(:user).permit(active_shelves: [], location_ids: [], library_system_ids: [])
+  end
+
   def get_consumer 
     OAuth::Consumer.new(GOODREADS_API_KEY, 
                         GOODREADS_API_SECRET, 

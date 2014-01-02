@@ -3,7 +3,7 @@ class BooksController < ApplicationController
 
   def index
   end
-  
+
   private
   def find_books
     if @user.locations.any?

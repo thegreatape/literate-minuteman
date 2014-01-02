@@ -1,50 +1,51 @@
 require 'spec_helper'
 
 describe Book do
-  context "book list syncing" do
+  context "copy syncing" do
     before do
-      @list = [
-        {:title => "The Areas of My Expertise",
-         :status => 'In',
-         :location => "Cambridge",
-         :call_number => 'FICBLAH'},
-        {:title => "Foucault's Pendulum",
-         :status => 'Out',
-         :call_number=>'FICBLAH2',
-         :location => "Allston"}
+      @book = create(:book)
+      LibrarySystem::MINUTEMAN.stub(:find).and_return [
+        ScrapedBook.new(title: @book.title, location: "Main",    call_number: 'ABC', status: "In"),
+        ScrapedBook.new(title: @book.title, location: "Concord", call_number: 'ABC', status: "Out")
       ]
-      @book = Factory(:book)
-      @library_system = Factory(:library_system)
-      @book.sync_copies @list, @library_system
-      Copy.update_all last_synced_at: 1.hour.ago
+      LibrarySystem::BOSTON.stub(:find).and_return []
+
     end
 
-    it "produce Copies" do
-      expect( 2).to eq( @book.reload.copies.length )
-      @book.copies.each do |copy|
-        expect(copy.location).to_not be_nil
-        expect(copy.location.library_system).to eq(@library_system)
-        expect(copy.call_number).to_not be_nil
-      end
+    it "produces new copies" do
+      expect(@book.copies).to be_empty
+      @book.sync_copies
+      expect(@book.copies.length).to eq(2)
+      expect(@book.copies.map(&:title)).to eq([@book.title, @book.title])
     end
 
-    it "not duplicate copies" do
-      @book.sync_copies @list, @library_system
+    it "creates new locations on-demand" do
+      create(:location, name: "Main", library_system_id: LibrarySystem::MINUTEMAN.id)
+
+      expect(Location.count).to eq(1)
+      @book.sync_copies
+      expect(Location.count).to eq(2)
+      expect(Location.pluck(:name)).to eq(["Main", "Concord"])
+    end
+
+    it "updates status of existing copies" do
+      location = create(:location, name: "Main", library_system_id: LibrarySystem::MINUTEMAN.id)
+      copy = create(:copy, book: @book, call_number: "ABC", title: @book.title, status: "Out", location: location)
+
+      expect(@book.copies.length).to eq(1)
+      @book.sync_copies
       expect(@book.reload.copies.length).to eq(2)
+      expect(copy.reload.status).to eq("In")
     end
 
-    it "delete copies no longer on the list" do
-      copy_count = Copy.count
-      @book.sync_copies [@list.first], @library_system
-      expect(Copy.count).to eq(copy_count - 1)
-      expect(@book.reload.copies.length).to eq(1)
-      expect(@book.copies.first.title).to eq(@list.first[:title])
-    end
+    it "delete copies no longer found" do
+      location = create(:location, name: "Somewhere Else", library_system_id: LibrarySystem::MINUTEMAN.id)
+      copy = create(:copy, book: @book, call_number: "ABC", title: @book.title, status: "Out", location: location, last_synced_at: 1.day.ago)
 
-    it "update status" do
-      @book.sync_copies [@list.first.merge(:status => 'Out')], @library_system
-      expect(@book.reload.copies.first.status).to eq("Out")
+      expect(@book.copies.length).to eq(1)
+      @book.sync_copies
+      expect(@book.reload.copies.length).to eq(2)
+      expect(@book.copies).to_not include(copy)
     end
-
   end
 end

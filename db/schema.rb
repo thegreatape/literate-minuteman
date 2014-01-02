@@ -9,67 +9,76 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121202230652) do
+ActiveRecord::Schema.define(version: 20140112164834) do
 
-  create_table "books", :force => true do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "books", force: true do |t|
     t.string   "title"
     t.integer  "user_id"
     t.string   "author"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-    t.datetime "last_synced_at"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "goodreads_link"
     t.string   "image_url"
     t.string   "small_image_url"
   end
 
-  create_table "copies", :force => true do |t|
+  create_table "copies", force: true do |t|
     t.text     "title"
     t.text     "author"
     t.string   "call_number"
     t.integer  "book_id"
     t.string   "status"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.datetime "last_synced_at"
     t.integer  "location_id"
   end
 
-  create_table "library_systems", :force => true do |t|
+  create_table "library_systems", force: true do |t|
     t.string   "search_bot_class"
     t.string   "name"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
-  create_table "library_systems_users", :force => true do |t|
+  create_table "library_systems_users", force: true do |t|
     t.integer "library_system_id"
     t.integer "user_id"
   end
 
-  create_table "locations", :force => true do |t|
-    t.integer  "library_system_id"
+  create_table "locations", force: true do |t|
+    t.string   "library_system_id"
     t.string   "name"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
-  create_table "locations_users", :force => true do |t|
+  create_table "locations_users", force: true do |t|
     t.integer "location_id"
     t.integer "user_id"
   end
 
-  create_table "users", :force => true do |t|
+  create_table "shelvings", force: true do |t|
+    t.integer  "book_id"
+    t.integer  "user_id"
+    t.datetime "synced_at"
+  end
+
+  create_table "users", force: true do |t|
     t.string   "oauth_access_token"
     t.string   "oauth_access_secret"
     t.string   "goodreads_id"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.datetime "last_synced_at"
     t.text     "shelves"
     t.text     "active_shelves"
+    t.string   "library_system_ids",  default: [],              array: true
   end
 
 end

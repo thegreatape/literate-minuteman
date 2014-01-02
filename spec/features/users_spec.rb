@@ -1,22 +1,22 @@
 require 'spec_helper'
 
-feature "users editing preferences" do
+feature "users editing preferences", js: true do
   before do
-    @system1 = Factory(:library_system)
-    @system2 = Factory(:library_system)
-    @system3 = Factory(:library_system)
-    @loc1 = Factory(:location, library_system: @system1)
-    @loc2 = Factory(:location, library_system: @system1)
-    @loc3 = Factory(:location, library_system: @system1)
+    @system1 = LibrarySystem::MINUTEMAN
+    @system2 = LibrarySystem::BOSTON
 
-    @user = Factory(:user, library_systems: [@system1])
+    @loc1 = create(:location, library_system_id: @system1.id)
+    @loc2 = create(:location, library_system_id: @system1.id)
+    @loc3 = create(:location, library_system_id: @system1.id)
+
+    @user = create(:user, library_system_ids: [@system1.id])
     login @user
   end
 
   scenario "show all the locations" do
     visit "/users/#{@user.id}/edit"
     [@loc1, @loc2, @loc3].each do |loc|
-      assert page.has_css?("input[name*=location_ids][value='#{loc.id}']")
+     expect(page).to have_css("input[name*=location_ids][value='#{loc.id}']")
     end
 
   end
@@ -27,10 +27,10 @@ feature "users editing preferences" do
     check @loc2.name
     click_on 'Save'
 
-    assert_equal books_url, current_url
-    assert_equal 2, @user.reload.locations.length
-    assert @user.locations.member? @loc1
-    assert @user.locations.member? @loc2
+    expect(current_path).to eq(books_path)
+    expect(@user.reload.locations.length).to eq(2)
+    expect(@user.locations).to include(@loc1)
+    expect(@user.locations).to include(@loc2)
   end
 
   scenario "overwrite existing location choices" do
@@ -41,43 +41,42 @@ feature "users editing preferences" do
     check @loc3.name
     click_on 'Save'
 
-    assert_equal books_url, current_url
-    assert_equal 2, @user.locations.length
-    assert @user.locations.member? @loc1
-    assert @user.locations.member? @loc2
+    expect(current_path).to eq(books_path)
+    expect(@user.reload.locations.length).to eq(3)
+    expect(@user.locations).to include(@loc1)
+    expect(@user.locations).to include(@loc2)
+    expect(@user.locations).to include(@loc3)
   end
 
   scenario "save for a single library system" do
     save_systems @system1
-    assert @user.library_systems.member? @system1
-    assert_equal 1, @user.library_systems.length
+    expect(@user.reload.library_systems.length).to eq(1)
+    expect(@user.library_systems).to include(@system1)
   end
 
   scenario "work for multiple library systems" do
-    save_systems @system1, @system2, @system3
-    assert @user.library_systems.member? @system1
-    assert @user.library_systems.member? @system2
-    assert @user.library_systems.member? @system3
-    assert_equal 3, @user.library_systems.length
+    save_systems @system1, @system2
+    expect(@user.reload.library_systems.length).to eq(2)
+    expect(@user.library_systems).to include(@system1)
+    expect(@user.library_systems).to include(@system2)
   end
 
   scenario "be able to change library systems" do
     save_systems @system1, @system2
-    save_systems @system2, @system3
-    assert @user.library_systems.member? @system2
-    assert @user.library_systems.member? @system3
-    assert_equal 2, @user.library_systems.length
+    save_systems @system2
+    expect(@user.reload.library_systems.length).to eq(1)
+    expect(@user.library_systems).to include(@system2)
   end
 
   scenario "be able to de-select all library systems" do
     save_systems @system1, @system2
     save_systems
-    assert_equal 0, @user.library_systems.length
+    expect(@user.library_systems).to be_empty
   end
 
   scenario "redirect back to books index" do
     save_systems @system1
-    assert_equal books_url, current_url
+    expect(current_path).to eq(books_path)
   end
 
   scenario "save active shelves" do
@@ -88,14 +87,14 @@ feature "users editing preferences" do
     check 'wishlist'
     click_on 'Save'
 
-    assert_equal ['wishlist'], @user.reload.active_shelves
+    expect(@user.reload.active_shelves).to eq ['wishlist']
   end
 
   def save_systems(*args)
     visit "/users/#{@user.id}/edit"
-    assert_equal 200, page.status_code
+    expect(page.status_code).to eq(200)
 
-    [@system1, @system2, @system3].each {|s| uncheck(s.name)}
+    [@system1, @system2].each {|s| uncheck(s.name)}
     args.each do |s|
       check(s.name)
     end

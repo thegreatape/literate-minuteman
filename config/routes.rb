@@ -1,13 +1,13 @@
 Minuteman::Application.routes.draw do
-  match '/' => 'welcome#index', :as => :welcome
-  match 'login' => 'users#login', :as => :login
-  match 'logout' => 'users#logout', :as => :logout
-  match 'signup' => 'users#signup', :as => :signup
-  match 'library_systems' => 'users#library_systems', :as => :user_library_systems
-  match 'save_library_systems' => 'users#save_library_systems', :as => :save_library_systems
-  match '/user/locations' => 'users#locations', :as => :user_locations
-  match 'save_locations' => 'users#save_locations', :as => :save_locations
-  match 'oauth-callback' => 'users#oauth_callback', :as => :oauth_callback
+  get '/' => 'welcome#index', :as => :welcome
+  get 'login' => 'users#login', :as => :login
+  get 'logout' => 'users#logout', :as => :logout
+  get 'signup' => 'users#signup', :as => :signup
+  get 'library_systems' => 'users#library_systems', :as => :user_library_systems
+  get 'save_library_systems' => 'users#save_library_systems', :as => :save_library_systems
+  get '/user/locations' => 'users#locations', :as => :user_locations
+  get 'save_locations' => 'users#save_locations', :as => :save_locations
+  get 'oauth-callback' => 'users#oauth_callback', :as => :oauth_callback
 
   resources :books
   resources :locations

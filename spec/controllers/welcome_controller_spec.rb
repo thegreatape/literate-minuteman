@@ -7,7 +7,7 @@ describe WelcomeController do
   end
 
   it "redirects to books when logged in" do
-    session[:user_id] = Factory(:user).id
+    session[:user_id] = create(:user).id
     get :index
     expect(response).to redirect_to(books_url)
   end

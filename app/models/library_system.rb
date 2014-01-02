@@ -1,9 +1,22 @@
-class LibrarySystem < ActiveRecord::Base
-  has_many :locations
-  has_and_belongs_to_many :users
-  validates_presence_of :search_bot_class, :name
+class LibrarySystem < ActiveHash::Base
+  include ActiveHash::Enum
 
-  def search_bot(goodreads_id)
-    search_bot_class.constantize.new(goodreads_id)
+  self.data = [
+    { id: 'minuteman',
+      name: "Massachusetts Minuteman Library Network",
+      lookup_strategy: LookupStrategies::Minuteman },
+    { id: 'boston',
+      name: "Boston Public Library System",
+      lookup_strategy: LookupStrategies::Boston }
+  ]
+
+  enum_accessor :id
+
+  def locations
+    Location.where(library_system_id: id)
+  end
+
+  def find(title, author)
+    lookup_strategy.new(title, author).find
   end
 end

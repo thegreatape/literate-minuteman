@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   def require_login
-    redirect_to :controller => :users, :action => :login unless @user
+    redirect_to welcome_path unless @user
   end
 
   def find_user

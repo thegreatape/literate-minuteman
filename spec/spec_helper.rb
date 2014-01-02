@@ -6,27 +6,28 @@ require 'rspec/rails'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
-require 'shoulda'
 require 'factory_girl'
 require 'capybara/rspec'
-
-class ActiveSupport::TestCase
-  def login(user)
-    session[:user_id] = user.id
-  end
-end
-
 require 'capybara/rails'
+require 'webmock/rspec'
+require 'vcr'
 
 if ENV["TRAVIS"].present?
   Capybara.default_wait_time = 240
   Capybara.register_driver :webkit do |app|
-    Capybara::Webkit::Driver.new(app, timeout: 240)
+    Capybara::Poltergeist::Driver.new(app, timeout: 240)
   end
 end
 
-Capybara.javascript_driver = :webkit
+Capybara.javascript_driver = :poltergeist
 UpdateUser.stubs(:perform_async)
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
+  c.allow_http_connections_when_no_cassette = true
+  c.filter_sensitive_data("<GOODREADS_API_KEY>") { ENV['GOODREADS_API_KEY'] }
+  c.hook_into :webmock
+end
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods

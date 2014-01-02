@@ -1,8 +1,6 @@
-Factory.sequence :goodreads_id do |n|
-  n.to_s
-end
-
-Factory.define :user do |f|
-  f.goodreads_id {Factory.next(:goodreads_id)}
-  f.library_systems { [Factory(:library_system)] }
+FactoryGirl.define do
+  factory :user do |f|
+    sequence(:goodreads_id) {|i| i.to_s }
+    library_system_ids { [LibrarySystem::MINUTEMAN.id] }
+  end
 end

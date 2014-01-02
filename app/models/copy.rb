@@ -3,10 +3,11 @@ class Copy < ActiveRecord::Base
   belongs_to :location
   validates_presence_of :book, :status, :location_id
 
-  scope :for_library_system, lambda{|system|
-    joins(:location).where(:locations => {:library_system_id => system.id})
-  }
-  scope :at_location, lambda{|locations|
+  def self.for_library_system(system)
+    joins(:location).where(:locations => {:library_system_id => system.id}).readonly(false)
+  end
+
+  def self.at_location(locations)
     where("location_id in (?)", Array(locations))
-  }
+  end
 end

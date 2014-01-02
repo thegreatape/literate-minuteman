@@ -1,5 +1,7 @@
-Factory.define :copy do |f|
-  f.association :location
-  f.status      "In"
-  f.association :book
+FactoryGirl.define do
+  factory :copy do |f|
+    location
+    f.status      "In"
+    book
+  end
 end

@@ -1,7 +1,6 @@
-Factory.sequence :location_name do |n|
-  "location #{n}"
-end
-Factory.define :location do |f|
-  f.association :library_system
-  f.name        {Factory.next(:location_name)}
+FactoryGirl.define do 
+  factory :location do |f|
+    library_system_id LibrarySystem::MINUTEMAN.id
+    sequence(:name)  {|n| "location #{n}"} 
+  end
 end
