@@ -1,7 +1,7 @@
 class UpdateBook
-  include Sidekiq::Worker
+  @queue = :update_book
 
-  def perform(book_id)
+  def self.perform(book_id)
     Book.find(book_id).sync_copies
   end
 end

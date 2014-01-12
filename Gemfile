@@ -9,8 +9,7 @@ gem 'hpricot'
 gem 'goodreads'
 gem 'oauth'
 gem 'dynamic_form'
-gem 'sidekiq'
-gem 'sinatra' # for sidekiq-web
+gem 'resque'
 gem 'slim'
 gem 'will_paginate'
 gem 'thin'
@@ -36,6 +35,7 @@ group :test do
   gem 'webmock'
   gem 'database_cleaner'
   gem 'vcr'
+  gem 'connection_pool'
 end
 
 group :development do
