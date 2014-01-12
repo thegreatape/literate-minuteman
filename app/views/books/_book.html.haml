@@ -1,22 +1,14 @@
 - copies = @user.locations.any? ? book.copies.at_location(@user.locations) : book.copies
 - copies.group_by(&:title).each do |title, copies|
-  - available = copies.select {|c| c.status == "In"}.sort_by! {|c| c.location.name }
-  - out = copies.select {|c| c.status == "Out"}
+  - statuses = copies.group_by(&:status)
   
   %li.result
     .title.cell= title
-    - unless available.empty?
-      .available.locations.cell
-        Available at: 
+    - statuses.each do |status, copies|
+      .locations.cell{class: status.downcase.parameterize}
+        #{status.titleize} at: 
         %ul
-          - available.each do |copy|
+          - copies.each do |copy|
             %li 
               %b=copy.location.name 
               =copy.call_number
-
-    - unless out.empty?
-      .out.locations.cell
-        Out at:
-        %ul
-          - out.each do |copy|
-            %li #{copy.location.name}
