@@ -20,12 +20,9 @@ gem 'poltergeist'
 gem 'capybara-screenshot'
 gem 'active_hash'
 
-# in production environments by default.
-group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
-end
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'uglifier'
 
 group :test do
   gem 'rspec-rails'
