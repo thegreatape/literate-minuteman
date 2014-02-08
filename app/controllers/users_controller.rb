@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def oauth_callback
     @user = get_authorized_user
     @user.update_shelves
-    UpdateUser.perform_async @user.id
+    Resque.enqueue UpdateUser, @user.id
 
     session[:user_id] = @user.id
     redirect_to :controller => :books, :action => :index
