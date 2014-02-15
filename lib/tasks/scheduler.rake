@@ -1,10 +1,13 @@
 desc "Enqueue all users for lookup"
-task :enqueue_all_users => :environment do
-  puts "Queuing users for update..."
+task :refresh_all_users => :environment do
   User.find_each do |user|
-    puts "Enqueuing user id #{user.id} | goodreads id #{user.goodreads_id}"
-    UpdateUser.perform_async user.id
+    Resque.enqueue UpdateUser, user.id
   end
-  puts "done."
+end
+
+task :refresh_all_books => :environment do
+  Book.find_each do |book|
+    Resque.enqueue UpdateBook, book.id
+  end
 end
 
