@@ -1,19 +1,19 @@
 - at = @location ? "available now at #{@location.name}" : "available system-wide"
 .book
-  %p 
-    Showing books from your to-read list #{at}. 
+  %p
+    Showing books from your to-read list #{at}.
     - if @user.last_synced_at
       This list was last updated by the gruff-but-friendly robot army #{time_ago_in_words @user.last_synced_at} ago.
-  %p.nav 
+  %p.nav
     = link_to 'Settings', controller: :users, action: :edit, id: @user.id
     %span.divider= " | "
-    = link_to 'Logout', logout_url
+    = link_to 'Logout', logout_users_url
 .book
   .pagination
     = will_paginate @books
   .location-filter
     Pick a branch to filter by:
     %select#locations
-      %option{:value => books_url, :selected => (!@location) } All Locations 
+      %option{:value => books_url, :selected => (!@location) } All Locations
       - @locations.each do |loc|
         %option{:value => location_url(loc), :selected => (@location ? @location.id == loc.id : false) }= loc.name

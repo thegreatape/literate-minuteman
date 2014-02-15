@@ -4,7 +4,7 @@ feature "viewing books", js: true do
 
   scenario "redirecting to login without auth" do
     visit books_path
-    expect(current_path).to eq(welcome_path)
+    expect(current_path).to eq(root_path)
   end
 
   context "without books" do

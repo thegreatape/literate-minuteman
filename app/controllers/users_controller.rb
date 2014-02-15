@@ -29,13 +29,13 @@ class UsersController < ApplicationController
     if @user.update_attributes(user_params)
       flash[:notice_good] = "Settings updated."
       redirect_to :controller => :books, :action => :index
-    else 
+    else
       flash[:notice_bad] = "Couldn't save settings."
       render :edit
     end
   end
 
-  private 
+  private
   def user_params
     params[:user] ||= {}
     params[:user][:location_ids] ||= []
@@ -44,9 +44,9 @@ class UsersController < ApplicationController
     params.require(:user).permit(active_shelves: [], location_ids: [], library_system_ids: [])
   end
 
-  def get_consumer 
-    OAuth::Consumer.new(GOODREADS_API_KEY, 
-                        GOODREADS_API_SECRET, 
+  def get_consumer
+    OAuth::Consumer.new(GOODREADS_API_KEY,
+                        GOODREADS_API_SECRET,
                         :site => 'http://www.goodreads.com')
   end
 

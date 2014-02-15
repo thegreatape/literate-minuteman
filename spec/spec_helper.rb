@@ -37,7 +37,7 @@ RSpec.configure do |config|
   def login(user)
     UsersController.any_instance.stubs(:get_authorized_user).returns(user)
     User.any_instance.stubs(:update_shelves)
-    visit '/oauth-callback'
+    visit oauth_callback_users_path
     User.any_instance.unstub(:update_shelves)
   end
 
