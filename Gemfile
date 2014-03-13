@@ -4,7 +4,7 @@ ruby '2.1.0'
 gem 'rails', '4.0.2'
 
 gem 'pg'
-gem 'haml'
+gem 'haml-rails'
 gem 'hpricot'
 gem 'goodreads'
 gem 'oauth'
@@ -20,6 +20,8 @@ gem 'poltergeist'
 gem 'capybara-screenshot'
 gem 'active_hash'
 
+gem "twitter-bootstrap-rails"
+gem 'jquery-rails'
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
@@ -44,9 +46,3 @@ group :development, :test do
   gem 'byebug'
   gem 'dotenv-rails'
 end
-
-gem 'jquery-rails'
-
-# Deploy with Capistrano
-gem 'capistrano'
-gem 'rvm-capistrano'

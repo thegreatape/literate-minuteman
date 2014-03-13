@@ -1,22 +1,44 @@
-!!!
-%html
+!!! 5
+%html(lang="en")
   %head
-    %title Literate Minuteman
-    = javascript_include_tag 'application'
-    = stylesheet_link_tag 'application' 
+    %meta(charset="utf-8")
+    %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %title= content_for?(:title) ? yield(:title) : "Minuteman"
     = csrf_meta_tags
-  - branch ||= nil
-  %body{:class => branch ? 'branch' : 'main'}
-    #wrap
-      %a{href: '/'}
-        %h1 Literate Minuteman
-      = yield
-      .book.footer
-        Created by 
-        %a{:href => 'http://zen-hacking.com/'} Thomas Mayfield
-        |
-        Code on 
-        %a{:href => 'https://github.com/thegreatape/literate-minuteman'} Github
-        | 
-        Something broken? 
-        %a{:href => 'https://github.com/thegreatape/literate-minuteman/issues'} File a bug
+    / Le HTML5 shim, for IE6-8 support of HTML elements
+    /[if lt IE 9]
+      = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js"
+    = stylesheet_link_tag "application", :media => "all"
+    = favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144'
+    = favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114'
+    = favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72'
+    = favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png'
+    = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
+    = javascript_include_tag "application"
+
+
+  %body
+    .navbar.navbar-static-top
+      .navbar-inner
+        .container
+          %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.brand(href="#") Minuteman
+          -#.container.nav-collapse
+            -#%ul.nav
+              -#%li= link_to "Link 1", "/path1"
+              -#%li= link_to "Link 2", "/path2"
+              -#%li= link_to "Link 3", "/path3"
+
+    .container
+
+      .row
+        .span12
+          = bootstrap_flash
+          = yield
+    
+      %footer
+        %p &copy; Company 2014

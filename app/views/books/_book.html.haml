@@ -1,14 +1,21 @@
-- copies = @user.locations.any? ? book.copies.at_location(@user.locations) : book.copies
-- copies.group_by(&:title).each do |title, copies|
-  - statuses = copies.group_by(&:status)
-  
-  %li.result
-    .title.cell= title
-    - statuses.each do |status, copies|
-      .locations.cell{class: status.downcase.parameterize}
-        #{status.titleize} at: 
-        %ul
-          - copies.each do |copy|
-            %li 
-              %b=copy.location.name 
-              =copy.call_number
+.book-result
+  - if book.image_url.present?
+    .image.pull-left
+      = image_tag book.image_url
+  .data
+    %h2.title
+      = book[:title]
+      %span.divider /
+      = book[:author]
+    %table.table.table-condensed
+      %tr
+        %th Title
+        %th Status
+        %th Location
+        %th Call Number
+      - book.copies.each do |copy|
+        %tr{class: ('success' if copy.status.downcase == "available")}
+          %td=copy.title
+          %td=copy.status
+          %td=copy.location.name
+          %td=copy.call_number

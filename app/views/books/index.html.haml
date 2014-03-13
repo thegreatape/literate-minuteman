@@ -1,45 +1,32 @@
 - if @user.library_systems.empty?
-  .book
-    = render partial: 'users/form'
+  = render partial: 'users/form'
 - elsif @user.books.empty?
-  .book
-    %h2 Thanks for signing up!
-    %p Our army of gruff-but-friendly robots is checking your book lists against your library's records. Check back in a few minutes!
+  %h2 Thanks for signing up!
+  %p Our army of gruff-but-friendly robots is checking your book lists against your library's records. Check back in a few minutes!
 - else
-  = render :partial => 'books_header'
-  - @books.each do |book|
-    .book.book-result
-      - if book.image_url.present?
-        .image 
-          = image_tag book.image_url
-      .data
-        %h2 
-          = book[:title]
-          %span.divider / 
-          = book[:author]
-        %ul.results
-          = render :partial => "book", :locals => {:book => book}
-  .book
-    .pagination
-      = will_paginate @books
+  = render @books
+
+  .pagination
+    = will_paginate @books
+
   - if @user.locations.any?
     - elsewhere = @user.books.without_copies_at(@user.locations).with_copies
     - unless elsewhere.empty?
-      .book.no-results
-        %h2 Found These Books At Other Locations 
-        %ul 
+      .no-results
+        %h2 Found These Books At Other Locations
+        %ul
           - elsewhere.each do |book|
-            %li 
+            %li
               = book[:title]
-              %span.divider / 
+              %span.divider /
               = book[:author]
 
   - unless @not_found.empty?
-    .book.no-results
+    .no-results
       %h2 Didn't Find These Books :-(
-      %ul 
+      %ul
         - @not_found.each do |book|
-          %li 
+          %li
             = book[:title]
-            %span.divider / 
+            %span.divider /
             = book[:author]
