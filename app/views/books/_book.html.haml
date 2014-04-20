@@ -13,9 +13,5 @@
         %th Status
         %th Location
         %th Call Number
-      - book.copies.each do |copy|
-        %tr{class: ('success' if copy.status.downcase == "available")}
-          %td=copy.title
-          %td=copy.status
-          %td=copy.location.name
-          %td=copy.call_number
+        %th Synced At
+      = render book.copies

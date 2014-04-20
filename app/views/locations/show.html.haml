@@ -1,13 +1,19 @@
 = render :partial => 'books/books_header'
 - @books.each do |book|
-  .book.book-result
+  .book-result
     - if book.image_url.present?
-      .image 
+      .image.pull-left
         = image_tag book.image_url
     .data
-      %h2 
+      %h2.title
         = book[:title]
-        %span.divider / 
+        %span.divider /
         = book[:author]
-      %ul.results
-        = render :partial => "book", :locals => {:book => book}
+      %table.table.table-condensed
+        %tr
+          %th Title
+          %th Status
+          %th Location
+          %th Call Number
+          %th Synced At
+        = render book.copies.reject {|c| c.location != @location}

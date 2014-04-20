@@ -27,11 +27,10 @@
             %span.icon-bar
             %span.icon-bar
           %a.brand(href="#") Minuteman
-          -#.container.nav-collapse
-            -#%ul.nav
-              -#%li= link_to "Link 1", "/path1"
-              -#%li= link_to "Link 2", "/path2"
-              -#%li= link_to "Link 3", "/path3"
+          - if @user.present?
+            %ul.nav.navbar-nav.navbar-right
+              %li= link_to 'Settings', controller: :users, action: :edit, id: @user.id
+              %li= link_to 'Logout', logout_users_url
 
     .container
 
@@ -39,6 +38,5 @@
         .span12
           = bootstrap_flash
           = yield
-    
+
       %footer
-        %p &copy; Company 2014

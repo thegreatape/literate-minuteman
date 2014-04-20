@@ -1,0 +1,6 @@
+%tr{class: ('success' if copy.status.downcase == "available")}
+  %td=copy.title
+  %td=copy.status
+  %td=copy.location.name
+  %td=copy.call_number
+  %td=time_ago_in_words copy.updated_at

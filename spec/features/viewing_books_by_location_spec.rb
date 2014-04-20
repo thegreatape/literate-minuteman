@@ -25,16 +25,16 @@ feature "viewing locations", js: true do
       visit location_path Location.find_by_name("Cambridge")
       expect(page.status_code).to eq(200)
 
-      expect(page).to have_css('li.result', text: @the_areas_of_my_expertise.title)
-      expect(page).to have_css('li.result', text: @foucaults_pendulum.title)
+      expect(page).to have_css('.book-result .title', text: @the_areas_of_my_expertise.title)
+      expect(page).to have_css('.book-result .title', text: @foucaults_pendulum.title)
     end
 
     scenario "should only show books at second location" do
       visit location_path Location.find_by_name("Concord")
       expect(page.status_code).to eq(200)
 
-      expect(page).to_not have_css('li.result', text: @the_areas_of_my_expertise.title)
-      expect(page).to have_css('li.result', text: @foucaults_pendulum.title)
+      expect(page).to_not have_css('.book-result .title', text: @the_areas_of_my_expertise.title)
+      expect(page).to have_css('.book-result .title', text: @foucaults_pendulum.title)
     end
   end
 end
