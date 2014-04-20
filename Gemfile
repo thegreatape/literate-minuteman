@@ -25,6 +25,8 @@ gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
 gem 'puma'
+gem 'angularjs-rails'
+gem 'active_model_serializers'
 
 group :test do
   gem 'rspec-rails'
@@ -45,4 +47,5 @@ end
 group :development, :test do
   gem 'byebug'
   gem 'dotenv-rails'
+  gem 'teaspoon'
 end
