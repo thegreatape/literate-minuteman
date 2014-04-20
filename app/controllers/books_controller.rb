@@ -1,18 +1,19 @@
 class BooksController < ApplicationController
-  before_filter :require_login, :find_books
+  before_filter :require_login
+  before_filter :ensure_library_systems
 
   def index
+    respond_to do |format|
+      format.json { render json: @user.books.includes(copies: :location) }
+      format.html {}
+    end
   end
 
   private
-  def find_books
-    if @user.locations.any?
-      @books = @user.books.with_copies_at(@user.locations)
-    else
-      @books = @user.books.with_copies
+  def ensure_library_systems
+    if @user.library_systems.empty?
+      return redirect_to edit_user_path(@user)
     end
-    @books = @books.paginate(:page => params[:page])
-    @not_found = @user.books.without_copies
-    @locations = @user.selected_locations
   end
 end
+

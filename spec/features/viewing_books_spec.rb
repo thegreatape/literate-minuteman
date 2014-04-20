@@ -34,13 +34,7 @@ feature "viewing books", js: true do
     end
 
     it "display all my books with copies" do
-      expect(page.all('.book-result').length).to eq(3)
-    end
-
-    it "display all my books without copies" do
-      within '.no-results' do
-        expect(page).to have_content "Book With No Copies"
-      end
+      expect(page.all('.book-result table tr.copy').length).to eq(6)
     end
   end
 
@@ -67,21 +61,14 @@ feature "viewing books", js: true do
       @user.update_attributes(locations: [Location.find_by_name("Concord")])
       visit books_path
 
-      within '.book-result' do
-        page.should have_content @foucaults_pendulum.title
-        page.should_not have_content @the_areas_of_my_expertise.title
-      end
-
-      within '.no-results' do
-        page.should_not have_content @foucaults_pendulum.title
-        page.should have_content @the_areas_of_my_expertise.title
-      end
+      page.should have_css "tr.copy", text: @foucaults_pendulum.title
+      page.should_not have_css "tr.copy", text: @the_areas_of_my_expertise.title
 
       @user.update_attributes(locations: [Location.find_by_name("Cambridge")])
       visit books_path
 
-      page.should have_css ".book-result", text: @foucaults_pendulum.title
-      page.should have_css ".book-result", text: @the_areas_of_my_expertise.title
+      page.should have_css "tr.copy", text: @foucaults_pendulum.title
+      page.should have_css "tr.copy", text: @the_areas_of_my_expertise.title
 
       page.should_not have_css ".no-results"
     end

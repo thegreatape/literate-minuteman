@@ -1,39 +1,32 @@
-- if @user.library_systems.empty?
-  = render partial: 'users/form'
-- elsif @user.books.empty?
-  %h2 Thanks for signing up!
-  %p Our army of gruff-but-friendly robots is checking your book lists against your library's records. Check back in a few minutes!
+.books{"ng-controller" => "BooksCtrl"}
+  .loading{'ng-hide' => 'books.$resolved'}
+    Loading...
 
-- else
-  .location-filter
-    Pick a branch to filter by:
-    %select#locations
-      %option{:value => books_url, :selected => (!@location) } All Locations
-      - @locations.each do |loc|
-        %option{:value => location_url(loc), :selected => (@location ? @location.id == loc.id : false) }= loc.name
-  = render @books
+  .filter{'ng-show' => 'books.$resolved'}
+    = render 'filter_form'
 
-  .pagination
-    = will_paginate @books
+  .book-result{'ng-repeat' => 'book in books | filter:bookFilter'}
+    .image.pull-left
+      %img{"ng-src" => "{{ book.image_url }}"}
+    .data
+      %h2.title
+        {{ book.title }}
+        %span.divider /
+        {{ book.author }}
+      %table.table.table-condensed
+        %tr
+          %th Title
+          %th Status
+          %th Location
+          %th Call Number
+          %th Synced At
+        %tr.copy{"ng-repeat" => "copy in book.copies | filter:copyFilter"}
+          %td {{ copy.title }}
+          %td {{ copy.status }}
+          %td {{ copy.location_name }}
+          %td {{ copy.call_number }}
+          %td {{ copy.last_synced_at }}
 
-  - if @user.locations.any?
-    - elsewhere = @user.books.without_copies_at(@user.locations).with_copies
-    - unless elsewhere.empty?
-      .no-results
-        %h2 Found These Books At Other Locations
-        %ul
-          - elsewhere.each do |book|
-            %li
-              = book[:title]
-              %span.divider /
-              = book[:author]
-
-  - unless @not_found.empty?
-    .no-results
-      %h2 Didn't Find These Books :-(
-      %ul
-        - @not_found.each do |book|
-          %li
-            = book[:title]
-            %span.divider /
-            = book[:author]
+:javascript
+  Minuteman = {};
+  Minuteman.preferredLocations = #{ActiveModel::ArraySerializer.new(@user.locations, each_serializer: LocationSerializer).to_json};

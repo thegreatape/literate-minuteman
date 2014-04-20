@@ -1,0 +1,12 @@
+%form
+  Filter Results
+  .checkbox
+    %label
+      %input{type: "checkbox", "ng-model" => "onlyShowAvailableCopies"}
+        Only show available copies
+
+  .checkbox
+    %label
+      %input{type: "checkbox", "ng-model" => "onlyShowCopiesAtPreferredLocations"}
+        Only books with copies at
+        = link_to "my preferred locations", edit_user_path(@user)
