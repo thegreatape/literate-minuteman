@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 ruby '2.1.0'
-gem 'rails', '4.0.2'
+gem 'rails', '4.0.4'
 
 gem 'pg'
 gem 'haml-rails'
@@ -12,7 +12,6 @@ gem 'dynamic_form'
 gem 'resque'
 gem 'slim'
 gem 'will_paginate'
-gem 'thin'
 gem 'newrelic_rpm'
 gem 'airbrake'
 gem 'json'
@@ -25,6 +24,7 @@ gem 'jquery-rails'
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
+gem 'puma'
 
 group :test do
   gem 'rspec-rails'
