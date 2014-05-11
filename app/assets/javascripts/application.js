@@ -4,4 +4,5 @@
 // the compiled file.
 //
 //= require angular
+//= require angular-resource
 //= require_tree .

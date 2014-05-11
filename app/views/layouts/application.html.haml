@@ -18,7 +18,7 @@
     = javascript_include_tag "application"
 
 
-  %body{'ng-app' => true}
+  %body{'ng-app' => "minuteman"}
     .navbar.navbar-static-top
       .navbar-inner
         .container
@@ -37,6 +37,7 @@
       .row
         .span12
           = bootstrap_flash
-          = yield
+          %div
+            = yield
 
       %footer

@@ -3,7 +3,7 @@ class BooksController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render json: @user.books }
+      format.json { render json: @user.books.includes(copies: :location) }
       format.html {}
     end
   end

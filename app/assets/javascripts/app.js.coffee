@@ -1,15 +1,7 @@
 angular.module('minuteman', [
-  'ngRoute',
   'minuteman.controllers',
-]).config ['$routeProvider', ($routeProvider) ->
-  $routeProvider.
-  when('/', {
-    templateUrl: '/books',
-    controller: 'BooksCtrl'
-  }).
-  otherwise({
-    redirectTo: '/'
-  })
-]
+  'minuteman.services'
+])
 
 angular.module('minuteman.controllers', [])
+angular.module('minuteman.services', ['ngResource'])

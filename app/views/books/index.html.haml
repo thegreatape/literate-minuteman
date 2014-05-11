@@ -1,2 +1,25 @@
-%h1
-  Test: {{title}}
+.books{"ng-controller" => "BooksCtrl"}
+  .loading{'ng-hide' => 'books.$resolved'}
+    Loading...
+
+  .book-result{'ng-repeat' => 'book in books'}
+    .image.pull-left
+      %img{"ng-src" => "{{ book.image_url }}"}
+    .data
+      %h2.title
+        {{ book.title }}
+        %span.divider /
+        {{ book.author }}
+      %table.table.table-condensed
+        %tr
+          %th Title
+          %th Status
+          %th Location
+          %th Call Number
+          %th Synced At
+        %tr{"ng-repeat" => "copy in book.copies"}
+          %td {{ copy.title }}
+          %td {{ copy.status }}
+          %td {{ copy.location_name }}
+          %td {{ copy.call_number }}
+          %td {{ copy.last_synced_at }}
