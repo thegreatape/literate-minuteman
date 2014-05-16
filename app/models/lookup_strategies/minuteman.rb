@@ -25,7 +25,7 @@ class LookupStrategies::Minuteman
         next if cells.empty?
 
         copies << ScrapedBook.new(title: title,
-                                  location: cells[0].text,
+                                  location: self.class.normalize_location_name(cells[0].text),
                                   call_number: cells[1].text,
                                   status: cells[2].text)
       end
@@ -38,6 +38,11 @@ class LookupStrategies::Minuteman
     #p e
     #p e.backtrace
     #session.save_and_open_page
+  end
+
+  def self.normalize_location_name(text)
+    parts = text.split("/")
+    parts[0, parts.length-1].map(&:titleize).join('/')
   end
 
   def book_urls
