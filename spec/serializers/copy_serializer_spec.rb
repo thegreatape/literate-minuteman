@@ -14,11 +14,11 @@ describe CopySerializer do
     )
 
     json = CopySerializer.new(copy).as_json
-    expect(json[:copy][:title]).to eq 'Annihilation'
-    expect(json[:copy][:author]).to eq 'Allen Steele'
-    expect(json[:copy][:call_number]).to eq 'SF VanderMeer, Jeff'
-    expect(json[:copy][:status]).to eq 'In'
-    expect(json[:copy][:last_synced_at]).to eq synced_at
-    expect(json[:copy][:location_name]).to eq 'SOMERVILLE/Adult'
+    expect(json[:title]).to eq 'Annihilation'
+    expect(json[:author]).to eq 'Allen Steele'
+    expect(json[:call_number]).to eq 'SF VanderMeer, Jeff'
+    expect(json[:status]).to eq 'In'
+    expect(json[:last_synced_at]).to eq synced_at
+    expect(json[:location_name]).to eq 'SOMERVILLE/Adult'
   end
 end

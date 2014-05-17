@@ -15,7 +15,7 @@ describe BooksController do
       get :index, format: :json
 
       expect(response).to be_ok
-      expect(response.body).to eq(ActiveModel::ArraySerializer.new(@books, each_serializer: BookSerializer, root: "books").to_json)
+      expect(response.body).to eq(ActiveModel::ArraySerializer.new(@books, each_serializer: BookSerializer, root: false).to_json)
     end
   end
 end
