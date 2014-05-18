@@ -2,7 +2,7 @@
   .loading{'ng-hide' => 'books.$resolved'}
     Loading...
 
-  .book-result{'ng-repeat' => 'book in books | filter:withCopiesAtPreferredLocations'}
+  .book-result{'ng-repeat' => 'book in books | filter:bookFilter'}
     .image.pull-left
       %img{"ng-src" => "{{ book.image_url }}"}
     .data
@@ -17,7 +17,7 @@
           %th Location
           %th Call Number
           %th Synced At
-        %tr.copy{"ng-repeat" => "copy in book.copies | filter:atPreferredLocations"}
+        %tr.copy{"ng-repeat" => "copy in book.copies | filter:copyFilter"}
           %td {{ copy.title }}
           %td {{ copy.status }}
           %td {{ copy.location_name }}
