@@ -2,7 +2,7 @@
   .loading{'ng-hide' => 'books.$resolved'}
     Loading...
 
-  .book-result{'ng-repeat' => 'book in books'}
+  .book-result{'ng-repeat' => 'book in books | filter:withCopiesAtPreferredLocations'}
     .image.pull-left
       %img{"ng-src" => "{{ book.image_url }}"}
     .data

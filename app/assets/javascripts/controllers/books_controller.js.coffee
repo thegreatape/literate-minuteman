@@ -3,6 +3,9 @@ angular.module('minuteman.controllers').controller('BooksCtrl', ['$scope', 'Book
     $scope.rowClass = (copy) ->
       'success' if copy.status.toLower() == 'available'
 
+    $scope.withCopiesAtPreferredLocations = (book) ->
+      _.filter(book.copies, $scope.atPreferredLocations).length > 0
+
     $scope.atPreferredLocations = (copy) ->
       return true if Location.preferred().length == 0
 
