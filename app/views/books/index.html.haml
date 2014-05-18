@@ -17,9 +17,13 @@
           %th Location
           %th Call Number
           %th Synced At
-        %tr{"ng-repeat" => "copy in book.copies"}
+        %tr.copy{"ng-repeat" => "copy in book.copies | filter:atPreferredLocations"}
           %td {{ copy.title }}
           %td {{ copy.status }}
           %td {{ copy.location_name }}
           %td {{ copy.call_number }}
           %td {{ copy.last_synced_at }}
+
+:javascript
+  Minuteman = {};
+  Minuteman.preferredLocations = #{ActiveModel::ArraySerializer.new(@user.locations, each_serializer: LocationSerializer).to_json};
