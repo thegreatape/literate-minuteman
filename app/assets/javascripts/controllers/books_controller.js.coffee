@@ -16,7 +16,7 @@ angular.module('minuteman.controllers').controller('BooksCtrl', ['$scope', 'Book
 
       if $scope.onlyShowAvailableCopies
         status = copy.status.toLowerCase()
-        show = show && status == 'available' || status == "in"
+        show = show && status.match /available|^in/
 
       show
 
