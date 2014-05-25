@@ -32,12 +32,6 @@ class LookupStrategies::Minuteman
     end
 
     copies.uniq
-  #rescue Exception => e
-    #p title
-    #p author
-    #p e
-    #p e.backtrace
-    #session.save_and_open_page
   end
 
   def self.normalize_location_name(text)
