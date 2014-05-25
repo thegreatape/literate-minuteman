@@ -20,7 +20,7 @@ if ENV["TRAVIS"].present?
 end
 
 Capybara.javascript_driver = :poltergeist
-UpdateUser.stubs(:perform_async)
+Resque.stubs(:enqueue)
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
