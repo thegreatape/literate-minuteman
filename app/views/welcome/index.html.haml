@@ -1,4 +1,5 @@
-.book
+.jumbotron
+  %h1 Goodreads, Meet Your Local Library
   %p
     %b Literate Minuteman
     is a service to check your
@@ -10,5 +11,5 @@
       = link_to('Boston Public Library', 'http://www.bpl.org/')
     See when the books you want to read are available and where!
   %p
-    %a{:href => login_users_url }
+    = link_to login_users_url do
       = image_tag '/images/goodreads-login.png'

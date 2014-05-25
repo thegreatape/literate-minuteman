@@ -19,18 +19,19 @@
 
 
   %body{'ng-app' => "minuteman"}
-    .navbar.navbar-static-top
-      .navbar-inner
-        .container
-          %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
+    .navbar.navbar-default{role: "navigation"}
+      .container.fluid
+        .navbar-header
+          %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", type: "button"}
+            %span.sr-only Toggle navigation
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand(href="#") Minuteman
-          - if @user.present?
-            %ul.nav.navbar-nav.navbar-right
-              %li= link_to 'Settings', controller: :users, action: :edit, id: @user.id
-              %li= link_to 'Logout', logout_users_url
+          %a.navbar-brand(href="#") Literate Minuteman
+        - if @user.present?
+          %ul.nav.navbar-nav.navbar-right
+            %li= link_to 'Settings', controller: :users, action: :edit, id: @user.id
+            %li= link_to 'Logout', logout_users_url
 
     .container
 
