@@ -1,6 +1,7 @@
 angular.module('minuteman', [
   'minuteman.controllers',
-  'minuteman.services'
+  'minuteman.services',
+  'angularMoment'
 ])
 
 angular.module('minuteman.controllers', [])

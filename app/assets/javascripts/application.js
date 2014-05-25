@@ -5,5 +5,7 @@
 //
 //= require angular
 //= require angular-resource
+//= require moment
+//= require angular-moment
 //= require underscore
 //= require_tree .

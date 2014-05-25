@@ -25,7 +25,7 @@
           %td {{ copy.status }}
           %td {{ copy.location_name }}
           %td {{ copy.call_number }}
-          %td {{ copy.last_synced_at }}
+          %td{"am-time-ago" => "copy.last_synced_at"}
 
 :javascript
   Minuteman = {};
