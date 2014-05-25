@@ -61,6 +61,7 @@ describe "BooksCtrl", ->
         @scope.onlyShowAvailableCopies = true
         expect(@scope.copyFilter({status: "Out"})).toBeFalsy()
         expect(@scope.copyFilter({status: "AVAILABLE"})).toBeTruthy()
+        expect(@scope.copyFilter({status: "In"})).toBeTruthy()
 
       it "returns true for all copies when flag is unset", =>
         expect(@scope.copyFilter({status: "Out"})).toBeTruthy()

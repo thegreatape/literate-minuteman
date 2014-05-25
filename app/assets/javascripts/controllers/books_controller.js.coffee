@@ -15,7 +15,8 @@ angular.module('minuteman.controllers').controller('BooksCtrl', ['$scope', 'Book
         show = _.contains _.pluck(Location.preferred(), 'name'), copy.location_name
 
       if $scope.onlyShowAvailableCopies
-        show = show && copy.status.toLowerCase() == 'available'
+        status = copy.status.toLowerCase()
+        show = show && status == 'available' || status == "in"
 
       show
 
