@@ -18,6 +18,7 @@ gem 'json'
 gem 'poltergeist'
 gem 'capybara-screenshot'
 gem 'active_hash'
+gem 'sentry-raven'
 
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git', branch: 'bootstrap3'
 gem 'jquery-rails'
