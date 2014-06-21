@@ -46,6 +46,7 @@ GEM
       multi_json
     angularjs-rails (1.2.16)
     arel (4.0.2)
+    awesome_print (1.2.0)
     better_errors (1.0.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -242,6 +243,7 @@ DEPENDENCIES
   active_model_serializers
   airbrake
   angularjs-rails
+  awesome_print
   better_errors
   binding_of_caller
   byebug
