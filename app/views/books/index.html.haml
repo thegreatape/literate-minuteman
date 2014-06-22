@@ -1,9 +1,24 @@
 .books{"ng-controller" => "BooksCtrl"}
   .loading{'ng-hide' => 'books.$resolved'}
-    Loading...
+    .progress.progress-striped.active
+      .progress-bar.progress-bar-info{"style"=>"width: 100%"}
+        Loading...
+
+  .pending.panel.panel-info{'ng-show' => 'books.$resolved && pendingBookCount > 0'}
+    .panel-heading
+      Loading New Books
+    .panel-body
+      %p Our gruff-but-friendly robot army is currently fetching your books. New books will appear below when they're found at your selected libraries. This will take a while the first time, so go grab a beverage and a book!
+      .container
+        .row
+          .col-lg-2.col-sm-3.col-xs-5.text-right {{pendingBookCount}} books to go.
+          .col-lg-9.col-sm-7.col-xs-5
+            .progress.progress-striped.active
+              .progress-bar.progress-bar-info{role: "progressbar", "aria-valuenow" => "{{pendingBookCount}}", "aria-valuemin"=>"0", "aria-valuemax"=>"{{books.length}}", "style"=>"width: {{100 - (pendingBookCount / books.length * 100)}}%"}
 
   .filter{'ng-show' => 'books.$resolved'}
     = render 'filter_form'
+
 
   .book-result{'ng-repeat' => 'book in books | filter:bookFilter'}
     .image.pull-left
@@ -30,3 +45,7 @@
 :javascript
   Minuteman = {};
   Minuteman.preferredLocations = #{ActiveModel::ArraySerializer.new(@user.locations, each_serializer: LocationSerializer).to_json};
+  Minuteman.pusherKey = '#{Pusher.key}';
+  Minuteman.bookUpdateChannel = '#{BookNotifier.book_update_channel_name(@user)}';
+  Minuteman.pendingBooksChannel = '#{BookNotifier.pending_book_channel_name(@user)}';
+  Minuteman.initialPendingBookCount = '#{@user.books.unsynced.count}';

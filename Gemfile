@@ -29,6 +29,7 @@ gem 'puma'
 gem 'angularjs-rails'
 gem 'active_model_serializers'
 gem 'awesome_print'
+gem 'pusher'
 
 group :test do
   gem 'rspec-rails'

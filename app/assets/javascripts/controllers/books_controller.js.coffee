@@ -1,5 +1,5 @@
-angular.module('minuteman.controllers').controller('BooksCtrl', ['$scope', 'Book', 'Location',
-  ($scope, Book, Location) ->
+angular.module('minuteman.controllers').controller('BooksCtrl', ['$scope', 'Book', 'Location', 'Pusher'
+  ($scope, Book, Location, Pusher) ->
     $scope.onlyShowCopiesAtPreferredLocations = true
 
     $scope.rowClass = (copy) ->
@@ -21,4 +21,14 @@ angular.module('minuteman.controllers').controller('BooksCtrl', ['$scope', 'Book
       show
 
     $scope.books = Book.query()
+
+    Pusher.subscribe Minuteman.bookUpdateChannel, 'book-updated', (updatedBook) ->
+      for book, i in $scope.books
+        if book.id == updatedBook.id
+          return $scope.books[i] = updatedBook
+      $scope.books.push updatedBook
+
+    $scope.pendingBookCount = Minuteman.initialPendingBookCount
+    Pusher.subscribe Minuteman.pendingBooksChannel, 'pending-count-updated', (update) ->
+      $scope.pendingBookCount = update.count
 ])

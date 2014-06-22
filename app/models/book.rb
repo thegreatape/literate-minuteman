@@ -18,6 +18,10 @@ class Book < ActiveRecord::Base
     where('books.id not in (select distinct(copies.book_id) from copies)')
   end
 
+  def self.unsynced
+    where('last_synced_at is null')
+  end
+
   def sync_copies
     now = Time.now
 
@@ -30,5 +34,9 @@ class Book < ActiveRecord::Base
       end
     end
     self.copies.where('last_synced_at < ?', now).destroy_all
+    update_attributes(last_synced_at: now)
+
+    BookNotifier.notify_all(self)
   end
+
 end
