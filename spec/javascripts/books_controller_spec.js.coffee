@@ -3,6 +3,10 @@ describe "BooksCtrl", ->
 
   beforeEach =>
     @preferredLocations = []
+    @pusherMock = {
+      subscribe: =>
+    }
+
     @locationMock = {
       preferred: => @preferredLocations
     }
@@ -24,7 +28,7 @@ describe "BooksCtrl", ->
   beforeEach inject ($rootScope, $controller) =>
     @scope = $rootScope.$new()
     @controller = $controller('BooksCtrl', {
-      $scope: @scope, Book: @bookMock, Location: @locationMock
+      $scope: @scope, Book: @bookMock, Location: @locationMock, Pusher: @pusherMock
     })
 
   it "adds all books to the scope", =>

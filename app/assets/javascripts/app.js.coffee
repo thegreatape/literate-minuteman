@@ -4,7 +4,8 @@ angular.module('minuteman', [
   'angularMoment',
   'doowb.angular-pusher'
 ]).config(['PusherServiceProvider', (PusherServiceProvider) ->
-  PusherServiceProvider.setToken(Minuteman.pusherKey).setOptions({})
+  if window.Minuteman
+    PusherServiceProvider.setToken(Minuteman.pusherKey).setOptions({})
 ])
 
 angular.module('minuteman.controllers', [])
