@@ -1,3 +1,5 @@
+require 'resque/failure/redis'
+require 'resque/failure/multiple'
 require 'resque-sentry'
 
 if Rails.env.production?
