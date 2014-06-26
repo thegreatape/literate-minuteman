@@ -8,7 +8,7 @@ class BookNotifier
   end
 
   def self.notify(user, book)
-    Pusher[book_update_channel_name(user)].trigger('book-updated', BookSerializer.new(book).as_json)
+    Pusher[book_update_channel_name(user)].trigger('book-updated', {id: book.id})
     Pusher[pending_book_channel_name(user)].trigger('pending-count-updated', {
       count: user.books.unsynced.count
     })

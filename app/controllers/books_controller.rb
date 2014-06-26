@@ -9,6 +9,10 @@ class BooksController < ApplicationController
     end
   end
 
+  def show
+    render json: Book.find(params[:id])
+  end
+
   private
   def ensure_library_systems
     if @user.library_systems.empty?

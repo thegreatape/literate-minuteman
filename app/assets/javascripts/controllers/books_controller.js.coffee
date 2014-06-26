@@ -22,10 +22,11 @@ angular.module('minuteman.controllers').controller('BooksCtrl', ['$scope', 'Book
 
     $scope.books = Book.query()
 
-    Pusher.subscribe Minuteman.bookUpdateChannel, 'book-updated', (updatedBook) ->
+    Pusher.subscribe Minuteman.bookUpdateChannel, 'book-updated', (message) ->
       for book, i in $scope.books
-        if book.id == updatedBook.id
-          return $scope.books[i] = updatedBook
+        if book.id == message.id
+          return Book.get {id: message.id}, (updatedBook) ->
+            $scope.books[i] = updatedBook
       $scope.books.push updatedBook
 
     $scope.pendingBookCount = Minuteman.initialPendingBookCount
