@@ -11,7 +11,6 @@ class UsersController < ApplicationController
   def oauth_callback
     @user = get_authorized_user
     @user.update_shelves
-    Resque.enqueue UpdateUser, @user.id
 
     session[:user_id] = @user.id
     redirect_to :controller => :books, :action => :index
@@ -27,6 +26,12 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_params)
+      @user.sync_books
+
+      @user.books.pluck(:id).each do |id|
+        Resque.enqueue UpdateBook, id
+      end
+
       flash[:notice_good] = "Settings updated."
       redirect_to :controller => :books, :action => :index
     else
