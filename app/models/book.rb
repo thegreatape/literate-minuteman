@@ -22,6 +22,10 @@ class Book < ActiveRecord::Base
     where('last_synced_at is null')
   end
 
+  def self.with_sync_errors
+    where('last_sync_error is not null')
+  end
+
   def sync_copies
     now = Time.now
 
