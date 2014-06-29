@@ -21,26 +21,34 @@
 
 
   .book-result{'ng-repeat' => 'book in books | filter:bookFilter'}
-    .image.pull-left
-      %img{"ng-src" => "{{ book.image_url }}"}
-    .data
-      %h2.title
-        {{ book.title }}
-        %span.divider /
-        {{ book.author }}
-      %table.table.table-condensed
-        %tr
-          %th Title
-          %th Status
-          %th Location
-          %th Call Number
-          %th Synced At
-        %tr.copy{"ng-repeat" => "copy in book.copies | filter:copyFilter"}
-          %td {{ copy.title }}
-          %td {{ copy.status }}
-          %td {{ copy.location_name }}
-          %td {{ copy.call_number }}
-          %td{"am-time-ago" => "copy.last_synced_at"}
+    .row.book-data
+      .col-lg-1.col-md-1.col-sm-2.col-xs-3
+        %img.book-image{"ng-src" => "{{ book.image_url }}"}
+      .col-lg-11.col-md-11.col-sm-10.col-xs-9
+        .title
+          {{ book.title }}
+        .author
+          {{ book.author }}
+        %a.book-toggle.btn.btn-default{href: '#', "ng-click" => "book.showCopies = !book.showCopies"}
+          %span{"ng-show" => "!book.showCopies"}
+            Show {{(book.copies | filter:copyFilter).length}} Copies
+          %span{"ng-show" => "book.showCopies"}
+            Hide Copies
+      %table.table.table-condensed{"ng-show" => "book.showCopies"}
+        %thead
+          %tr
+            %th Title
+            %th Status
+            %th Location
+            %th Call Number
+            %th Synced At
+        %tbody
+          %tr.copy{"ng-repeat" => "copy in book.copies | filter:copyFilter"}
+            %td{"data-title" => "Title"} {{ copy.title }}
+            %td{"data-title" => "Status"} {{ copy.status }}
+            %td{"data-title" => "Location"} {{ copy.location_name }}
+            %td{"data-title" => "Call Number"} {{ copy.call_number }}
+            %td{"data-title" => "Last Synced At", "am-time-ago" => "copy.last_synced_at"}
 
 :javascript
   Minuteman = {};

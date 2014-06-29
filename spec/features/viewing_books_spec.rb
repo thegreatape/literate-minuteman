@@ -34,6 +34,12 @@ feature "viewing books", js: true do
     end
 
     it "display all my books with copies" do
+      3.times do |i|
+        within all(".book-result")[i] do
+          click_on "Show 2 Copies"
+        end
+      end
+
       expect(page.all('.book-result table tr.copy').length).to eq(6)
     end
   end
@@ -58,14 +64,17 @@ feature "viewing books", js: true do
     end
 
     it "only shows books with copies at my locations" do
+
       @user.update_attributes(locations: [Location.find_by_name("Concord")])
       visit books_path
+      all(".book-toggle").map(&:click)
 
       page.should have_css "tr.copy", text: @foucaults_pendulum.title
       page.should_not have_css "tr.copy", text: @the_areas_of_my_expertise.title
 
       @user.update_attributes(locations: [Location.find_by_name("Cambridge")])
       visit books_path
+      all(".book-toggle").map(&:click)
 
       page.should have_css "tr.copy", text: @foucaults_pendulum.title
       page.should have_css "tr.copy", text: @the_areas_of_my_expertise.title
