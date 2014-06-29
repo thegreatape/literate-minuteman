@@ -34,7 +34,7 @@ gem 'pusher'
 
 group :test do
   gem 'rspec-rails'
-  gem 'mocha', require: 'mocha/api'
+  gem 'rspec-mocks'
   gem 'hashie'
   gem 'factory_girl_rails'
   gem 'webmock'

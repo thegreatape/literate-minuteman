@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140622162106) do
+ActiveRecord::Schema.define(version: 20140629160951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20140622162106) do
     t.string   "image_url"
     t.string   "small_image_url"
     t.datetime "last_synced_at"
+    t.text     "last_sync_error"
   end
 
   create_table "copies", force: true do |t|

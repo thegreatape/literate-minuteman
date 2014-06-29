@@ -20,7 +20,6 @@ if ENV["TRAVIS"].present?
 end
 
 Capybara.javascript_driver = :poltergeist
-Resque.stubs(:enqueue)
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
@@ -34,9 +33,13 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.order = "random"
 
+  config.before do
+    Resque.stub(:enqueue)
+  end
+
   def login(user)
-    UsersController.any_instance.stubs(:get_authorized_user).returns(user)
-    User.any_instance.stubs(:update_shelves)
+    UsersController.any_instance.stub(:get_authorized_user).and_return(user)
+    User.any_instance.stub(:update_shelves)
     visit oauth_callback_users_path
     User.any_instance.unstub(:update_shelves)
   end

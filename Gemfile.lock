@@ -122,12 +122,9 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    metaclass (0.0.1)
     mime-types (1.25.1)
     mini_portile (0.5.2)
     minitest (4.7.5)
-    mocha (0.14.0)
-      metaclass (~> 0.0.1)
     mono_logger (1.1.0)
     multi_json (1.10.1)
     multipart-post (2.0.0)
@@ -269,7 +266,6 @@ DEPENDENCIES
   hpricot
   jquery-rails
   json
-  mocha
   newrelic_rpm
   oauth
   pg
@@ -279,6 +275,7 @@ DEPENDENCIES
   rails (= 4.0.4)
   resque
   resque-sentry
+  rspec-mocks
   rspec-rails
   sass-rails
   sentry-raven
