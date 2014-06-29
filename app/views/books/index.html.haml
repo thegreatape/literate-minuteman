@@ -23,9 +23,10 @@
   .book-result{'ng-repeat' => 'book in books | filter:bookFilter'}
     .row.book-data
       .col-lg-1.col-md-1.col-sm-2.col-xs-3
-        %img.book-image{"ng-src" => "{{ book.image_url }}"}
+        %a{href: "{{book.goodreads_link}}"}
+          %img.book-image{"ng-src" => "{{ book.image_url }}"}
       .col-lg-11.col-md-11.col-sm-10.col-xs-9
-        .title
+        %a.title{href: "{{book.goodreads_link}}"}
           {{ book.title }}
         .author
           {{ book.author }}
