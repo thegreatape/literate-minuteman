@@ -80,6 +80,7 @@ feature "users editing preferences", js: true do
   end
 
   scenario "save active shelves" do
+    User.any_instance.stub(:sync_books)
     @user.shelves = ['to-read', 'wishlist']
     @user.save
 
