@@ -31,8 +31,7 @@
         .author
           {{ book.author }}
         %a.book-toggle.btn.btn-default{href: '#', "ng-click" => "book.showCopies = !book.showCopies"}
-          %span{"ng-show" => "!book.showCopies"}
-            Show {{(book.copies | filter:copyFilter).length}} Copies
+          %span{"ng-show" => "!book.showCopies", "ng-pluralize" => true, count: "(book.copies | filter:copyFilter).length", when: "{'1': 'Show 1 Copy', 'other': 'Show {} Copies'}"}
           %span{"ng-show" => "book.showCopies"}
             Hide Copies
       %table.table.table-condensed{"ng-show" => "book.showCopies"}
