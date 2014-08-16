@@ -54,6 +54,7 @@
 :javascript
   Minuteman = {};
   Minuteman.preferredLocations = #{ActiveModel::ArraySerializer.new(@user.locations, each_serializer: LocationSerializer).to_json};
+  Minuteman.allLocations = #{ActiveModel::ArraySerializer.new(Location.all, each_serializer: LocationSerializer).to_json};
   Minuteman.pusherKey = '#{Pusher.key}';
   Minuteman.bookUpdateChannel = '#{BookNotifier.book_update_channel_name(@user)}';
   Minuteman.pendingBooksChannel = '#{BookNotifier.pending_book_channel_name(@user)}';

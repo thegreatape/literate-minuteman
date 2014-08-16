@@ -3,12 +3,14 @@ describe "BooksCtrl", ->
 
   beforeEach =>
     @preferredLocations = []
+    @allLocations = []
     @pusherMock = {
       subscribe: =>
     }
 
     @locationMock = {
       preferred: => @preferredLocations
+      all: => @allLocations
     }
 
     @lexicon = {
@@ -70,3 +72,16 @@ describe "BooksCtrl", ->
 
       it "returns true for all copies when flag is unset", =>
         expect(@scope.copyFilter({status: "Out"})).toBeTruthy()
+
+    describe "copy location name filtering", =>
+
+      it "is disabled by default", =>
+        expect(@scope.location).toBeFalsy()
+
+      it "returns true for only copies with the same location name", =>
+        @scope.location = "Cambridge"
+        expect(@scope.copyFilter({location_name: "Kalamazoo"})).toBeFalsy()
+        expect(@scope.copyFilter({location_name: "Cambridge"})).toBeTruthy()
+
+      it "returns true for all copies when flag is unset", =>
+        expect(@scope.copyFilter({location_name: "Kalamazoo"})).toBeTruthy()

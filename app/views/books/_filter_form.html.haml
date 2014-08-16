@@ -10,3 +10,10 @@
       %input{type: "checkbox", "ng-model" => "onlyShowCopiesAtPreferredLocations"}
         Only books with copies at
         = link_to "my preferred locations", edit_user_path(@user)
+
+  .select
+    %label
+      Show books at:
+      %select.form-control{"ng-model" => "location"}
+        %option{value: ''} All locations
+        %option{"ng-repeat" => "location in available_locations | orderBy:'name'", "ng-value" => "location.name"} {{location.name}}

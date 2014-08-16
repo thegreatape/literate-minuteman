@@ -2,6 +2,14 @@ angular.module('minuteman.controllers').controller('BooksCtrl', ['$scope', 'Book
   ($scope, Book, Location, Pusher) ->
     $scope.onlyShowCopiesAtPreferredLocations = true
 
+    $scope.available_locations = Location.preferred()
+    $scope.$watch 'onlyShowCopiesAtPreferredLocations', ->
+      if $scope.onlyShowCopiesAtPreferredLocations
+        $scope.available_locations = Location.preferred()
+      else
+        $scope.available_locations = Location.all()
+
+
     $scope.rowClass = (copy) ->
       'success' if copy.status.toLowerCase() == 'available'
 
@@ -13,6 +21,9 @@ angular.module('minuteman.controllers').controller('BooksCtrl', ['$scope', 'Book
 
       if $scope.onlyShowCopiesAtPreferredLocations && Location.preferred().length > 0
         show = _.contains _.pluck(Location.preferred(), 'name'), copy.location_name
+
+      if $scope.location
+        show = show && copy.location_name == $scope.location
 
       if $scope.onlyShowAvailableCopies
         status = copy.status.toLowerCase()
