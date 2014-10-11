@@ -33,8 +33,14 @@ class Book < ActiveRecord::Base
       system.find(title, author).each do |scraped_book|
         location = Location.where(name: scraped_book.location, library_system_id: system.id).first_or_create
 
-        copy = copies.where(location: location, call_number: scraped_book.call_number, title: scraped_book.title).first_or_create
-        copy.update_attributes(last_synced_at: now, status: scraped_book.status)
+        copy = copies.where(location: location,
+                            call_number: scraped_book.call_number,
+                            title: scraped_book.title
+                           ).first_or_create
+        copy.update_attributes(
+          last_synced_at: now,
+          url: scraped_book.url,
+          status: scraped_book.status)
       end
     end
     self.copies.where('last_synced_at < ?', now).destroy_all

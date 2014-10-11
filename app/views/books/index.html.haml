@@ -44,7 +44,11 @@
             %th Synced At
         %tbody
           %tr.copy{"ng-repeat" => "copy in book.copies | filter:copyFilter"}
-            %td{"data-title" => "Title"} {{ copy.title }}
+            %td{"data-title" => "Title"}
+              %a{"ng-href" => "{{copy.url}}", "ng-if" => "copy.url"}
+                {{ copy.title }}
+              %span{"ng-if" => "!copy.url"}
+                {{ copy.title }}
             %td{"data-title" => "Status"} {{ copy.status }}
             %td{"data-title" => "Location"} {{ copy.location_name }}
             %td{"data-title" => "Call Number"} {{ copy.call_number }}

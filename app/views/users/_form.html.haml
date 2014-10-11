@@ -22,7 +22,7 @@
           Preferred branches in the #{system.name}
         %p Check the branches that you'd like to see books from by default.
         - unless system.locations.empty?
-          - system.locations.sort_by(&:name).each_slice(system.locations.length / 3).each do |sublist|
+          - system_locations_columns(system).each do |sublist|
             %div.branches-part
               - sublist.each do |location|
                 .checkbox

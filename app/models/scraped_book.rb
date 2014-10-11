@@ -1,5 +1,5 @@
 class ScrapedBook
-  attr_accessor :title, :location, :call_number, :status
+  attr_accessor :title, :location, :call_number, :status, :url
 
   def initialize(options={})
     options.each do |k,v|
