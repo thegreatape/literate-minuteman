@@ -10,7 +10,10 @@ class LibrarySystem < ActiveHash::Base
       lookup_strategy: LookupStrategies::Boston },
     { id: 'boston-overdrive',
       name: "Boston Public Library - Overdrive Ebooks",
-      lookup_strategy: LookupStrategies::BplOverdrive }
+      lookup_strategy: LookupStrategies::BplOverdrive },
+    { id: 'minuteman-overdrive',
+      name: "Minuteman - Overdrive Ebooks",
+      lookup_strategy: LookupStrategies::MinutemanOverdrive }
   ]
 
   enum_accessor :id
