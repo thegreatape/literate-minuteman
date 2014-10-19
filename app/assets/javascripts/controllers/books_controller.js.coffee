@@ -11,7 +11,7 @@ angular.module('minuteman.controllers').controller('BooksCtrl', ['$scope', 'Book
 
 
     $scope.rowClass = (copy) ->
-      'success' if copy.status.toLowerCase() == 'available'
+      'success' if $scope.isAvailable(copy)
 
     $scope.bookFilter = (book) ->
       _.filter(book.copies, $scope.copyFilter).length > 0
@@ -26,10 +26,13 @@ angular.module('minuteman.controllers').controller('BooksCtrl', ['$scope', 'Book
         show = show && copy.location_name == $scope.location
 
       if $scope.onlyShowAvailableCopies
-        status = copy.status.toLowerCase()
-        show = show && status.match /available|^in/
+        show = show && $scope.isAvailable(copy)
 
       show
+
+    $scope.isAvailable = (copy) ->
+      status = copy.status.toLowerCase()
+      status.match /available($|:\s*[123456789]+)|^in/
 
     $scope.books = Book.query()
 
