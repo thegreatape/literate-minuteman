@@ -3,6 +3,7 @@ Minuteman::Application.routes.draw do
 
   resources :books
   resources :locations
+  resources :library_systems, only: [:show]
   resources :users do
     collection do
       get :login

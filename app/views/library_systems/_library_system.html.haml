@@ -1,0 +1,14 @@
+%div{class: "system-#{library_system.id}"}
+  %h3
+    Preferred branches in the #{library_system.name}
+  %p Check the branches that you'd like to see books from by default.
+  - unless library_system.locations.empty?
+    - system_locations_columns(library_system).each do |sublist|
+      %div.branches-part
+        - sublist.each do |location|
+          .checkbox
+            = label_tag "user_location_ids_#{location.id}" do
+              = check_box_tag 'user[location_ids][]', location.id, @user.locations.member?(location), {id: "user_location_ids_#{location.id}"}
+              = location.name
+          %br
+  %br{:style => 'clear:both'}

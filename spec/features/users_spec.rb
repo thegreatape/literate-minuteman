@@ -9,16 +9,26 @@ feature "users editing preferences", js: true do
     @loc2 = create(:location, library_system_id: @system1.id)
     @loc3 = create(:location, library_system_id: @system1.id)
 
+    @loc4 = create(:location, library_system_id: @system2.id)
+
     @user = create(:user, library_system_ids: [@system1.id])
     login @user
   end
 
   scenario "show all the locations" do
     visit "/users/#{@user.id}/edit"
-    [@loc1, @loc2, @loc3].each do |loc|
-     expect(page).to have_css("input[name*=location_ids][value='#{loc.id}']")
-    end
+    should_have_locations @loc1, @loc2, @loc3
+  end
 
+  scenario "toggles locations when system is selected" do
+    visit "/users/#{@user.id}/edit"
+    should_have_locations @loc1, @loc2, @loc3
+    uncheck @system1.name
+    should_not_have_locations @loc1, @loc2, @loc3
+    check @system1.name
+    should_have_locations @loc1, @loc2, @loc3
+    check @system2.name
+    should_have_locations @loc1, @loc2, @loc3, @loc4
   end
 
   scenario "save locations" do
@@ -76,6 +86,7 @@ feature "users editing preferences", js: true do
 
   scenario "redirect back to books index" do
     save_systems @system1
+    sleep 1
     expect(current_path).to eq(books_path)
   end
 
@@ -89,6 +100,18 @@ feature "users editing preferences", js: true do
     click_on 'Save'
 
     expect(@user.reload.active_shelves).to eq ['wishlist']
+  end
+
+  def should_have_locations(*locations)
+    locations.each do |loc|
+      expect(page).to have_css("input[name*=location_ids][value='#{loc.id}']")
+    end
+  end
+
+  def should_not_have_locations(*locations)
+    locations.each do |loc|
+      expect(page).to_not have_css("input[name*=location_ids][value='#{loc.id}']")
+    end
   end
 
   def save_systems(*args)
