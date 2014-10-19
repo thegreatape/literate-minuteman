@@ -13,11 +13,7 @@ class LookupStrategies::Overdrive
 
   def find
     session.visit host
-
     search_for_book
-
-    puts "#{title} / #{author} - #{result_links.length} results"
-
     copies_from_links
   end
 
