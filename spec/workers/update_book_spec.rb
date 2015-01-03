@@ -7,7 +7,7 @@ describe UpdateBook do
     Book.any_instance.stub(:sync_copies) {|book_id| raise StubbedError.new("oh no!") }
     book = create(:book)
 
-    expect{ UpdateBook.perform(book.id) }.to raise_error(StubbedError)
+    expect{ UpdateBook.perform(book.id, LibrarySystem::MINUTEMAN.id) }.to raise_error(StubbedError)
     expect(book.reload.last_sync_error).to_not be_nil
     expect(book.reload.last_sync_error).to include('StubbedError')
   end
@@ -16,7 +16,7 @@ describe UpdateBook do
     Book.any_instance.stub(:sync_copies)
     book = create(:book, last_sync_error: "things went poorly")
 
-    expect{ UpdateBook.perform(book.id) }.to_not raise_error
+    expect{ UpdateBook.perform(book.id, LibrarySystem::MINUTEMAN.id) }.to_not raise_error
     expect(book.reload.last_sync_error).to be_nil
   end
 end

@@ -26,24 +26,22 @@ class Book < ActiveRecord::Base
     where('last_sync_error is not null')
   end
 
-  def sync_copies
+  def sync_copies(library_system)
     now = Time.now
 
-    LibrarySystem.all.each do |system|
-      system.find(title, author).each do |scraped_book|
-        location = Location.where(name: scraped_book.location, library_system_id: system.id).first_or_create
+    library_system.find(title, author).each do |scraped_book|
+      location = Location.where(name: scraped_book.location, library_system_id: library_system.id).first_or_create
 
-        copy = copies.where(location: location,
-                            call_number: scraped_book.call_number,
-                            title: scraped_book.title
-                           ).first_or_create
-        copy.update_attributes(
-          last_synced_at: now,
-          url: scraped_book.url,
-          status: scraped_book.status)
-      end
+      copy = copies.where(location: location,
+                          call_number: scraped_book.call_number,
+                          title: scraped_book.title
+                         ).first_or_create
+      copy.update_attributes(
+        last_synced_at: now,
+        url: scraped_book.url,
+        status: scraped_book.status)
     end
-    self.copies.where('last_synced_at < ?', now).destroy_all
+    self.copies.for_library_system(library_system).where('last_synced_at < ?', now).destroy_all
     update_attributes(last_synced_at: now)
 
     BookNotifier.notify_all(self)

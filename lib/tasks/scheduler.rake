@@ -7,7 +7,9 @@ end
 
 task :refresh_all_books => :environment do
   Book.find_each do |book|
-    Resque.enqueue UpdateBook, book.id
+    LibrarySystem.all.each do |library_system|
+      Resque.enqueue UpdateBook, book.id, library_system.id
+    end
   end
 end
 
