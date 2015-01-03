@@ -16,6 +16,7 @@ class LookupStrategies::Boston
 
       result_title = extract_title(location_button)
       location_button.click
+      wait_for_modal_to_open
 
       session.within location_modal do
         location_rows.each do |row|
@@ -29,7 +30,12 @@ class LookupStrategies::Boston
     copies
   end
 
+
   private
+
+  def wait_for_modal_to_open
+    session.has_css? location_modal
+  end
 
   def extract_title(location_button)
     location_button.find(:xpath, '../..').find('.title').text
@@ -44,7 +50,7 @@ class LookupStrategies::Boston
   end
 
   def modal_close_button
-    session.find('a.close')
+    session.find('button.close')
   end
 
   def location_buttons
@@ -52,7 +58,7 @@ class LookupStrategies::Boston
   end
 
   def location_modal
-    ".modal-box"
+    ".modal-content"
   end
 
   def location_rows
