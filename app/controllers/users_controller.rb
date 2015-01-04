@@ -29,7 +29,9 @@ class UsersController < ApplicationController
       @user.sync_books
 
       @user.books.pluck(:id).each do |id|
-        Resque.enqueue UpdateBook, id
+        LibrarySystem.all.each do |system|
+          UpdateBook.perform_async id, system.id
+        end
       end
 
       flash[:notice_good] = "Settings updated."

@@ -1,0 +1,5 @@
+---
+:concurrency: 3
+:queues:
+  - update_book
+  - update_user

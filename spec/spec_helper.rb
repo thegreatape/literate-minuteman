@@ -34,7 +34,7 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.before do
-    Resque.stub(:enqueue)
+    Sidekiq::Worker.stub(:perform_async)
   end
 
   def login(user)
