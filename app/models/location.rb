@@ -5,5 +5,5 @@ class Location < ActiveRecord::Base
   belongs_to_active_hash :library_system
 
   has_and_belongs_to_many :users
-  validates_presence_of :library_system_id
+  validates_presence_of :library_system_id, :name
 end
