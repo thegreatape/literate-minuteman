@@ -33,6 +33,7 @@ gem 'angularjs-rails'
 gem 'active_model_serializers'
 gem 'awesome_print'
 gem 'pusher'
+gem 'httparty'
 
 group :test do
   gem 'rspec-rails'
