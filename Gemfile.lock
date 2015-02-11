@@ -276,7 +276,7 @@ GEM
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
     uuidtools (2.1.4)
-    vcr (2.8.0)
+    vcr (2.9.3)
     vegas (0.1.11)
       rack (>= 1.0.0)
     webmock (1.16.1)
