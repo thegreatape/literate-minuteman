@@ -4,7 +4,7 @@ describe UpdateBook do
   class StubbedError < StandardError; end
 
   it "records errors when something blows up and re-raises them" do
-    Book.any_instance.stub(:sync_copies) {|book_id| raise StubbedError.new("oh no!") }
+    Book.any_instance.stub(:sync_copies) {|instance, book_id| raise StubbedError.new("oh no!") }
     book = create(:book)
 
     expect{ UpdateBook.perform(book.id, LibrarySystem::MINUTEMAN.id) }.to raise_error(StubbedError)

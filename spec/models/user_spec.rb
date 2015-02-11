@@ -48,7 +48,7 @@ describe User do
     stub_request(:get, %r|/www\.goodreads\.com/user/show|).
       to_return(body: fixture_file('goodreads_responses/user_show.xml'))
 
-    expect(user.update_shelves).to be_true
+    expect(user.update_shelves).to be_truthy
     expect(user.shelves).to eq ["read", "currently-reading", "to-read", "photography", "wishlist"]
   end
 end

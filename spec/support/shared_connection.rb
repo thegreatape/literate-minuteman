@@ -14,7 +14,7 @@ module SharedConnection
 end
 
 RSpec.configure do |config|
-  config.before do
+  config.before do |example|
     if example.metadata[:js]
       SharedConnection.share!
     end
