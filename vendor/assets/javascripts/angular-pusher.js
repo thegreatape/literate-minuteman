@@ -43,6 +43,8 @@ angular.module('doowb.angular-pusher', [])
 
   // load the pusher api script async
   function createScript ($document, protocol, callback, success ) {
+    if(!apiKey) { return; }
+
     var tag = $document.createElement('script');
     tag.type = 'text/javascript';
     tag.async = true;
