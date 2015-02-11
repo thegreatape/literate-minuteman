@@ -36,7 +36,7 @@ gem 'pusher'
 gem 'httparty'
 
 group :test do
-  gem 'rspec-rails', '2.99'
+  gem 'rspec-rails'
   gem 'rspec-mocks'
   gem 'hashie'
   gem 'factory_girl_rails'

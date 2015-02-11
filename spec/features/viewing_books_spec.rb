@@ -69,17 +69,17 @@ feature "viewing books", js: true do
       visit books_path
       all(".book-toggle").map(&:click)
 
-      page.should have_css "tr.copy", text: @foucaults_pendulum.title
-      page.should_not have_css "tr.copy", text: @the_areas_of_my_expertise.title
+      expect(page).to have_css "tr.copy", text: @foucaults_pendulum.title
+      expect(page).to_not have_css "tr.copy", text: @the_areas_of_my_expertise.title
 
       @user.update_attributes(locations: [Location.find_by_name("Cambridge")])
       visit books_path
       all(".book-toggle").map(&:click)
 
-      page.should have_css "tr.copy", text: @foucaults_pendulum.title
-      page.should have_css "tr.copy", text: @the_areas_of_my_expertise.title
+      expect(page).to have_css "tr.copy", text: @foucaults_pendulum.title
+      expect(page).to have_css "tr.copy", text: @the_areas_of_my_expertise.title
 
-      page.should_not have_css ".no-results"
+      expect(page).to_not have_css ".no-results"
     end
   end
 end
