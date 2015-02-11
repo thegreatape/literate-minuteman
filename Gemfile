@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 ruby '2.1.2'
-gem 'rails', '4.1.9'
+gem 'rails', '4.2.0'
 
 gem 'pg'
 gem 'haml-rails'
