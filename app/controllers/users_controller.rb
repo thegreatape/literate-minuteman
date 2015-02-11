@@ -60,7 +60,7 @@ class UsersController < ApplicationController
     access_token = request_token.get_access_token
     client = Goodreads::Client.new(oauth_token: access_token)
 
-    User.find_or_create_by_goodreads_id(client.user_id).tap do |user|
+    User.where(goodreads_id: client.user_id).first_or_create.tap do |user|
       user.oauth_access_token = access_token.token
       user.oauth_access_secret = access_token.secret
       user.save
