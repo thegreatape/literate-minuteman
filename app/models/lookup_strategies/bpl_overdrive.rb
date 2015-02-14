@@ -1,19 +1,12 @@
-class LookupStrategies::BplOverdrive
-  HOST = 'http://overdrive.bpl.org'
-
-  attr_accessor :title, :author
-  def initialize(title, author)
-    self.title = title
-    self.author = author
-  end
-
+LookupStrategies::BplOverdrive = Struct.new(:title, :author) do
   def find
-    overdrive_strategy.find
+    copies.map do |copy|
+      copy[:location] = "BPL Overdrive"
+      ScrapedBook.new(copy.slice(*ScrapedBook::ATTRIBUTES))
+    end
   end
 
-  private
-  def overdrive_strategy
-    @overdrive_strategy ||= LookupStrategies::Overdrive.new(HOST, "BPL Overdrive", title, author)
+  def copies
+    LookupStrategies::Lyeberry.new('bpl-overdrive').copies(title, author)
   end
-
 end

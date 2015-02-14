@@ -1,19 +1,12 @@
-class LookupStrategies::MinutemanOverdrive
-  HOST = 'http://digital.minlib.net'
-
-  attr_accessor :title, :author
-  def initialize(title, author)
-    self.title = title
-    self.author = author
-  end
-
+LookupStrategies::MinutemanOverdrive = Struct.new(:title, :author) do
   def find
-    overdrive_strategy.find
+    copies.map do |copy|
+      copy[:location] = "Minuteman Overdrive"
+      ScrapedBook.new(copy.slice(*ScrapedBook::ATTRIBUTES))
+    end
   end
 
-  private
-  def overdrive_strategy
-    @overdrive_strategy ||= LookupStrategies::Overdrive.new(HOST, "Minuteman Overdrive", title, author)
+  def copies
+    LookupStrategies::Lyeberry.new('minuteman-overdrive').copies(title, author)
   end
-
 end
