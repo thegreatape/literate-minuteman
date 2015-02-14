@@ -11,77 +11,78 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141012004158) do
+ActiveRecord::Schema.define(version: 20150214181455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "books", force: true do |t|
-    t.string   "title"
+  create_table "books", force: :cascade do |t|
+    t.string   "title",           limit: 255
     t.integer  "user_id"
-    t.string   "author"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.string   "goodreads_link"
-    t.string   "image_url"
-    t.string   "small_image_url"
+    t.string   "author",          limit: 255
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.string   "goodreads_link",  limit: 255
+    t.string   "image_url",       limit: 255
+    t.string   "small_image_url", limit: 255
     t.datetime "last_synced_at"
-    t.text     "last_sync_error"
+    t.json     "sync_errors",                 default: {}, null: false
   end
 
-  create_table "copies", force: true do |t|
+  create_table "copies", force: :cascade do |t|
     t.text     "title"
     t.text     "author"
-    t.string   "call_number"
+    t.string   "call_number",    limit: 255
     t.integer  "book_id"
-    t.string   "status"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.string   "status",         limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.datetime "last_synced_at"
     t.integer  "location_id"
     t.text     "url"
   end
 
-  create_table "library_systems", force: true do |t|
-    t.string   "search_bot_class"
-    t.string   "name"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "library_systems", force: :cascade do |t|
+    t.string   "search_bot_class", limit: 255
+    t.string   "name",             limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
-  create_table "library_systems_users", force: true do |t|
+  create_table "library_systems_users", force: :cascade do |t|
     t.integer "library_system_id"
     t.integer "user_id"
   end
 
-  create_table "locations", force: true do |t|
-    t.string   "library_system_id"
-    t.string   "name"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+  create_table "locations", force: :cascade do |t|
+    t.string   "library_system_id", limit: 255
+    t.string   "name",              limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
-  create_table "locations_users", force: true do |t|
+  create_table "locations_users", force: :cascade do |t|
     t.integer "location_id"
     t.integer "user_id"
   end
 
-  create_table "shelvings", force: true do |t|
+  create_table "shelvings", force: :cascade do |t|
     t.integer  "book_id"
     t.integer  "user_id"
     t.datetime "synced_at"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "oauth_access_token"
-    t.string   "oauth_access_secret"
-    t.string   "goodreads_id"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+  create_table "users", force: :cascade do |t|
+    t.string   "oauth_access_token",  limit: 255
+    t.string   "oauth_access_secret", limit: 255
+    t.string   "goodreads_id",        limit: 255
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.datetime "last_synced_at"
     t.text     "shelves"
     t.text     "active_shelves"
-    t.string   "library_system_ids",  default: [],              array: true
+    t.string   "library_system_ids",              default: [],              array: true
   end
 
+  add_foreign_key "copies", "books", name: "fk_copies_books"
 end
