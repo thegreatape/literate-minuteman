@@ -1,0 +1,8 @@
+%h1 Errors for #{@book.title} / #{@book.author}
+= link_to "Back to all sync errors", sync_errors_path
+- if @book.sync_errors.empty?
+  No errors found! Yippie!
+- else
+  - @book.sync_errors.each do |library_system_id, error|
+    %h2= LibrarySystem.find(library_system_id).name
+    %pre=error

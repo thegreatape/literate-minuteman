@@ -1,0 +1,19 @@
+- if @errors.library_systems.empty?
+  %h1 No book sync errors! Hooray!
+- else
+  - @errors.library_systems.each do |library_system|
+    %h2= library_system.name
+    .errors= "#{@errors[library_system].count} books with issues"
+    %table.table
+      %thead
+        %tr
+          %th Id
+          %th Book
+          %th Error
+      %tbody
+        - @errors[library_system].each do |book|
+          %tr
+            %td= book.id
+            %td 
+              = link_to "#{book.title} / #{book.author}", sync_error_path(book)
+            %td= book.sync_errors[library_system.id].truncate(70)

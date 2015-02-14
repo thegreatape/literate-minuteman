@@ -11,4 +11,5 @@ Minuteman::Application.routes.draw do
       get :oauth_callback
     end
   end
+  resources :sync_errors, only: [:index, :show]
 end
