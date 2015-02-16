@@ -7,6 +7,7 @@ require 'rspec/rails'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 require 'factory_girl'
+require 'capybara/poltergeist'
 require 'capybara/rspec'
 require 'capybara/rails'
 require 'webmock/rspec'
