@@ -12,7 +12,7 @@ LookupStrategies::Boston = Struct.new(:title, :author) do
 
   private
 
-  def normalize_location(name)
+  def normalize_location_name(name)
     # remove book count from location name
     name.gsub(/\s*\(\d+\)\s*/, '')
   end
