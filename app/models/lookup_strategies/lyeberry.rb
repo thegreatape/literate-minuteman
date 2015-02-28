@@ -8,6 +8,6 @@ LookupStrategies::Lyeberry = Struct.new(:lyeberry_id) do
   def search_url(title, author)
     # some Goodreads titles have the series name in parenthesis, and search
     # results seem to be better when it's omitted
-    "#{HOST}/systems/#{lyeberry_id}/books?title=#{URI::encode(title.gsub(/\(.*\)/,''))}&author=#{URI::encode(author)}"
+    "#{HOST}/systems/#{lyeberry_id}/books?title=#{URI::encode(title.gsub(/\(.*\)/,''))}&author=#{URI::encode(author)}&token=#{ENV['LYEBERRY_AUTH_TOKEN']}"
   end
 end
