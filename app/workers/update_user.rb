@@ -1,7 +1,7 @@
 class UpdateUser
-  @queue = :update_user
+  include Sidekiq::Worker
 
-  def self.perform(user_id)
+  def perform(user_id)
     User.find(user_id).sync_books
   end
 end

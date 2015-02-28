@@ -12,6 +12,7 @@ require 'capybara/rspec'
 require 'capybara/rails'
 require 'webmock/rspec'
 require 'vcr'
+require 'sidekiq/testing'
 
 if ENV["TRAVIS"].present?
   Capybara.default_wait_time = 240
@@ -42,7 +43,7 @@ RSpec.configure do |config|
   RSpec::Mocks.configuration.syntax = :should
 
   config.before do
-    Resque.stub(:enqueue)
+    Sidekiq::Testing.disable!
   end
 
   def login(user)

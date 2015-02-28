@@ -1,12 +1,7 @@
-require 'resque-retry'
-
 class UpdateBook
-  extend Resque::Plugins::Retry
+  include Sidekiq::Worker
 
-  @queue = :update_book
-  @retry_limit = 3
-
-  def self.perform(book_id, library_system_id)
+  def perform(book_id, library_system_id)
     book = Book.find(book_id)
     book.sync_copies(LibrarySystem.find(library_system_id))
     if book.sync_errors.has_key?(library_system_id)

@@ -7,7 +7,7 @@ describe UpdateBook do
     Book.any_instance.stub(:sync_copies) {|instance, book_id| raise StubbedError.new("oh no!") }
     book = create(:book)
 
-    expect{ UpdateBook.perform(book.id, LibrarySystem::MINUTEMAN.id) }.to raise_error(StubbedError)
+    expect{ UpdateBook.new.perform(book.id, LibrarySystem::MINUTEMAN.id) }.to raise_error(StubbedError)
     book.reload
     expect(book.sync_errors).to_not be_nil
     expect(book.sync_errors).to have_key(LibrarySystem::MINUTEMAN.id)
@@ -22,7 +22,7 @@ describe UpdateBook do
       LibrarySystem::BOSTON.id => "thing also went badly in Boston"
     })
 
-    expect{ UpdateBook.perform(book.id, LibrarySystem::MINUTEMAN.id) }.to_not raise_error
+    expect{ UpdateBook.new.perform(book.id, LibrarySystem::MINUTEMAN.id) }.to_not raise_error
     expect(book.reload.sync_errors).to eq({LibrarySystem::BOSTON.id => "thing also went badly in Boston"})
   end
 end
