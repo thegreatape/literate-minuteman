@@ -4,10 +4,8 @@
 // the compiled file.
 //
 //= require jquery
-//= require angular
-//= require angular-resource
 //= require moment
-//= require angular-moment
-//= require angular-pusher
 //= require underscore
-//= require_tree .
+//= require react
+//= require components
+//= require react_ujs
