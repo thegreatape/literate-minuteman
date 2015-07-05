@@ -54,11 +54,12 @@
             %td{"data-title" => "Call Number"} {{ copy.call_number }}
             %td{"data-title" => "Last Synced At", "am-time-ago" => "copy.last_synced_at"}
 
-:javascript
-  Minuteman = {};
-  Minuteman.preferredLocations = #{ActiveModel::ArraySerializer.new(@user.locations, each_serializer: LocationSerializer).to_json};
-  Minuteman.allLocations = #{ActiveModel::ArraySerializer.new(Location.all, each_serializer: LocationSerializer).to_json};
-  Minuteman.pusherKey = '#{Pusher.key}';
-  Minuteman.bookUpdateChannel = '#{BookNotifier.book_update_channel_name(@user)}';
-  Minuteman.pendingBooksChannel = '#{BookNotifier.pending_book_channel_name(@user)}';
-  Minuteman.initialPendingBookCount = '#{@user.books.unsynced.count}';
+- content_for :data_preload do
+  :javascript
+    Minuteman = {};
+    Minuteman.preferredLocations = #{ActiveModel::ArraySerializer.new(@user.locations, each_serializer: LocationSerializer).to_json};
+    Minuteman.allLocations = #{ActiveModel::ArraySerializer.new(Location.all, each_serializer: LocationSerializer).to_json};
+    Minuteman.pusherKey = '#{Pusher.key}';
+    Minuteman.bookUpdateChannel = '#{BookNotifier.book_update_channel_name(@user)}';
+    Minuteman.pendingBooksChannel = '#{BookNotifier.pending_book_channel_name(@user)}';
+    Minuteman.initialPendingBookCount = '#{@user.books.unsynced.count}';
