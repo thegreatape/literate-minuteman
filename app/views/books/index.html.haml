@@ -16,9 +16,7 @@
             .progress.progress-striped.active
               .progress-bar.progress-bar-info{role: "progressbar", "aria-valuenow" => "{{pendingBookCount}}", "aria-valuemin"=>"0", "aria-valuemax"=>"{{books.length}}", "style"=>"width: {{100 - (pendingBookCount / books.length * 100)}}%"}
 
-  .filter{'ng-show' => 'books.$resolved'}
-    = render 'filter_form'
-
+  #filter-form
 
   .book-result{'ng-repeat' => 'book in books | filter:bookFilter'}
     .row.book-data
