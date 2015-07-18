@@ -17,40 +17,7 @@
               .progress-bar.progress-bar-info{role: "progressbar", "aria-valuenow" => "{{pendingBookCount}}", "aria-valuemin"=>"0", "aria-valuemax"=>"{{books.length}}", "style"=>"width: {{100 - (pendingBookCount / books.length * 100)}}%"}
 
   #filter-form
-
-  .book-result{'ng-repeat' => 'book in books | filter:bookFilter'}
-    .row.book-data
-      .col-lg-1.col-md-1.col-sm-2.col-xs-3
-        %a{href: "{{book.goodreads_link}}"}
-          %img.book-image{"ng-src" => "{{ book.image_url }}"}
-      .col-lg-11.col-md-11.col-sm-10.col-xs-9
-        %a.title{href: "{{book.goodreads_link}}"}
-          {{ book.title }}
-        .author
-          {{ book.author }}
-        %a.book-toggle.btn.btn-default{href: '#', "ng-click" => "book.showCopies = !book.showCopies"}
-          %span{"ng-show" => "!book.showCopies", "ng-pluralize" => true, count: "(book.copies | filter:copyFilter).length", when: "{'1': 'Show 1 Copy', 'other': 'Show {} Copies'}"}
-          %span{"ng-show" => "book.showCopies"}
-            Hide Copies
-      %table.table.table-condensed{"ng-show" => "book.showCopies"}
-        %thead
-          %tr
-            %th Title
-            %th Status
-            %th Location
-            %th Call Number
-            %th Synced At
-        %tbody
-          %tr.copy{"ng-repeat" => "copy in book.copies | filter:copyFilter"}
-            %td{"data-title" => "Title"}
-              %a{"ng-href" => "{{copy.url}}", "ng-if" => "copy.url"}
-                {{ copy.title }}
-              %span{"ng-if" => "!copy.url"}
-                {{ copy.title }}
-            %td{"data-title" => "Status"} {{ copy.status }}
-            %td{"data-title" => "Location"} {{ copy.location_name }}
-            %td{"data-title" => "Call Number"} {{ copy.call_number }}
-            %td{"data-title" => "Last Synced At", "am-time-ago" => "copy.last_synced_at"}
+  #book-list
 
 - content_for :data_preload do
   :javascript
