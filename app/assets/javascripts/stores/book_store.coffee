@@ -3,7 +3,7 @@
     @books = []
     @bindActions(
       constants.LOAD_BOOKS, @loadBooks
-      constants.LOAD_BOOKS_SUCCESS, @onLoadSuccess
+      constants.LOAD_BOOKS_SUCCESS, @onBookLoadSuccess
     )
 
   loadBooks: ->
@@ -12,10 +12,11 @@
       success: (response) =>
         @flux.actions.loadBooksSuccess(response)
 
-  onLoadSuccess: (payload) ->
+  onBookLoadSuccess: (payload) ->
     @books = payload.books
     @emit('change')
 
   getState: -> {
-    books: @books
+    books: @books,
+    pendingBookCount: 1
   }
