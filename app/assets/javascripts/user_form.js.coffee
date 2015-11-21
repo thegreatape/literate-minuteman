@@ -8,6 +8,7 @@ class UserForm
       @addSystem(input.val())
     else
       @removeSystem(input.val())
+      sup
 
   addSystem: (id) =>
     $.ajax
@@ -19,3 +20,5 @@ class UserForm
     $(".system-#{id}").remove()
 
 @UserForm = UserForm
+
+hi
