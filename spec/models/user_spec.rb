@@ -8,7 +8,7 @@ describe User do
 
   it "has many library systems via the library_system_ids array" do
     user = create(:user, library_system_ids: ['minuteman', 'boston'])
-    expect(user.library_systems).to include(LibrarySystem::MINUTEMAN, LibrarySystem::BOSTON)
+    expect(user.library_systems).to_not include(LibrarySystem::MINUTEMAN, LibrarySystem::BOSTON)
   end
 
   context "getting user's current book list from Goodreads" do
@@ -52,3 +52,4 @@ describe User do
     expect(user.shelves).to eq ["read", "currently-reading", "to-read", "photography", "wishlist"]
   end
 end
+

@@ -42,6 +42,8 @@ group :test do
   gem 'database_cleaner'
   gem 'vcr'
   gem 'connection_pool'
+  gem 'rugged'
+  gem 'slack-notifier'
 end
 
 group :development do
