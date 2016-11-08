@@ -32,7 +32,7 @@ angular.module('minuteman.controllers').controller('BooksCtrl', ['$scope', 'Book
 
     $scope.isAvailable = (copy) ->
       status = copy.status.toLowerCase()
-      status.match /available($|:\s*[123456789]+)|^in/
+      status.match /available($| copies:\s*[123456789]+)|^in/
 
     $scope.books = Book.query()
 

@@ -69,8 +69,8 @@ describe "BooksCtrl", ->
         expect(@scope.copyFilter({status: "AVAILABLE"})).toBeTruthy()
         expect(@scope.copyFilter({status: "In"})).toBeTruthy()
         expect(@scope.copyFilter({status: "In-Recent Return"})).toBeTruthy()
-        expect(@scope.copyFilter({status: "Available: 1"})).toBeTruthy()
-        expect(@scope.copyFilter({status: "Available: 0"})).toBeFalsy()
+        expect(@scope.copyFilter({status: "Available Copies: 1"})).toBeTruthy()
+        expect(@scope.copyFilter({status: "Available Copies: 0"})).toBeFalsy()
 
       it "returns true for all copies when flag is unset", =>
         expect(@scope.copyFilter({status: "Out"})).toBeTruthy()
